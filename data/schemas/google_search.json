@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://innov8ai.local/schemas/google_search.json",
+  "title": "GoogleSearchRSAOutputs",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "options": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "option": { "type": "integer" },
+          "fields": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "headlines": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "descriptions": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "required": ["headlines", "descriptions"]
+          }
+        },
+        "required": ["option", "fields"]
+      }
+    }
+  },
+  "required": ["options"]
+}

@@ -1,0 +1,63 @@
+# Controlled vocabularies + simple policy groupings the UI and API will reuse.
+
+social_channels:
+  - "Facebook"
+  - "Instagram"
+  - "LinkedIn"
+  - "TikTok"
+  - "Snapchat"
+  - "X"
+  - "Reddit"
+
+non_emoji_channels:
+  - "YouTube"
+  - "Google Search"
+  - "Google Display"
+  - "Performance Max"
+  - "Demand Gen"
+
+all_channels:
+  - "Facebook"
+  - "Instagram"
+  - "LinkedIn"
+  - "TikTok"
+  - "Snapchat"
+  - "X"
+  - "Reddit"
+  - "YouTube"
+  - "Google Search"
+  - "Google Display"
+  - "Performance Max"
+  - "Demand Gen"
+
+tones:
+  - "Confident"
+  - "Supportive & inclusive"
+  - "Curious & forward-thinking"
+  - "Warm & welcoming"
+  - "Professional & ambitious"
+  - "Light-hearted & modern"
+
+audiences:
+  - "Undergraduates"
+  - "Postgraduates"
+  - "Parents & Influencers"
+
+subtypes:
+  - "Brand level recruitment"
+  - "Subject/course specific ad"
+  - "Open Day"
+  - "Clearing"
+
+tone_hints:
+  "Confident": "Evidence-led, concise. Prefer demonstrable strengths; avoid unverifiable superlatives."
+  "Supportive & inclusive": "Warm, encouraging, accessible. Emphasise community and wellbeing."
+  "Curious & forward-thinking": "Inquisitive, innovative. Highlight research, labs, industry links."
+  "Warm & welcoming": "Friendly, human, campus-life focused. Use inclusive we/you language."
+  "Professional & ambitious": "Formal, outcome-focused, career and ranking oriented."
+  "Light-hearted & modern": "Playful, contemporary. Short lines; occasional emojis if allowed."
+
+audience_hints:
+  "Undergraduates": "Peer-like tone, modern phrasing, avoid jargon."
+  "Postgraduates": "Professional tone, research/career focus, clear next steps."
+  "Parents & Influencers": "Reassuring and trustworthy; safety, support, outcomes."

@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: rh-ads-api-dev
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MODEL_GENERATION=${MODEL_GENERATION:-gpt-4o}
+      - MODEL_GENERATION_MINI=${MODEL_GENERATION_MINI:-gpt-4o-mini}
+      - REQUEST_TIMEOUT_SECONDS=${REQUEST_TIMEOUT_SECONDS:-20}
+      - CORS_ALLOW_ORIGINS=http://localhost:3000,http://localhost:3001
+      - JINA_API_KEY=${JINA_API_KEY:-}
+      - SCRAPE_TIMEOUT_SECONDS=${SCRAPE_TIMEOUT_SECONDS:-6}
+      - USER_AGENT=${USER_AGENT:-RH-Edu-Ads-Bot/1.0}
+      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      - CONFIG_CACHE_TTL_SECONDS=${CONFIG_CACHE_TTL_SECONDS:-600}
+      - DEBUG=true
+    volumes:
+      - ./api:/app  # Mount source code for hot reload
+      - ./data:/app/data:ro
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+
+  web:
+    image: node:20-alpine
+    container_name: rh-ads-web-dev
+    working_dir: /app
+    ports:
+      - "3001:3000"
+    environment:
+      - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME:-RH AI Assistant}
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NODE_ENV=development
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - /app/.next
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+networks:
+  default:
+    name: rh-ads-network-dev

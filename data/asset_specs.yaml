@@ -1,0 +1,193 @@
+# Creative asset specs your UI can list after copy is generated or via the /assets page.
+# These are practical starting points; tailor to RH's production workflow.
+
+# --- FACEBOOK ---
+- channel: "Facebook"
+  placement_or_format: "Feed"
+  aspect_ratio: "1:1"
+  recommended_px: "1080x1080"
+  file_types: ["jpg","png","mp4"]
+  max_file_size_mb: 30
+  caption_limit_chars: 2200
+  duration_seconds_max: 0
+  notes: "Minimal text overlay recommended."
+
+- channel: "Facebook"
+  placement_or_format: "Story/Reel"
+  aspect_ratio: "9:16"
+  recommended_px: "1080x1920"
+  file_types: ["jpg","png","mp4"]
+  max_file_size_mb: 30
+  duration_seconds_max: 60
+  caption_limit_chars: 2200
+  notes: "Safe-area margins; keep captions large."
+
+# --- INSTAGRAM ---
+- channel: "Instagram"
+  placement_or_format: "Feed"
+  aspect_ratio: "1:1"
+  recommended_px: "1080x1080"
+  file_types: ["jpg","png","mp4"]
+  max_file_size_mb: 30
+  duration_seconds_max: 60
+  caption_limit_chars: 2200
+  notes: "Strong focal point in first 1–2 seconds for video."
+
+- channel: "Instagram"
+  placement_or_format: "Story/Reel"
+  aspect_ratio: "9:16"
+  recommended_px: "1080x1920"
+  file_types: ["jpg","png","mp4"]
+  duration_seconds_max: 60
+  max_file_size_mb: 30
+  caption_limit_chars: 2200
+  notes: "Use captions/subtitles for accessibility."
+
+# --- LINKEDIN ---
+- channel: "LinkedIn"
+  placement_or_format: "Feed (Single Image)"
+  aspect_ratio: "1:1"
+  recommended_px: "1200x1200"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 200
+  duration_seconds_max: 0
+  caption_limit_chars: 3000
+  notes: "Corporate style; avoid heavy filters."
+
+- channel: "LinkedIn"
+  placement_or_format: "Feed (Landscape)"
+  aspect_ratio: "1.91:1"
+  recommended_px: "1200x627"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 200
+  duration_seconds_max: 30
+  caption_limit_chars: 3000
+  notes: "Professional tone recommended."
+
+# --- TIKTOK ---
+- channel: "TikTok"
+  placement_or_format: "In-Feed Video"
+  aspect_ratio: "9:16"
+  recommended_px: "1080x1920"
+  file_types: ["mp4","mov"]
+  duration_seconds_max: 60
+  max_file_size_mb: 500
+  caption_limit_chars: 100
+  notes: "Native-style content performs best."
+
+# --- X (Twitter) ---
+- channel: "X"
+  placement_or_format: "Feed"
+  aspect_ratio: "1:1"
+  recommended_px: "1200x1200"
+  file_types: ["jpg","png","mp4"]
+  max_file_size_mb: 512
+  duration_seconds_max: 140
+  caption_limit_chars: 280
+  notes: "Video auto-plays muted."
+
+- channel: "X"
+  placement_or_format: "Feed (Landscape)"
+  aspect_ratio: "16:9"
+  recommended_px: "1920x1080"
+  file_types: ["jpg","png","mp4"]
+  max_file_size_mb: 512
+  duration_seconds_max: 140
+  caption_limit_chars: 280
+  notes: "Landscape format for expanded view."
+
+# --- REDDIT ---
+- channel: "Reddit"
+  placement_or_format: "Feed (Image)"
+  aspect_ratio: "1:1"
+  recommended_px: "1200x1200"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 20
+  duration_seconds_max: 0
+  caption_limit_chars: 300
+  notes: "Blend with organic content; authentic tone."
+
+# --- SNAPCHAT ---
+- channel: "Snapchat"
+  placement_or_format: "Snap Ad"
+  aspect_ratio: "9:16"
+  recommended_px: "1080x1920"
+  file_types: ["mp4","mov","jpg","png"]
+  max_file_size_mb: 1024
+  duration_seconds_max: 180
+  caption_limit_chars: 34
+  notes: "Vertical format only."
+
+# --- YOUTUBE ---
+- channel: "YouTube"
+  placement_or_format: "Skippable In‑Stream"
+  aspect_ratio: "16:9"
+  recommended_px: "1920x1080"
+  file_types: ["mp4","mov"]
+  max_file_size_mb: 256
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Clear branding in first 5 seconds."
+
+- channel: "YouTube"
+  placement_or_format: "Shorts"
+  aspect_ratio: "9:16"
+  recommended_px: "1080x1920"
+  file_types: ["mp4","mov"]
+  duration_seconds_max: 60
+  max_file_size_mb: 256
+  caption_limit_chars: 0
+  notes: "Vertical short-form content."
+
+# --- GOOGLE DISPLAY ---
+- channel: "Google Display"
+  placement_or_format: "Responsive Display Images"
+  aspect_ratio: "1.91:1"
+  recommended_px: "1200x628"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Also prepare 1:1 at 1200x1200 for flexibility."
+
+- channel: "Google Display"
+  placement_or_format: "Static Banners (common)"
+  aspect_ratio: "varies"
+  recommended_px: "300x250, 336x280, 728x90, 300x600, 160x600, 320x100, 970x250"
+  file_types: ["jpg","png","gif"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Supply multiple sizes for reach."
+
+# --- PERFORMANCE MAX / DEMAND GEN ---
+- channel: "Performance Max"
+  placement_or_format: "Core Images"
+  aspect_ratio: "1:1, 1.91:1, 4:5"
+  recommended_px: "1200x1200, 1200x628, 960x1200"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Add transparent logos 120x120 and 1200x300 where required."
+
+- channel: "Demand Gen"
+  placement_or_format: "Image & Video"
+  aspect_ratio: "1:1, 16:9, 9:16"
+  recommended_px: "1200x1200, 1920x1080, 1080x1920"
+  file_types: ["jpg","png","mp4"]
+  max_file_size_mb: 5
+  duration_seconds_max: 30
+  caption_limit_chars: 0
+  notes: "Use diverse formats to unlock inventory."
+
+# --- GOOGLE SEARCH ---
+- channel: "Google Search"
+  placement_or_format: "Text Ad"
+  aspect_ratio: null
+  recommended_px: null
+  file_types: []
+  max_file_size_mb: 0
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Text-only; no image assets required."

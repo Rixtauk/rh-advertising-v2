@@ -1,0 +1,70 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+/web/.next/
+/web/out/
+/web/build/
+/api/dist/
+/api/build/
+*.egg-info/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pip-log.txt
+
+# Testing
+coverage/
+.coverage
+.pytest_cache/
+.nyc_output/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Cache
+.cache/
+.parcel-cache/
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Cloned repositories
+ref-tools-mcp/

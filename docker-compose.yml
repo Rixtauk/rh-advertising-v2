@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: rh-ads-api
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MODEL_GENERATION=${MODEL_GENERATION:-gpt-4o}
+      - MODEL_GENERATION_MINI=${MODEL_GENERATION_MINI:-gpt-4o-mini}
+      - REQUEST_TIMEOUT_SECONDS=${REQUEST_TIMEOUT_SECONDS:-20}
+      - CORS_ALLOW_ORIGINS=http://localhost:3000,http://localhost:3001
+      - JINA_API_KEY=${JINA_API_KEY:-}
+      - SCRAPE_TIMEOUT_SECONDS=${SCRAPE_TIMEOUT_SECONDS:-6}
+      - USER_AGENT=${USER_AGENT:-RH-Edu-Ads-Bot/1.0}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - CONFIG_CACHE_TTL_SECONDS=${CONFIG_CACHE_TTL_SECONDS:-600}
+      - DEBUG=${DEBUG:-false}
+    volumes:
+      - ./data:/app/data:ro  # Mount config data as read-only
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: rh-ads-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME:-RH AI Assistant}
+      - NEXT_PUBLIC_API_URL=http://api:8000
+      - NODE_ENV=production
+    depends_on:
+      - api
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', (r) => {if(r.statusCode!==200)throw new Error(r.statusCode)})"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+networks:
+  default:
+    name: rh-ads-network

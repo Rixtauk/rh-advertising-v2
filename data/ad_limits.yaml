@@ -1,0 +1,803 @@
+# Ad copy field/length guidance per channel/subtype.
+# You can duplicate a block and change values for other subtypes (Subject/Course, Open Day, Clearing).
+# Fields are used to shape LLM prompts and to validate/flag over-limit outputs client-side.
+
+- channel: "Facebook"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 125       # typical feed guidance; adjust as needed
+      max_words: 0
+      emojis_allowed: true
+      notes: "Feed/standard placements"
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+- channel: "Instagram"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 125
+      max_words: 0
+      emojis_allowed: true
+      notes: "Feed/reels captions vary; keep concise for first line"
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+- channel: "LinkedIn"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 150       # intro text; adjust for Sponsored Content variants
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+- channel: "TikTok"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 150       # visible portion; captions can be longer—keep concise
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+- channel: "Snapchat"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 80
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 34
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+- channel: "X"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 180       # keep short for engagement; you can increase if desired
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+- channel: "Reddit"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 300
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+- channel: "YouTube"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: false  # keep text minimal; assets carry the message
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: false
+
+# Google-style ads (Responsive Search, etc.). Arrays with counts.
+- channel: "Google Search"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "headlines"
+      count: 15
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+      notes: "Responsive Search Ads (RSA) headlines"
+    - field: "descriptions"
+      count: 4
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+      notes: "RSA descriptions"
+
+- channel: "Google Display"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "short_headline"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+- channel: "Performance Max"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "headlines"
+      count: 5          # seed value; adjust as needed
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "descriptions"
+      count: 5          # seed value
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+- channel: "Demand Gen"
+  subtype: "Brand level recruitment"
+  fields:
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Additional subtypes for all channels
+
+# Facebook - Subject/course specific ad
+- channel: "Facebook"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 125
+      max_words: 0
+      emojis_allowed: true
+      notes: "Highlight specific course benefits and outcomes"
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# Facebook - Open Day
+- channel: "Facebook"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 125
+      max_words: 0
+      emojis_allowed: true
+      notes: "Include date, time, and registration CTA"
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# Facebook - Clearing
+- channel: "Facebook"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 125
+      max_words: 0
+      emojis_allowed: true
+      notes: "Include dates/phone lines if relevant; prioritise clarity"
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# Instagram - Subject/course specific ad
+- channel: "Instagram"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 125
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# Instagram - Open Day
+- channel: "Instagram"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 125
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# Instagram - Clearing
+- channel: "Instagram"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 125
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# LinkedIn - Subject/course specific ad
+- channel: "LinkedIn"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+# LinkedIn - Open Day
+- channel: "LinkedIn"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+# LinkedIn - Clearing
+- channel: "LinkedIn"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+# TikTok - Subject/course specific ad
+- channel: "TikTok"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# TikTok - Open Day
+- channel: "TikTok"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# TikTok - Clearing
+- channel: "TikTok"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: true
+
+# Snapchat - Subject/course specific ad
+- channel: "Snapchat"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 80
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 34
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+# Snapchat - Open Day
+- channel: "Snapchat"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 80
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 34
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+# Snapchat - Clearing
+- channel: "Snapchat"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 80
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 34
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+# X - Subject/course specific ad
+- channel: "X"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 180
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+# X - Open Day
+- channel: "X"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 180
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+# X - Clearing
+- channel: "X"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 180
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 60
+      max_words: 0
+      emojis_allowed: true
+
+# Reddit - Subject/course specific ad
+- channel: "Reddit"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 300
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+# Reddit - Open Day
+- channel: "Reddit"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 300
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+# Reddit - Clearing
+- channel: "Reddit"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 300
+      max_words: 0
+      emojis_allowed: true
+    - field: "headline"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: true
+
+# YouTube - Subject/course specific ad
+- channel: "YouTube"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: false
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: false
+
+# YouTube - Open Day
+- channel: "YouTube"
+  subtype: "Open Day"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: false
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: false
+
+# YouTube - Clearing
+- channel: "YouTube"
+  subtype: "Clearing"
+  fields:
+    - field: "primary_text"
+      max_chars: 150
+      max_words: 0
+      emojis_allowed: false
+    - field: "headline"
+      max_chars: 70
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 100
+      max_words: 0
+      emojis_allowed: false
+
+# Google Search - Subject/course specific ad
+- channel: "Google Search"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "headlines"
+      count: 15
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "descriptions"
+      count: 4
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Google Search - Open Day
+- channel: "Google Search"
+  subtype: "Open Day"
+  fields:
+    - field: "headlines"
+      count: 15
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+      notes: "Include date and registration keywords"
+    - field: "descriptions"
+      count: 4
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Google Search - Clearing
+- channel: "Google Search"
+  subtype: "Clearing"
+  fields:
+    - field: "headlines"
+      count: 15
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+      notes: "Emphasize availability and quick application"
+    - field: "descriptions"
+      count: 4
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Google Display - Subject/course specific ad
+- channel: "Google Display"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "short_headline"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Google Display - Open Day
+- channel: "Google Display"
+  subtype: "Open Day"
+  fields:
+    - field: "short_headline"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Google Display - Clearing
+- channel: "Google Display"
+  subtype: "Clearing"
+  fields:
+    - field: "short_headline"
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Performance Max - Subject/course specific ad
+- channel: "Performance Max"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "headlines"
+      count: 5
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "descriptions"
+      count: 5
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Performance Max - Open Day
+- channel: "Performance Max"
+  subtype: "Open Day"
+  fields:
+    - field: "headlines"
+      count: 5
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "descriptions"
+      count: 5
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Performance Max - Clearing
+- channel: "Performance Max"
+  subtype: "Clearing"
+  fields:
+    - field: "headlines"
+      count: 5
+      max_chars: 30
+      max_words: 0
+      emojis_allowed: false
+    - field: "long_headline"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+    - field: "descriptions"
+      count: 5
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Demand Gen - Subject/course specific ad
+- channel: "Demand Gen"
+  subtype: "Subject/course specific ad"
+  fields:
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Demand Gen - Open Day
+- channel: "Demand Gen"
+  subtype: "Open Day"
+  fields:
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false
+
+# Demand Gen - Clearing
+- channel: "Demand Gen"
+  subtype: "Clearing"
+  fields:
+    - field: "headline"
+      max_chars: 40
+      max_words: 0
+      emojis_allowed: false
+    - field: "description"
+      max_chars: 90
+      max_words: 0
+      emojis_allowed: false

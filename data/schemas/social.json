@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://innov8ai.local/schemas/social.json",
+  "title": "SocialAdOutputs",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "options": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "option": { "type": "integer" },
+          "fields": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "primary_text": { "type": "string" },
+              "headline": { "type": "string" },
+              "description": { "type": "string" }
+            },
+            "required": ["primary_text", "headline", "description"]
+          }
+        },
+        "required": ["option", "fields"]
+      }
+    }
+  },
+  "required": ["options"]
+}
