@@ -1,0 +1,16 @@
+{
+  "buildCommand": "cd web && npm ci && npm run build",
+  "outputDirectory": "web/.next",
+  "framework": "nextjs",
+  "installCommand": "cd web && npm ci",
+  "devCommand": "cd web && npm run dev",
+  "rootDirectory": "web",
+  "env": {
+    "NEXT_PUBLIC_API_URL": "http://localhost:8000"
+  },
+  "functions": {
+    "web/app/api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
