@@ -179,7 +179,7 @@ async def generate_copy_with_openai(
                     response_format={
                         "type": "json_schema",
                         "json_schema": {
-                            "name": f"{channel.lower()}_ad_copy",
+                            "name": f"{channel.lower().replace(' ', '_')}_ad_copy",
                             "strict": True,
                             "schema": json_schema,
                         },

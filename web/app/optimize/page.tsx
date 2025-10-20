@@ -34,7 +34,7 @@ export default function OptimizePage() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to analyze landing page",
+        description: "Failed to analyse landing page",
         variant: "destructive",
       });
     } finally {
@@ -45,7 +45,7 @@ export default function OptimizePage() {
   return (
     <main className="container mx-auto py-8 px-4 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Landing Page Optimizer</h1>
+        <h1 className="text-4xl font-bold mb-2">Landing Page Optimiser</h1>
         <p className="text-lg text-muted-foreground">
           Get comprehensive analysis and actionable recommendations for your university landing pages
         </p>
@@ -79,7 +79,7 @@ export default function OptimizePage() {
                   ></path>
                 </svg>
                 <div>
-                  <p className="font-medium text-blue-900">Analyzing page...</p>
+                  <p className="font-medium text-blue-900">Analysing page...</p>
                   <p className="text-sm text-blue-700">This may take 10-20 seconds</p>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export default function OptimizePage() {
                   Enter a landing page URL and objective to get started
                 </p>
                 <div className="mt-6">
-                  <h4 className="text-xs font-semibold text-gray-900 mb-2">What we analyze:</h4>
+                  <h4 className="text-xs font-semibold text-gray-900 mb-2">What we analyse:</h4>
                   <ul className="text-xs text-left text-gray-600 space-y-1">
                     <li>• Copy Quality (value proposition, length, readability)</li>
                     <li>• UX/Layout (hierarchy, navigation, mobile)</li>

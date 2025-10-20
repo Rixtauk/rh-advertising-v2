@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Image } from 'lucide-react';
+import { FileText, Image, LineChart } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -13,9 +13,9 @@ export default function HomePage() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 mt-12">
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader>
+      <div className="grid gap-6 md:grid-cols-3 mt-12">
+        <Card className="hover:shadow-lg transition-shadow flex flex-col">
+          <CardHeader className="flex-1">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
                 <FileText className="h-6 w-6 text-primary" />
@@ -23,7 +23,7 @@ export default function HomePage() {
               <CardTitle>Ad Copy Generator</CardTitle>
             </div>
             <CardDescription>
-              Generate compliant, on-brand ad copy for 12+ advertising channels with automatic
+              Generate compliant, on-brand ad copy for 14+ advertising channels with automatic
               character limit enforcement
             </CardDescription>
           </CardHeader>
@@ -34,8 +34,27 @@ export default function HomePage() {
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader>
+        <Card className="hover:shadow-lg transition-shadow flex flex-col">
+          <CardHeader className="flex-1">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <LineChart className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle>Landing Page Optimiser</CardTitle>
+            </div>
+            <CardDescription>
+              Analyse and optimise university landing pages with actionable recommendations and scoring
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/optimize">
+              <Button className="w-full">Analyse Page</Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow flex flex-col">
+          <CardHeader className="flex-1">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
                 <Image className="h-6 w-6 text-primary" />
@@ -49,9 +68,7 @@ export default function HomePage() {
           </CardHeader>
           <CardContent>
             <Link href="/assets">
-              <Button className="w-full" variant="outline">
-                View Specs
-              </Button>
+              <Button className="w-full">View Specs</Button>
             </Link>
           </CardContent>
         </Card>
@@ -63,8 +80,7 @@ export default function HomePage() {
           <li className="flex items-start gap-2">
             <span className="text-primary">•</span>
             <span>
-              <strong>12 Channels:</strong> Facebook, Instagram, LinkedIn, TikTok, Snapchat, X,
-              Reddit, YouTube, Google Search, Display, Performance Max, and Demand Gen
+              <strong>14 Channels:</strong> Search, Display, Performance Max, YouTube, TikTok, Snapchat, LinkedIn, Meta (Facebook/Instagram), and Reddit
             </span>
           </li>
           <li className="flex items-start gap-2">
@@ -72,6 +88,12 @@ export default function HomePage() {
             <span>
               <strong>Smart Limits:</strong> Automatic character counting and over-limit warnings
               with shortened alternatives
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary">•</span>
+            <span>
+              <strong>Landing Page Analysis:</strong> Comprehensive scoring across 6 categories with actionable recommendations for improvement
             </span>
           </li>
           <li className="flex items-start gap-2">

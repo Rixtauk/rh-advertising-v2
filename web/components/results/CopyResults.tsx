@@ -37,7 +37,7 @@ function formatFieldName(field: string): string {
 }
 
 function FieldDisplay({ field }: { field: GeneratedField }) {
-  const displayValue = field.isOverLimit && field.shortened ? field.shortened : field.value;
+  const displayValue = field.value; // Always show full text
   const isArray = Array.isArray(displayValue);
 
   return (
@@ -62,7 +62,7 @@ function FieldDisplay({ field }: { field: GeneratedField }) {
       {field.isOverLimit && (
         <div className="flex items-start gap-2 text-xs text-destructive">
           <AlertTriangle className="h-3 w-3 mt-0.5 shrink-0" />
-          <span>Over limit. Shortened alternative shown above.</span>
+          <span>Over limit by {field.charCount - field.maxChars} characters.</span>
         </div>
       )}
     </div>
@@ -76,7 +76,7 @@ export function CopyResults({ results, channel, onRegenerate, onSelectOption }: 
   const handleCopy = async (option: GeneratedOption) => {
     const text = option.fields
       .map((f) => {
-        const val = f.isOverLimit && f.shortened ? f.shortened : f.value;
+        const val = f.value; // Always copy full text
         const formatted = Array.isArray(val) ? val.map((v, i) => `${i + 1}. ${v}`).join('\n') : val;
         return `${formatFieldName(f.field)}:\n${formatted}`;
       })
@@ -109,39 +109,40 @@ export function CopyResults({ results, channel, onRegenerate, onSelectOption }: 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Generated Options</h2>
+        <h2 className="text-2xl font-bold">Generated Copy</h2>
         <Button onClick={handleRegenerate} disabled={isRegenerating} variant="outline" size="sm">
           {isRegenerating ? (
             <RefreshCw className="h-4 w-4 animate-spin" />
           ) : (
             <>
               <RefreshCw className="h-4 w-4 mr-2" />
-              Regenerate 3 More
+              Regenerate
             </>
           )}
         </Button>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
+      <div className="space-y-6">
         {results.map((option) => (
           <Card key={option.option} className="hover:shadow-lg transition-shadow">
             <CardHeader>
-              <CardTitle>Option {option.option}</CardTitle>
-              <CardDescription>{channel}</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>{channel}</CardTitle>
+                  <CardDescription>Generated ad copy</CardDescription>
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={() => handleCopy(option)} variant="outline" size="sm">
+                    <Copy className="h-4 w-4 mr-2" />
+                    Copy
+                  </Button>
+                </div>
+              </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {option.fields.map((field, idx) => (
                 <FieldDisplay key={`${option.option}-${idx}`} field={field} />
               ))}
-              <div className="flex gap-2 pt-4">
-                <Button onClick={() => handleCopy(option)} variant="outline" size="sm" className="flex-1">
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copy
-                </Button>
-                <Button onClick={() => onSelectOption(option)} variant="default" size="sm" className="flex-1">
-                  Select
-                </Button>
-              </div>
             </CardContent>
           </Card>
         ))}

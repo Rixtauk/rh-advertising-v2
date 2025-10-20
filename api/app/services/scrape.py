@@ -120,6 +120,7 @@ async def scrape_with_selectolax(url: str) -> ScrapedContent:
             content.h3 = [h.text().strip() for h in tree.css("h3") if h.text().strip()][:5]
 
             # CTAs (buttons and links with CTA keywords)
+            # Expanded keywords and selectors to catch more CTAs
             cta_keywords = [
                 "register",
                 "apply",
@@ -129,11 +130,25 @@ async def scrape_with_selectolax(url: str) -> ScrapedContent:
                 "sign up",
                 "get started",
                 "learn more",
+                "find out",
+                "discover",
+                "explore",
+                "join",
+                "visit",
+                "open day",
+                "prospectus",
+                "contact",
+                "get in touch",
             ]
-            for btn in tree.css("button, a.btn, a.button, .cta"):
-                text = btn.text().strip().lower()
-                if any(keyword in text for keyword in cta_keywords):
-                    content.ctas.append(btn.text().strip())
+            # Check buttons, links with button classes, and common CTA containers
+            for btn in tree.css("button, a.btn, a.button, .cta, .btn, .button, a[role='button'], input[type='submit']"):
+                text = btn.text().strip()
+                if text:  # Any button/CTA element with text
+                    text_lower = text.lower()
+                    # Add if it contains CTA keywords OR if it's a button element (likely a CTA)
+                    if any(keyword in text_lower for keyword in cta_keywords) or btn.tag in ["button", "input"]:
+                        if text not in content.ctas:  # Avoid duplicates
+                            content.ctas.append(text)
 
             # Forms
             for form in tree.css("form"):

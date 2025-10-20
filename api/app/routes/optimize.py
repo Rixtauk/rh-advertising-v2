@@ -38,8 +38,9 @@ async def optimize_landing_page(request: OptimizeRequest) -> OptimizeResponse:
 
     try:
         # Scrape the landing page
+        # Use HTML parser (selectolax) instead of Jina for more accurate structure detection
         scrape_start = time.time()
-        content = await scrape_landing_page(str(request.url), use_jina=True)
+        content = await scrape_landing_page(str(request.url), use_jina=False)
 
         if content.error:
             raise HTTPException(

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import Image from 'next/image';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -9,6 +10,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_APP_NAME || 'RH AI Assistant',
   description: 'Education ad copy generator and creative asset specification tool',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -20,28 +24,38 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="min-h-screen flex flex-col">
-          <header className="border-b">
-            <div className="container mx-auto px-4 py-4">
+          <header className="sticky top-0 z-50 bg-[#222222] border-b border-gray-800">
+            <div className="container mx-auto px-4 py-3">
               <div className="flex items-center justify-between">
-                <Link href="/" className="text-2xl font-bold text-primary">
-                  {process.env.NEXT_PUBLIC_APP_NAME || 'RH AI Assistant'}
+                <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                  <Image
+                    src="/rh-logo.png"
+                    alt="RH Advertising"
+                    width={120}
+                    height={40}
+                    className="h-10 w-auto"
+                    priority
+                  />
+                  <span className="text-xl font-semibold text-white border-l border-gray-600 pl-3">
+                    AI Assistant
+                  </span>
                 </Link>
                 <nav className="flex gap-6">
                   <Link
                     href="/copy"
-                    className="text-sm font-medium hover:text-primary transition-colors"
+                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
                     Copy Generator
                   </Link>
                   <Link
                     href="/optimize"
-                    className="text-sm font-medium hover:text-primary transition-colors"
+                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
-                    Landing Page Optimizer
+                    Landing Page Optimiser
                   </Link>
                   <Link
                     href="/assets"
-                    className="text-sm font-medium hover:text-primary transition-colors"
+                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
                     Asset Specs
                   </Link>

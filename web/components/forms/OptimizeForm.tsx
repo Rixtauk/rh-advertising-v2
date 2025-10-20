@@ -39,7 +39,7 @@ export function OptimizeForm({ onSubmit, isLoading }: OptimizeFormProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Analyze Landing Page</CardTitle>
+        <CardTitle>Analyse Landing Page</CardTitle>
         <CardDescription>
           Get a comprehensive analysis of your university landing page with actionable
           recommendations
@@ -60,7 +60,7 @@ export function OptimizeForm({ onSubmit, isLoading }: OptimizeFormProps) {
               disabled={isLoading}
             />
             <p className="text-xs text-muted-foreground">
-              Enter the full URL of the landing page you want to analyze
+              Enter the full URL of the landing page you want to analyse
             </p>
           </div>
 
@@ -108,10 +108,10 @@ export function OptimizeForm({ onSubmit, isLoading }: OptimizeFormProps) {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                Analyzing...
+                Analysing...
               </>
             ) : (
-              "Analyze Page"
+              "Analyse Page"
             )}
           </Button>
         </form>

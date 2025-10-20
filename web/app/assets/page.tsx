@@ -7,18 +7,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { SpecsList } from '@/components/assets/SpecsList';
 
 const CHANNELS = [
-  'Facebook',
-  'Instagram',
-  'LinkedIn',
-  'TikTok',
-  'Snapchat',
-  'X',
-  'Reddit',
-  'YouTube',
-  'Google Search',
-  'Google Display',
-  'Performance Max',
-  'Demand Gen',
+  'SEARCH',
+  'DISPLAY',
+  'PERFORMANCE MAX',
+  'YOUTUBE',
+  'TIKTOK',
+  'SNAPCHAT',
+  'LINKEDIN LEAD GEN',
+  'LINKEDIN SINGLE IMAGE',
+  'LINKEDIN SINGLE VIDEO',
+  'META SINGLE IMAGE',
+  'META VIDEO',
+  'META CAROUSEL',
+  'META COLLECTION',
+  'REDDIT',
 ];
 
 interface AssetSpec {

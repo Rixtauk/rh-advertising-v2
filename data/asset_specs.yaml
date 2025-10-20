@@ -1,188 +1,7 @@
-# Creative asset specs your UI can list after copy is generated or via the /assets page.
-# These are practical starting points; tailor to RH's production workflow.
+# Creative asset specs listed after copy is generated
 
-# --- FACEBOOK ---
-- channel: "Facebook"
-  placement_or_format: "Feed"
-  aspect_ratio: "1:1"
-  recommended_px: "1080x1080"
-  file_types: ["jpg","png","mp4"]
-  max_file_size_mb: 30
-  caption_limit_chars: 2200
-  duration_seconds_max: 0
-  notes: "Minimal text overlay recommended."
-
-- channel: "Facebook"
-  placement_or_format: "Story/Reel"
-  aspect_ratio: "9:16"
-  recommended_px: "1080x1920"
-  file_types: ["jpg","png","mp4"]
-  max_file_size_mb: 30
-  duration_seconds_max: 60
-  caption_limit_chars: 2200
-  notes: "Safe-area margins; keep captions large."
-
-# --- INSTAGRAM ---
-- channel: "Instagram"
-  placement_or_format: "Feed"
-  aspect_ratio: "1:1"
-  recommended_px: "1080x1080"
-  file_types: ["jpg","png","mp4"]
-  max_file_size_mb: 30
-  duration_seconds_max: 60
-  caption_limit_chars: 2200
-  notes: "Strong focal point in first 1–2 seconds for video."
-
-- channel: "Instagram"
-  placement_or_format: "Story/Reel"
-  aspect_ratio: "9:16"
-  recommended_px: "1080x1920"
-  file_types: ["jpg","png","mp4"]
-  duration_seconds_max: 60
-  max_file_size_mb: 30
-  caption_limit_chars: 2200
-  notes: "Use captions/subtitles for accessibility."
-
-# --- LINKEDIN ---
-- channel: "LinkedIn"
-  placement_or_format: "Feed (Single Image)"
-  aspect_ratio: "1:1"
-  recommended_px: "1200x1200"
-  file_types: ["jpg","png"]
-  max_file_size_mb: 200
-  duration_seconds_max: 0
-  caption_limit_chars: 3000
-  notes: "Corporate style; avoid heavy filters."
-
-- channel: "LinkedIn"
-  placement_or_format: "Feed (Landscape)"
-  aspect_ratio: "1.91:1"
-  recommended_px: "1200x627"
-  file_types: ["jpg","png"]
-  max_file_size_mb: 200
-  duration_seconds_max: 30
-  caption_limit_chars: 3000
-  notes: "Professional tone recommended."
-
-# --- TIKTOK ---
-- channel: "TikTok"
-  placement_or_format: "In-Feed Video"
-  aspect_ratio: "9:16"
-  recommended_px: "1080x1920"
-  file_types: ["mp4","mov"]
-  duration_seconds_max: 60
-  max_file_size_mb: 500
-  caption_limit_chars: 100
-  notes: "Native-style content performs best."
-
-# --- X (Twitter) ---
-- channel: "X"
-  placement_or_format: "Feed"
-  aspect_ratio: "1:1"
-  recommended_px: "1200x1200"
-  file_types: ["jpg","png","mp4"]
-  max_file_size_mb: 512
-  duration_seconds_max: 140
-  caption_limit_chars: 280
-  notes: "Video auto-plays muted."
-
-- channel: "X"
-  placement_or_format: "Feed (Landscape)"
-  aspect_ratio: "16:9"
-  recommended_px: "1920x1080"
-  file_types: ["jpg","png","mp4"]
-  max_file_size_mb: 512
-  duration_seconds_max: 140
-  caption_limit_chars: 280
-  notes: "Landscape format for expanded view."
-
-# --- REDDIT ---
-- channel: "Reddit"
-  placement_or_format: "Feed (Image)"
-  aspect_ratio: "1:1"
-  recommended_px: "1200x1200"
-  file_types: ["jpg","png"]
-  max_file_size_mb: 20
-  duration_seconds_max: 0
-  caption_limit_chars: 300
-  notes: "Blend with organic content; authentic tone."
-
-# --- SNAPCHAT ---
-- channel: "Snapchat"
-  placement_or_format: "Snap Ad"
-  aspect_ratio: "9:16"
-  recommended_px: "1080x1920"
-  file_types: ["mp4","mov","jpg","png"]
-  max_file_size_mb: 1024
-  duration_seconds_max: 180
-  caption_limit_chars: 34
-  notes: "Vertical format only."
-
-# --- YOUTUBE ---
-- channel: "YouTube"
-  placement_or_format: "Skippable In‑Stream"
-  aspect_ratio: "16:9"
-  recommended_px: "1920x1080"
-  file_types: ["mp4","mov"]
-  max_file_size_mb: 256
-  duration_seconds_max: 0
-  caption_limit_chars: 0
-  notes: "Clear branding in first 5 seconds."
-
-- channel: "YouTube"
-  placement_or_format: "Shorts"
-  aspect_ratio: "9:16"
-  recommended_px: "1080x1920"
-  file_types: ["mp4","mov"]
-  duration_seconds_max: 60
-  max_file_size_mb: 256
-  caption_limit_chars: 0
-  notes: "Vertical short-form content."
-
-# --- GOOGLE DISPLAY ---
-- channel: "Google Display"
-  placement_or_format: "Responsive Display Images"
-  aspect_ratio: "1.91:1"
-  recommended_px: "1200x628"
-  file_types: ["jpg","png"]
-  max_file_size_mb: 5
-  duration_seconds_max: 0
-  caption_limit_chars: 0
-  notes: "Also prepare 1:1 at 1200x1200 for flexibility."
-
-- channel: "Google Display"
-  placement_or_format: "Static Banners (common)"
-  aspect_ratio: "varies"
-  recommended_px: "300x250, 336x280, 728x90, 300x600, 160x600, 320x100, 970x250"
-  file_types: ["jpg","png","gif"]
-  max_file_size_mb: 5
-  duration_seconds_max: 0
-  caption_limit_chars: 0
-  notes: "Supply multiple sizes for reach."
-
-# --- PERFORMANCE MAX / DEMAND GEN ---
-- channel: "Performance Max"
-  placement_or_format: "Core Images"
-  aspect_ratio: "1:1, 1.91:1, 4:5"
-  recommended_px: "1200x1200, 1200x628, 960x1200"
-  file_types: ["jpg","png"]
-  max_file_size_mb: 5
-  duration_seconds_max: 0
-  caption_limit_chars: 0
-  notes: "Add transparent logos 120x120 and 1200x300 where required."
-
-- channel: "Demand Gen"
-  placement_or_format: "Image & Video"
-  aspect_ratio: "1:1, 16:9, 9:16"
-  recommended_px: "1200x1200, 1920x1080, 1080x1920"
-  file_types: ["jpg","png","mp4"]
-  max_file_size_mb: 5
-  duration_seconds_max: 30
-  caption_limit_chars: 0
-  notes: "Use diverse formats to unlock inventory."
-
-# --- GOOGLE SEARCH ---
-- channel: "Google Search"
+# --- SEARCH ---
+- channel: "SEARCH"
   placement_or_format: "Text Ad"
   aspect_ratio: null
   recommended_px: null
@@ -191,3 +10,146 @@
   duration_seconds_max: 0
   caption_limit_chars: 0
   notes: "Text-only; no image assets required."
+
+# --- DISPLAY ---
+- channel: "DISPLAY"
+  placement_or_format: "15 images required"
+  aspect_ratio: "5 Square 1:1, 5 Landscape 16:9, 5 Portrait 9:16"
+  recommended_px: "Landscape - 1200 x 628px, Portrait - 960 x 1200px, Square - 1200 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Video as YouTube Link. Up to 1 min length. Landscape video."
+
+# --- PERFORMANCE MAX ---
+- channel: "PERFORMANCE MAX"
+  placement_or_format: "15 images required"
+  aspect_ratio: "5 Square 1:1, 5 Landscape 16:9, 5 Portrait 9:16"
+  recommended_px: "Landscape - 1200 x 628px, Portrait - 960 x 1200px, Square - 1200 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Video as YouTube Link. 1min length. Landscape Video."
+
+# --- YOUTUBE ---
+- channel: "YOUTUBE"
+  placement_or_format: "Skippable In-Stream"
+  aspect_ratio: "16:9"
+  recommended_px: "1920x1080"
+  file_types: ["mp4","mov"]
+  max_file_size_mb: 256
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Clear branding in first 5 seconds."
+
+# --- TIKTOK ---
+- channel: "TIKTOK"
+  placement_or_format: "1 video required"
+  aspect_ratio: "Portrait 9:16"
+  recommended_px: "1080 x 1920 px"
+  file_types: ["mov","mp4"]
+  max_file_size_mb: 500
+  duration_seconds_max: 30
+  caption_limit_chars: 100
+  notes: "15 second recommended length. Up to 30 secs length."
+
+# --- SNAPCHAT ---
+- channel: "SNAPCHAT"
+  placement_or_format: "1 video required"
+  aspect_ratio: "Portrait 9:16"
+  recommended_px: "1080 x 1920 px"
+  file_types: ["mov","mp4"]
+  max_file_size_mb: 500
+  duration_seconds_max: 30
+  caption_limit_chars: 34
+  notes: "15 second recommended length. Up to 30 secs length."
+
+# --- LINKEDIN LEAD GEN ---
+- channel: "LINKEDIN LEAD GEN"
+  placement_or_format: "3 ad variations"
+  aspect_ratio: "Square 1:1"
+  recommended_px: "1200 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 600
+  notes: "Square 1:1 for both mobile and desktop placements."
+
+# --- LINKEDIN SINGLE IMAGE ---
+- channel: "LINKEDIN SINGLE IMAGE"
+  placement_or_format: "3 ad variations"
+  aspect_ratio: "Square 1:1"
+  recommended_px: "1200 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 600
+  notes: "Square 1:1."
+
+# --- LINKEDIN SINGLE VIDEO ---
+- channel: "LINKEDIN SINGLE VIDEO"
+  placement_or_format: "Video"
+  aspect_ratio: "Square 1:1"
+  recommended_px: "1920 x 1920 px"
+  file_types: ["mov","mp4"]
+  max_file_size_mb: 200
+  duration_seconds_max: 45
+  caption_limit_chars: 600
+  notes: "30sec-1min recommended length. No longer than 45 seconds."
+
+# --- META SINGLE IMAGE ---
+- channel: "META SINGLE IMAGE"
+  placement_or_format: "3 ad variations"
+  aspect_ratio: "Square, Portrait & Landscape per ad variation"
+  recommended_px: "Landscape - 1200 x 628px, Portrait - 1080 x 1920px, Square - 1200 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 30
+  duration_seconds_max: 0
+  caption_limit_chars: 125
+  notes: "Each variation requires Square, Portrait & Landscape."
+
+# --- META VIDEO ---
+- channel: "META VIDEO"
+  placement_or_format: "Feed, Reels & Stories"
+  aspect_ratio: "Square, Portrait & Landscape"
+  recommended_px: "Square: 1920 x 1920 px, Portrait: 1080 x 1350px, Landscape: 1920 x 1080px"
+  file_types: ["mov","mp4"]
+  max_file_size_mb: 4000
+  duration_seconds_max: 30
+  caption_limit_chars: 125
+  notes: "15-30 second recommended. Video as MOV or MP4."
+
+# --- META CAROUSEL ---
+- channel: "META CAROUSEL"
+  placement_or_format: "Up to 10 images"
+  aspect_ratio: "Square 1:1"
+  recommended_px: "1200 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 30
+  duration_seconds_max: 0
+  caption_limit_chars: 125
+  notes: "Up to 10 images square 1:1."
+
+# --- META COLLECTION ---
+- channel: "META COLLECTION"
+  placement_or_format: "1 Hero Video/Image + Up to 10 Carousel Images"
+  aspect_ratio: "Square 1:1"
+  recommended_px: "Square - 1200 x 1200px"
+  file_types: ["jpg","png","mp4","mov"]
+  max_file_size_mb: 4000
+  duration_seconds_max: 0
+  caption_limit_chars: 125
+  notes: "A) 1 Hero Video (Square 1:1) or 1 Hero Image Square 1:1. B) Up to 10 Carousel Images - (Square 1:1). Image max 30MB, Video max 4GB."
+
+# --- REDDIT ---
+- channel: "REDDIT"
+  placement_or_format: "3 ad variations"
+  aspect_ratio: "Square, Portrait & Landscape per ad variation"
+  recommended_px: "Landscape - 1200 x 628px, Portrait - 1080 x 1920px, Square - 1200 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 30
+  duration_seconds_max: 0
+  caption_limit_chars: 125
+  notes: "Each variation requires Square, Portrait & Landscape."

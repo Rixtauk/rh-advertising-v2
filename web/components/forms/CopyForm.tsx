@@ -73,7 +73,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
     if (!formState.landingUrl) {
       toast({
         title: 'Landing Page URL Required',
-        description: 'Please enter a landing page URL to analyze.',
+        description: 'Please enter a landing page URL to analyse.',
         variant: 'destructive',
       });
       return;
@@ -91,7 +91,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to analyze landing page');
+        throw new Error('Failed to analyse landing page');
       }
 
       const data = await response.json();
@@ -103,10 +103,10 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
         description: `Found ${data.usps.length} key selling points. Click to select/deselect.`,
       });
     } catch (error) {
-      console.error('Error analyzing USPs:', error);
+      console.error('Error analysing USPs:', error);
       toast({
         title: 'Analysis Failed',
-        description: error instanceof Error ? error.message : 'Failed to analyze landing page',
+        description: error instanceof Error ? error.message : 'Failed to analyse landing page',
         variant: 'destructive',
       });
     } finally {
@@ -278,18 +278,18 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
             {isAnalyzing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Analyzing...
+                Analysing...
               </>
             ) : (
               <>
                 <Sparkles className="mr-2 h-4 w-4" />
-                Analyze Now
+                Analyse Now
               </>
             )}
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          Enter a URL and click "Analyze Now" to extract key USPs automatically.
+          Enter a URL and click "Analyse Now" to extract key USPs automatically.
         </p>
       </div>
 
@@ -331,7 +331,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
         <Label htmlFor="usps">USPs / Key Points *</Label>
         <Textarea
           id="usps"
-          placeholder="Enter key points, dates, or unique selling points (or use Analyze Now above)..."
+          placeholder="Enter key points, dates, or unique selling points (or use Analyse Now above)..."
           rows={5}
           value={formState.usps}
           onChange={(e) => setFormState((prev) => ({ ...prev, usps: e.target.value }))}

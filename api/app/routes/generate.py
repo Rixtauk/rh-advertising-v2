@@ -74,7 +74,7 @@ async def generate_copy(request: GenerateRequest) -> GenerateResponse:
             audience_hint=audience_hint,
             emojis_allowed=request.emojis_allowed,
             scraped_context=scraped_context,
-            num_options=3,
+            num_options=1,
         )
         timings["generation_ms"] = int((time.time() - generation_start) * 1000)
 
