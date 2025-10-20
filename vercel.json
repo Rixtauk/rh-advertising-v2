@@ -1,9 +1,9 @@
 {
-  "buildCommand": "cd web && npm ci && npm run build",
-  "outputDirectory": "web/.next",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm ci",
   "framework": "nextjs",
-  "installCommand": "cd web && npm ci",
-  "devCommand": "cd web && npm run dev",
+  "cwd": "web",
   "env": {
     "NEXT_PUBLIC_API_URL": "http://localhost:8000"
   }
