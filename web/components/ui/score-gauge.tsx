@@ -46,16 +46,19 @@ export function ScoreGauge({ score, grade, size = "md" }: ScoreGaugeProps) {
       textSize: "text-5xl",
       gradeSize: "text-lg",
       barHeight: "h-8",
+      barHeightPx: 32,
     },
     md: {
       textSize: "text-7xl",
       gradeSize: "text-2xl",
       barHeight: "h-12",
+      barHeightPx: 48,
     },
     lg: {
       textSize: "text-8xl",
       gradeSize: "text-3xl",
       barHeight: "h-16",
+      barHeightPx: 64,
     },
   };
 
@@ -93,7 +96,7 @@ export function ScoreGauge({ score, grade, size = "md" }: ScoreGaugeProps) {
         {/* Progress Bar */}
         <div className="w-full space-y-3">
           {/* Bar container with color zones */}
-          <div className="relative w-full bg-gray-200 rounded-full overflow-hidden" style={{ height: config.barHeight.replace('h-', '') * 4 + 'px' }}>
+          <div className="relative w-full bg-gray-200 rounded-full overflow-hidden" style={{ height: config.barHeightPx + 'px' }}>
             {/* Color zone backgrounds */}
             <div className="absolute inset-0 flex">
               <div className="w-[40%] bg-red-100" />
