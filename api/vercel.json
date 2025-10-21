@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "app/main.py",
@@ -10,5 +11,13 @@
       "src": "/(.*)",
       "dest": "app/main.py"
     }
-  ]
+  ],
+  "env": {
+    "OPENAI_API_KEY": "@openai-api-key",
+    "MODEL_GENERATION": "gpt-4o",
+    "MODEL_GENERATION_MINI": "gpt-4o-mini",
+    "REQUEST_TIMEOUT_SECONDS": "20",
+    "LOG_LEVEL": "INFO",
+    "CORS_ALLOW_ORIGINS": "https://rh-advertising-v2.vercel.app,https://rh-advertising-v2-*.vercel.app"
+  }
 }
