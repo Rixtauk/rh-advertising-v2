@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.deps import get_settings
-from app.routes import generate, shorten, optimize, specs, limits, health, config, analyze_usps
+from app.routes import generate, shorten, optimize, specs, limits, health, config, analyze_usps, debug
 
 # Configure logging
 logging.basicConfig(
@@ -55,6 +55,7 @@ app.include_router(optimize.router, prefix="/v1", tags=["optimization"])
 app.include_router(specs.router, prefix="/v1", tags=["config"])
 app.include_router(limits.router, prefix="/v1", tags=["config"])
 app.include_router(config.router, prefix="/admin", tags=["admin"])
+app.include_router(debug.router, tags=["debug"])
 
 
 @app.exception_handler(Exception)
@@ -82,6 +83,9 @@ async def root():
             "specs": "GET /v1/asset-specs",
             "limits": "GET /v1/ad-limits",
             "reload": "POST /admin/reload-config",
+            "debug_filesystem": "GET /debug/filesystem",
+            "debug_env": "GET /debug/env",
+            "debug_config": "GET /debug/config-loader",
         },
         "docs": "/docs",
     }
