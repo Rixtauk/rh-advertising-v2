@@ -29,7 +29,14 @@ def _get_data_path() -> Path:
     if data_dir.exists():
         return data_dir
 
-    raise FileNotFoundError(f"Data directory not found. Tried: {root}/data and {Path.cwd()}/data")
+    # Try in api/data directory (Railway deployment)
+    api_data_dir = Path(__file__).parent.parent / "data"
+    if api_data_dir.exists():
+        return api_data_dir
+
+    raise FileNotFoundError(
+        f"Data directory not found. Tried: {root}/data, {Path.cwd()}/data, and {api_data_dir}"
+    )
 
 
 def _load_yaml(file_path: str) -> Any:
