@@ -2,6 +2,12 @@
 
 AI-powered advertising tools for higher education marketing.
 
+## 🚀 Live Application
+
+- **Web App**: https://rh-advertising-v2.vercel.app
+- **API**: https://rh-advertising-v2-production.up.railway.app
+- **API Docs**: https://rh-advertising-v2-production.up.railway.app/docs
+
 ## Features
 
 ### 1. Ad Copy Generator
@@ -32,8 +38,8 @@ This is a monorepo containing:
 
 ```
 /
-├── api/          # FastAPI backend
-├── web/          # Next.js 14 frontend
+├── api/          # FastAPI backend (deployed on Railway)
+├── web/          # Next.js 14 frontend (deployed on Vercel)
 ├── data/         # Shared YAML configuration
 └── README.md     # This file
 ```
@@ -42,13 +48,14 @@ This is a monorepo containing:
 - **Technology**: Python 3.11+, FastAPI, Pydantic v2
 - **AI**: OpenAI GPT-4o for copy generation and analysis
 - **Scraping**: Jina.AI Reader API with selectolax fallback
-- **Port**: http://localhost:8000
-- **Docs**: http://localhost:8000/docs
+- **Production**: https://rh-advertising-v2-production.up.railway.app
+- **Local Dev**: http://localhost:8000
 
 ### Frontend (Next.js)
 - **Technology**: Next.js 14 (App Router), TypeScript, React 18
 - **UI**: Tailwind CSS + shadcn/ui
-- **Port**: http://localhost:3001
+- **Production**: https://rh-advertising-v2.vercel.app
+- **Local Dev**: http://localhost:3001
 
 ### Shared Configuration
 - **ad_limits.yaml**: Character limits per channel/subtype
@@ -308,7 +315,61 @@ npm run lint
 
 ## Deployment
 
-### Docker
+### Production (Railway + Vercel)
+
+The application is deployed as two separate services:
+
+#### Backend on Railway
+
+1. **Connect GitHub Repository**
+   - Go to https://railway.app
+   - Create new project from GitHub repo
+   - Select this repository
+
+2. **Configure Environment Variables** in Railway dashboard:
+   ```
+   OPENAI_API_KEY=sk-your-key-here
+   JINA_API_KEY=jina_your-key-here
+   MODEL_GENERATION=gpt-4o
+   MODEL_GENERATION_MINI=gpt-4o-mini
+   REQUEST_TIMEOUT_SECONDS=20
+   LOG_LEVEL=INFO
+   CORS_ALLOW_ORIGINS=https://rh-advertising-v2.vercel.app,https://rh-advertising-v2-*.vercel.app
+   ```
+
+3. **Deploy**
+   - Railway auto-detects `nixpacks.toml`
+   - Builds from `/api` directory
+   - Copies `/data` directory during build
+   - Auto-generates public URL
+
+#### Frontend on Vercel
+
+1. **Import GitHub Repository**
+   - Go to https://vercel.com/new
+   - Import this repository
+   - **Set Root Directory**: `web`
+
+2. **Configure Environment Variables**:
+   ```
+   NEXT_PUBLIC_API_URL=https://your-railway-url.up.railway.app
+   API_URL=https://your-railway-url.up.railway.app
+   ```
+   ⚠️ **Note**: You need BOTH variables:
+   - `NEXT_PUBLIC_API_URL` for client-side components
+   - `API_URL` for server actions
+
+3. **Deploy**
+   - Vercel auto-detects Next.js
+   - Builds and deploys from `/web` directory
+   - Auto-deploys on every GitHub push
+
+#### Why Two Deployments?
+
+- **Frontend (Vercel)**: Optimized for Next.js, global CDN, instant deploys
+- **Backend (Railway)**: Supports long-running processes, no timeout issues for AI requests
+
+### Docker (Local/Self-Hosted)
 
 Full Docker and Docker Compose support is available. See [DOCKER.md](DOCKER.md) for complete documentation.
 
@@ -317,33 +378,42 @@ Full Docker and Docker Compose support is available. See [DOCKER.md](DOCKER.md) 
 # Production
 cp .env.example .env
 # Edit .env and add your OPENAI_API_KEY
-docker-compose up -d
+docker-compose -f docker-compose.prod.yml up -d
 
 # Development (with hot-reload)
-docker-compose -f docker-compose.dev.yml up
+docker-compose up
 ```
 
 **Access:**
-- Production: http://localhost:3000
+- Frontend: http://localhost:3000
 - API: http://localhost:8000
 - API Docs: http://localhost:8000/docs
 
 ### Environment Variables
 
-**Production Backend:**
-- `OPENAI_API_KEY`: Required
-- `JINA_API_KEY`: Optional, enhances scraping
-- `MODEL_GENERATION`: Default gpt-4o
-- `CORS_ALLOW_ORIGINS`: Production frontend URL
+**Backend Environment Variables:**
+- `OPENAI_API_KEY`: Required - Your OpenAI API key
+- `JINA_API_KEY`: Optional - Enhances web scraping
+- `MODEL_GENERATION`: Default `gpt-4o`
+- `MODEL_GENERATION_MINI`: Default `gpt-4o-mini`
+- `CORS_ALLOW_ORIGINS`: Comma-separated list of allowed frontend URLs
+- `REQUEST_TIMEOUT_SECONDS`: Default `20`
+- `LOG_LEVEL`: Default `INFO`
 
-**Production Frontend:**
-- `NEXT_PUBLIC_API_URL`: Production API URL
+**Frontend Environment Variables:**
+- `NEXT_PUBLIC_API_URL`: API URL for client-side (required in Vercel)
+- `API_URL`: API URL for server actions (required in Vercel)
 
 ## Documentation
 
 - **API Documentation**: See [api/README.md](api/README.md)
 - **Web Documentation**: See [web/README.md](web/README.md)
-- **Interactive API Docs**: http://localhost:8000/docs
+- **Interactive API Docs (Production)**: https://rh-advertising-v2-production.up.railway.app/docs
+- **Interactive API Docs (Local)**: http://localhost:8000/docs
+- **Deployment Guides**:
+  - [Railway Deployment](RAILWAY_DEPLOYMENT.md)
+  - [Docker Deployment](DOCKER.md)
+  - [DigitalOcean Deployment](DEPLOYMENT.md)
 
 ## Support
 
