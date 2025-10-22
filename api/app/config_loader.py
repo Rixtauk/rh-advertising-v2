@@ -30,7 +30,10 @@ def _get_data_path() -> Path:
         return data_dir
 
     # Try in api/data directory (Railway deployment)
-    api_data_dir = Path(__file__).parent.parent / "data"
+    # Path(__file__) is /app/api/app/config_loader.py
+    # So parent.parent.parent is /app, and we want /app/api/data
+    api_root = Path(__file__).parent.parent  # /app/api
+    api_data_dir = api_root / "data"  # /app/api/data
     if api_data_dir.exists():
         return api_data_dir
 
