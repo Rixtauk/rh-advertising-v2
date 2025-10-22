@@ -8,7 +8,9 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "cp -r data api/data"
+  "ls -la data || echo 'Warning: data directory not found in root'",
+  "cp -r data api/data && echo 'Successfully copied data to api/data' || echo 'ERROR: Failed to copy data directory'",
+  "ls -la api/data || echo 'ERROR: api/data directory does not exist after copy'"
 ]
 
 [start]
