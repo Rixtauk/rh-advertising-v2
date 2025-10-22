@@ -99,6 +99,17 @@ export default function CopyPage() {
 
       const generatedResults = await generateAdCopy(formData);
       setResults(generatedResults);
+
+      // Automatically fetch and display asset specs for the channel
+      try {
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(channel)}`);
+        const specs = await response.json();
+        setAssetSpecs(specs);
+        setShowAssetSpecs(true);
+      } catch (error) {
+        console.error('Failed to load asset specs:', error);
+      }
     } catch (error) {
       console.error('Generation failed:', error);
       toast({
@@ -123,7 +134,8 @@ export default function CopyPage() {
     if (selectedChannel) {
       // Fetch asset specs for the channel
       try {
-        const response = await fetch(`/api/assets?channel=${encodeURIComponent(selectedChannel)}`);
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(selectedChannel)}`);
         const specs = await response.json();
         setAssetSpecs(specs);
         setShowAssetSpecs(true);
