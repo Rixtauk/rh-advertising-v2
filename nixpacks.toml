@@ -3,10 +3,11 @@ nixPkgs = ["python311", "python311Packages.pip"]
 
 [phases.install]
 cmds = [
-  "cd api",
-  "python -m pip install --upgrade pip",
-  "python -m pip install -e .",
-  "cd ..",
+  "cd api && python -m pip install --upgrade pip && python -m pip install -e ."
+]
+
+[phases.build]
+cmds = [
   "cp -r data api/data"
 ]
 
