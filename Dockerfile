@@ -7,18 +7,15 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy dependency files from api directory
-COPY api/pyproject.toml ./
+# Copy entire api directory (contains pyproject.toml and app/)
+COPY api/ ./
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
 
-# Copy application code from api directory
-COPY api/app/ ./app/
-
 # Copy data directory to /app/data
-COPY data/ /app/data/
+COPY data/ ./data/
 
 # Expose port
 EXPOSE 8000
