@@ -18,27 +18,38 @@ _cache: dict[str, tuple[Any, datetime]] = {}
 
 def _get_data_path() -> Path:
     """Get path to data directory."""
-    # Try relative to project root
+    # List of possible data directory locations to try
+    possible_paths = []
+
+    # 1. Relative to project root (local development)
+    # If __file__ is /project/api/app/config_loader.py, root is /project
     root = Path(__file__).parent.parent.parent
-    data_dir = root / "data"
-    if data_dir.exists():
-        return data_dir
+    possible_paths.append(root / "data")
 
-    # Try relative to current working directory
-    data_dir = Path.cwd() / "data"
-    if data_dir.exists():
-        return data_dir
+    # 2. Current working directory + data (common deployment)
+    possible_paths.append(Path.cwd() / "data")
 
-    # Try in api/data directory (Railway deployment)
-    # Path(__file__) is /app/api/app/config_loader.py
-    # So parent.parent.parent is /app, and we want /app/api/data
-    api_root = Path(__file__).parent.parent  # /app/api
-    api_data_dir = api_root / "data"  # /app/api/data
-    if api_data_dir.exists():
-        return api_data_dir
+    # 3. api/data relative to module location (Railway nixpacks build)
+    # If __file__ is /app/api/app/config_loader.py, this is /app/api/data
+    possible_paths.append(Path(__file__).parent.parent / "data")
 
+    # 4. Absolute path /app/api/data (Railway production)
+    possible_paths.append(Path("/app/api/data"))
+
+    # 5. Absolute path /app/data (alternate deployment)
+    possible_paths.append(Path("/app/data"))
+
+    # Try each path and return the first one that exists
+    for path in possible_paths:
+        logger.debug(f"Checking data path: {path}")
+        if path.exists() and path.is_dir():
+            logger.info(f"Found data directory at: {path}")
+            return path
+
+    # If nothing found, log all attempts and raise error
+    tried_paths = ", ".join(str(p) for p in possible_paths)
     raise FileNotFoundError(
-        f"Data directory not found. Tried: {root}/data, {Path.cwd()}/data, and {api_data_dir}"
+        f"Data directory not found. Tried: {tried_paths}"
     )
 
 
