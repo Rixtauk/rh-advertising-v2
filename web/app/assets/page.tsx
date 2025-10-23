@@ -47,7 +47,7 @@ export default function AssetsPage() {
     }
 
     setIsLoading(true);
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
     fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(selectedChannel)}`)
       .then((res) => res.json())
       .then((data) => {
