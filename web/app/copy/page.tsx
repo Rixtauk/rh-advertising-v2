@@ -109,12 +109,14 @@ export default function CopyPage() {
           throw new Error(`Failed to fetch asset specs: ${response.status}`);
         }
 
-        const specs = await response.json();
+        const data = await response.json();
+        // API returns {channel: "...", specs: [...]}
+        const specs = data.specs || data;
         if (Array.isArray(specs)) {
           setAssetSpecs(specs);
           setShowAssetSpecs(true);
         } else {
-          console.error('Asset specs response is not an array:', specs);
+          console.error('Asset specs response is not an array:', data);
         }
       } catch (error) {
         console.error('Failed to load asset specs:', error);
@@ -152,12 +154,14 @@ export default function CopyPage() {
           throw new Error(`Failed to fetch asset specs: ${response.status}`);
         }
 
-        const specs = await response.json();
+        const data = await response.json();
+        // API returns {channel: "...", specs: [...]}
+        const specs = data.specs || data;
         if (Array.isArray(specs)) {
           setAssetSpecs(specs);
           setShowAssetSpecs(true);
         } else {
-          console.error('Asset specs response is not an array:', specs);
+          console.error('Asset specs response is not an array:', data);
         }
       } catch (error) {
         console.error('Failed to load asset specs:', error);

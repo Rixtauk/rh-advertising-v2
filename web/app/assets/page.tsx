@@ -56,8 +56,10 @@ export default function AssetsPage() {
         return res.json();
       })
       .then((data) => {
-        if (Array.isArray(data)) {
-          setSpecs(data);
+        // API returns {channel: "...", specs: [...]}
+        const specs = data.specs || data;
+        if (Array.isArray(specs)) {
+          setSpecs(specs);
         } else {
           console.error('Asset specs response is not an array:', data);
           setSpecs([]);
