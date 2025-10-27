@@ -104,11 +104,22 @@ export default function CopyPage() {
       try {
         const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
         const response = await fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(channel)}`);
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch asset specs: ${response.status}`);
+        }
+
         const specs = await response.json();
-        setAssetSpecs(specs);
-        setShowAssetSpecs(true);
+        if (Array.isArray(specs)) {
+          setAssetSpecs(specs);
+          setShowAssetSpecs(true);
+        } else {
+          console.error('Asset specs response is not an array:', specs);
+        }
       } catch (error) {
         console.error('Failed to load asset specs:', error);
+        setAssetSpecs([]);
+        setShowAssetSpecs(false);
       }
     } catch (error) {
       console.error('Generation failed:', error);
@@ -136,11 +147,22 @@ export default function CopyPage() {
       try {
         const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
         const response = await fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(selectedChannel)}`);
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch asset specs: ${response.status}`);
+        }
+
         const specs = await response.json();
-        setAssetSpecs(specs);
-        setShowAssetSpecs(true);
+        if (Array.isArray(specs)) {
+          setAssetSpecs(specs);
+          setShowAssetSpecs(true);
+        } else {
+          console.error('Asset specs response is not an array:', specs);
+        }
       } catch (error) {
         console.error('Failed to load asset specs:', error);
+        setAssetSpecs([]);
+        setShowAssetSpecs(false);
       }
     }
   };

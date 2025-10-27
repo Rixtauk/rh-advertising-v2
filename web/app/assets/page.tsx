@@ -49,9 +49,19 @@ export default function AssetsPage() {
     setIsLoading(true);
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
     fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(selectedChannel)}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch asset specs: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
-        setSpecs(data);
+        if (Array.isArray(data)) {
+          setSpecs(data);
+        } else {
+          console.error('Asset specs response is not an array:', data);
+          setSpecs([]);
+        }
         setIsLoading(false);
       })
       .catch((err) => {
