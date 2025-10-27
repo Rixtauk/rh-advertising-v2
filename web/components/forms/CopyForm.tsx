@@ -82,7 +82,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
     setIsAnalyzing(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/v1/analyze-usps`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/v1/analyze-usps`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
