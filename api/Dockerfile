@@ -17,8 +17,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy application code
 COPY app/ ./app/
 
-# Copy data directory (shared config)
-COPY ../data/ ./data/
+# Note: data directory is mounted as a volume in docker-compose.yml
 
 # Expose port
 EXPOSE 8000

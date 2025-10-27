@@ -81,9 +81,12 @@ function loadYaml<T>(filePath: string, schema: z.ZodType<T>): T {
   const cached = getCached<T>(cacheKey);
   if (cached) return cached;
 
-  // Data directory is at repository root, not web directory
-  const fullPath = path.join(process.cwd(), '..', filePath);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  // Data directory is mounted at /app/data in Docker, or ../data locally
+  const dataPath = fs.existsSync(path.join(process.cwd(), 'data'))
+    ? path.join(process.cwd(), filePath)
+    : path.join(process.cwd(), '..', filePath);
+
+  const fileContents = fs.readFileSync(dataPath, 'utf8');
   const parsed = yaml.load(fileContents);
   const validated = schema.parse(parsed);
 

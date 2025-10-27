@@ -1,9 +1,9 @@
 'use server';
 
-// Use relative /api path that gets proxied to Railway via Vercel rewrites
-// In dev: next.config.mjs proxies to http://localhost:8000
-// In prod: vercel.json proxies to Railway
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+// Server actions run on Vercel's servers, not in the browser
+// They need the full Railway URL for server-to-server communication (no CORS issues)
+// API_URL is server-side only (not NEXT_PUBLIC_*)
+const API_BASE_URL = process.env.API_URL || 'https://rh-advertising-v2-production.up.railway.app';
 
 // Social channels that support emojis
 const SOCIAL_CHANNELS = ['Facebook', 'Instagram', 'LinkedIn', 'TikTok', 'Snapchat', 'X', 'Reddit'];

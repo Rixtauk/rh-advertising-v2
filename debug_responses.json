@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-10-22T15:45:00",
+  "railway_base_url": "https://rh-advertising-v2-production.up.railway.app",
+  "endpoints": {
+    "filesystem": {
+      "python_file_locations": {
+        "__file__": "/app/app/routes/debug.py",
+        "__file___resolved": "/app/app/routes/debug.py",
+        "parent": "/app/app/routes",
+        "parent.parent": "/app/app",
+        "parent.parent.parent": "/app"
+      },
+      "working_directory": {
+        "cwd": "/app"
+      },
+      "directory_checks": {
+        "/": true,
+        "/app": true,
+        "/app/api": false,
+        "/app/data": false,
+        "/app/api/data": false,
+        "cwd/data": false
+      },
+      "directory_listings": {
+        "/": [
+          "var", "proc", "lib64", "root", "boot", "usr", "mnt", "tmp", "etc",
+          "media", "sbin", "sys", "srv", "home", "lib", "dev", "opt", "bin",
+          "run", "app"
+        ],
+        "/app": [
+          "app", "pyproject.toml"
+        ]
+      }
+    },
+    "env": {
+      "LOG_LEVEL": "INFO",
+      "MODEL_GENERATION": "gpt-4o",
+      "MODEL_GENERATION_MINI": "gpt-4o-mini",
+      "REQUEST_TIMEOUT_SECONDS": "20",
+      "CONFIG_CACHE_TTL_SECONDS": "not set",
+      "CORS_ALLOW_ORIGINS": "https://rh-advertising-v2.vercel.app,https://rh-advertising-v2-*.vercel.app",
+      "PORT": "8000",
+      "RAILWAY_ENVIRONMENT": "production",
+      "RAILWAY_SERVICE_NAME": "rh-advertising-v2",
+      "RAILWAY_GIT_COMMIT_SHA": "not set",
+      "RAILWAY_GIT_BRANCH": "not set",
+      "OPENAI_API_KEY_set": true,
+      "JINA_API_KEY_set": true
+    },
+    "config_loader": {
+      "success": false,
+      "error": "Data directory not found. Tried: /data, /app/data, /app/data, /app/api/data, /app/data",
+      "error_type": "FileNotFoundError"
+    }
+  }
+}
