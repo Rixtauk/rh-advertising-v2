@@ -42,7 +42,8 @@ async def get_ad_limits(
             )
 
         # Convert fields to dict format
-        fields_dicts = [field.model_dump() for field in limits.fields]
+        # Note: exclude_defaults=False ensures is_dropdown and dropdown_options are always included
+        fields_dicts = [field.model_dump(mode='json', exclude_defaults=False) for field in limits.fields]
 
         logger.info(f"Found {len(fields_dicts)} fields for {channel}/{subtype}")
 
