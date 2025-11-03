@@ -6,8 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { Loader2, Sparkles, X } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { Loader2, Info } from 'lucide-react';
 
 interface CopyFormProps {
   channels: string[];
@@ -32,10 +31,6 @@ interface FormState {
 
 export function CopyForm({ channels, subtypes, tones, audiences, socialChannels, onSubmit }: CopyFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [isAnalysing, setIsAnalysing] = useState(false);
-  const [extractedUSPs, setExtractedUSPs] = useState<string[]>([]);
-  const [selectedUSPs, setSelectedUSPs] = useState<Set<number>>(new Set());
-  const { toast } = useToast();
 
   const [formState, setFormState] = useState<FormState>({
     channel: '',
@@ -70,75 +65,6 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
   const isSocialChannel = socialChannels.includes(formState.channel);
   const isLightHearted = formState.tone === 'Light-hearted & modern';
   const showEmojiToggle = isSocialChannel && isLightHearted;
-
-  const handleAnalyseUSPs = async () => {
-    if (!formState.landingUrl) {
-      toast({
-        title: 'Landing Page URL Required',
-        description: 'Please enter a landing page URL to analyse.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setIsAnalysing(true);
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/v1/analyse-usps`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url: formState.landingUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to analyse landing page');
-      }
-
-      const data = await response.json();
-      setExtractedUSPs(data.usps);
-      setSelectedUSPs(new Set(data.usps.map((_: any, index: number) => index))); // Select all by default
-
-      toast({
-        title: 'USPs Extracted!',
-        description: `Found ${data.usps.length} key selling points. Click to select/deselect.`,
-      });
-    } catch (error) {
-      console.error('Error analysing USPs:', error);
-      toast({
-        title: 'Analysis Failed',
-        description: error instanceof Error ? error.message : 'Failed to analyse landing page',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsAnalysing(false);
-    }
-  };
-
-  const handleToggleUSP = (index: number) => {
-    const newSelected = new Set(selectedUSPs);
-    if (newSelected.has(index)) {
-      newSelected.delete(index);
-    } else {
-      newSelected.add(index);
-    }
-    setSelectedUSPs(newSelected);
-  };
-
-  const handleApplyUSPs = () => {
-    const selectedUSPTexts = Array.from(selectedUSPs)
-      .sort((a, b) => a - b)
-      .map((index) => extractedUSPs[index]);
-
-    const uspText = selectedUSPTexts.join('\n');
-    setFormState((prev) => ({ ...prev, usps: uspText }));
-
-    toast({
-      title: 'USPs Applied',
-      description: `Added ${selectedUSPTexts.length} USPs to the field.`,
-    });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -314,84 +240,42 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
 
       <div className="space-y-2">
         <Label htmlFor="landingUrl">Landing Page URL (optional)</Label>
-        <div className="flex gap-2">
-          <input
-            id="landingUrl"
-            type="url"
-            className="flex h-10 flex-1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            placeholder="https://www.huish.ac.uk/"
-            value={formState.landingUrl}
-            onChange={(e) => setFormState((prev) => ({ ...prev, landingUrl: e.target.value }))}
-          />
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleAnalyseUSPs}
-            disabled={isAnalysing || !formState.landingUrl}
-          >
-            {isAnalysing ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Analysing...
-              </>
-            ) : (
-              <>
-                <Sparkles className="mr-2 h-4 w-4" />
-                Analyse Now
-              </>
-            )}
-          </Button>
-        </div>
+        <input
+          id="landingUrl"
+          type="url"
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          placeholder="https://www.huish.ac.uk/"
+          value={formState.landingUrl}
+          onChange={(e) => setFormState((prev) => ({ ...prev, landingUrl: e.target.value }))}
+        />
         <p className="text-xs text-muted-foreground">
-          Enter a URL and click "Analyse Now" to extract key USPs automatically.
+          Add a landing page URL to automatically extract and incorporate USPs into your ad copy. This will add 10-20 seconds to generation time.
         </p>
       </div>
 
-      {extractedUSPs.length > 0 && (
-        <div className="space-y-3 rounded-lg border bg-muted/50 p-4">
-          <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium">Extracted USPs (Click to select/deselect)</Label>
-            <Button
-              type="button"
-              size="sm"
-              variant="default"
-              onClick={handleApplyUSPs}
-              disabled={selectedUSPs.size === 0}
-            >
-              Apply Selected ({selectedUSPs.size})
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {extractedUSPs.map((usp, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => handleToggleUSP(index)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                  selectedUSPs.has(index)
-                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    : 'bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
-                } border`}
-              >
-                {usp}
-                {selectedUSPs.has(index) && <X className="h-3 w-3" />}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
       <div className="space-y-2">
-        <Label htmlFor="usps">USPs / Key Points *</Label>
+        <Label htmlFor="usps">Additional USPs (optional)</Label>
         <Textarea
           id="usps"
-          placeholder="Enter key points, dates, or unique selling points (or use Analyse Now above)..."
+          placeholder="Enter key points, dates, or unique selling points..."
           rows={5}
           value={formState.usps}
           onChange={(e) => setFormState((prev) => ({ ...prev, usps: e.target.value }))}
-          required
         />
+        <p className="text-xs text-muted-foreground">
+          Add specific USPs manually, or leave blank if using a landing page URL. USPs from the page will be automatically included in the generated copy.
+        </p>
       </div>
+
+      {/* Timing notice when landing URL is provided */}
+      {formState.landingUrl && (
+        <div className="flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm">
+          <Info className="h-4 w-4 flex-shrink-0 text-blue-600" />
+          <p className="text-blue-900">
+            Since you've added a landing page URL, generation will take 10-20 seconds while we extract and analyze USPs.
+          </p>
+        </div>
+      )}
 
       <Button type="submit" disabled={isLoading} className="w-full">
         {isLoading ? (
