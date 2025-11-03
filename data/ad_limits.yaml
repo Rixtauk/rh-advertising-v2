@@ -1,6 +1,7 @@
 # Ad copy field/length guidance per channel/subtype.
 # Fields are used to shape LLM prompts and to validate/flag over-limit outputs client-side.
 # Each channel has configurations for all 4 subtypes.
+# Fields with is_dropdown: true should present dropdown UI instead of text generation
 
 - channel: SEARCH
   subtype: Brand level recruitment
@@ -17,6 +18,34 @@
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+  - field: Headline 4
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 5
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 6
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 7
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 8
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 9
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 10
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
   - field: Description 1
     max_chars: 90
     max_words: 0
@@ -26,6 +55,14 @@
     max_words: 0
     emojis_allowed: false
   - field: Description 3
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 4
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 5
     max_chars: 90
     max_words: 0
     emojis_allowed: false
@@ -53,6 +90,14 @@
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+  - field: Headline 4
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 5
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
   - field: Long Headline
     max_chars: 90
     max_words: 0
@@ -69,10 +114,25 @@
     max_chars: 90
     max_words: 0
     emojis_allowed: false
+  - field: Description 4
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 5
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
   - field: Call to Action
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Apply now"
+      - "Book now"
+      - "Learn more"
+      - "See more"
+      - "Sign up"
 - channel: DISPLAY
   subtype: Subject/course specific ad
   fields: *id002
@@ -97,6 +157,14 @@
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+  - field: Headline 4
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 5
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
   - field: Long Headline 1
     max_chars: 90
     max_words: 0
@@ -106,6 +174,14 @@
     max_words: 0
     emojis_allowed: false
   - field: Long Headline 3
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Long Headline 4
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Long Headline 5
     max_chars: 90
     max_words: 0
     emojis_allowed: false
@@ -121,10 +197,25 @@
     max_chars: 90
     max_words: 0
     emojis_allowed: false
+  - field: Description 4
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 5
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
   - field: Call to Action
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Apply now"
+      - "Book now"
+      - "Learn more"
+      - "See more"
+      - "Sign up"
 - channel: PERFORMANCE MAX
   subtype: Subject/course specific ad
   fields: *id003
@@ -134,29 +225,92 @@
 - channel: PERFORMANCE MAX
   subtype: Clearing
   fields: *id003
-- channel: YOUTUBE
+- channel: DEMAND GEN
   subtype: Brand level recruitment
   fields: &id004
+  - field: Headline 1
+    max_chars: 40
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 2
+    max_chars: 40
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 3
+    max_chars: 40
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 4
+    max_chars: 40
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 5
+    max_chars: 40
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 1
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 2
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 3
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 4
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Description 5
+    max_chars: 90
+    max_words: 0
+    emojis_allowed: false
+  - field: Call to Action
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Apply now"
+      - "Book now"
+      - "Learn more"
+      - "See more"
+      - "Sign up"
+- channel: DEMAND GEN
+  subtype: Subject/course specific ad
+  fields: *id004
+- channel: DEMAND GEN
+  subtype: Open Day
+  fields: *id004
+- channel: DEMAND GEN
+  subtype: Clearing
+  fields: *id004
+- channel: YOUTUBE
+  subtype: Brand level recruitment
+  fields: &id005
   - field: Headline
     max_chars: 25
     max_words: 0
     emojis_allowed: false
   - field: Call to Action
-    max_chars: 30
+    max_chars: 10
     max_words: 0
     emojis_allowed: false
 - channel: YOUTUBE
   subtype: Subject/course specific ad
-  fields: *id004
+  fields: *id005
 - channel: YOUTUBE
   subtype: Open Day
-  fields: *id004
+  fields: *id005
 - channel: YOUTUBE
   subtype: Clearing
-  fields: *id004
+  fields: *id005
 - channel: TIKTOK
   subtype: Brand level recruitment
-  fields: &id005
+  fields: &id006
   - field: Text
     max_chars: 100
     max_words: 0
@@ -167,16 +321,16 @@
     emojis_allowed: false
 - channel: TIKTOK
   subtype: Subject/course specific ad
-  fields: *id005
+  fields: *id006
 - channel: TIKTOK
   subtype: Open Day
-  fields: *id005
+  fields: *id006
 - channel: TIKTOK
   subtype: Clearing
-  fields: *id005
+  fields: *id006
 - channel: SNAPCHAT
   subtype: Brand level recruitment
-  fields: &id006
+  fields: &id007
   - field: Headline
     max_chars: 34
     max_words: 0
@@ -187,41 +341,17 @@
     emojis_allowed: false
 - channel: SNAPCHAT
   subtype: Subject/course specific ad
-  fields: *id006
+  fields: *id007
 - channel: SNAPCHAT
   subtype: Open Day
-  fields: *id006
+  fields: *id007
 - channel: SNAPCHAT
   subtype: Clearing
-  fields: *id006
-- channel: LINKEDIN LEAD GEN
-  subtype: Brand level recruitment
-  fields: &id007
-  - field: Intro Text
-    max_chars: 600
-    max_words: 0
-    emojis_allowed: false
-  - field: Headline
-    max_chars: 200
-    max_words: 0
-    emojis_allowed: false
-  - field: Form Headline
-    max_chars: 60
-    max_words: 0
-    emojis_allowed: false
-- channel: LINKEDIN LEAD GEN
-  subtype: Subject/course specific ad
   fields: *id007
 - channel: LINKEDIN LEAD GEN
-  subtype: Open Day
-  fields: *id007
-- channel: LINKEDIN LEAD GEN
-  subtype: Clearing
-  fields: *id007
-- channel: LINKEDIN SINGLE IMAGE
   subtype: Brand level recruitment
   fields: &id008
-  - field: Intro Text
+  - field: IntroText
     max_chars: 600
     max_words: 0
     emojis_allowed: false
@@ -229,68 +359,95 @@
     max_chars: 200
     max_words: 0
     emojis_allowed: false
-  - field: Form Headline
-    max_chars: 60
-    max_words: 0
-    emojis_allowed: false
-- channel: LINKEDIN SINGLE IMAGE
-  subtype: Subject/course specific ad
-  fields: *id008
-- channel: LINKEDIN SINGLE IMAGE
-  subtype: Open Day
-  fields: *id008
-- channel: LINKEDIN SINGLE IMAGE
-  subtype: Clearing
-  fields: *id008
-- channel: LINKEDIN SINGLE VIDEO
-  subtype: Brand level recruitment
-  fields: &id009
-  - field: Intro Text
-    max_chars: 600
-    max_words: 0
-    emojis_allowed: false
-  - field: Headline
-    max_chars: 200
-    max_words: 0
-    emojis_allowed: false
-- channel: LINKEDIN SINGLE VIDEO
-  subtype: Subject/course specific ad
-  fields: *id009
-- channel: LINKEDIN SINGLE VIDEO
-  subtype: Open Day
-  fields: *id009
-- channel: LINKEDIN SINGLE VIDEO
-  subtype: Clearing
-  fields: *id009
-- channel: META SINGLE IMAGE
-  subtype: Brand level recruitment
-  fields: &id010
-  - field: Primary Text
-    max_chars: 125
-    max_words: 0
-    emojis_allowed: true
-  - field: Headline
-    max_chars: 30
-    max_words: 0
-    emojis_allowed: true
-  - field: Description
-    max_chars: 35
-    max_words: 0
-    emojis_allowed: true
   - field: Call to Action
     max_chars: 30
     max_words: 0
     emojis_allowed: false
-- channel: META SINGLE IMAGE
+    is_dropdown: true
+    dropdown_options:
+      - "Learn more"
+      - "Apply"
+      - "Sign Up"
+  - field: Form CTA
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Form Headline
+    max_chars: 60
+    max_words: 0
+    emojis_allowed: false
+  - field: Form Details
+    max_chars: 160
+    max_words: 0
+    emojis_allowed: false
+- channel: LINKEDIN LEAD GEN
+  subtype: Subject/course specific ad
+  fields: *id008
+- channel: LINKEDIN LEAD GEN
+  subtype: Open Day
+  fields: *id008
+- channel: LINKEDIN LEAD GEN
+  subtype: Clearing
+  fields: *id008
+- channel: LINKEDIN SINGLE IMAGE
+  subtype: Brand level recruitment
+  fields: &id009
+  - field: IntroText
+    max_chars: 600
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline
+    max_chars: 200
+    max_words: 0
+    emojis_allowed: false
+  - field: Call to Action
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Learn more"
+      - "Apply"
+      - "Sign Up"
+- channel: LINKEDIN SINGLE IMAGE
+  subtype: Subject/course specific ad
+  fields: *id009
+- channel: LINKEDIN SINGLE IMAGE
+  subtype: Open Day
+  fields: *id009
+- channel: LINKEDIN SINGLE IMAGE
+  subtype: Clearing
+  fields: *id009
+- channel: LINKEDIN SINGLE VIDEO
+  subtype: Brand level recruitment
+  fields: &id010
+  - field: IntroText
+    max_chars: 600
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline
+    max_chars: 200
+    max_words: 0
+    emojis_allowed: false
+  - field: Call to Action
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Learn more"
+      - "Apply"
+      - "Sign Up"
+- channel: LINKEDIN SINGLE VIDEO
   subtype: Subject/course specific ad
   fields: *id010
-- channel: META SINGLE IMAGE
+- channel: LINKEDIN SINGLE VIDEO
   subtype: Open Day
   fields: *id010
-- channel: META SINGLE IMAGE
+- channel: LINKEDIN SINGLE VIDEO
   subtype: Clearing
   fields: *id010
-- channel: META VIDEO
+- channel: META SINGLE IMAGE
   subtype: Brand level recruitment
   fields: &id011
   - field: Primary Text
@@ -309,18 +466,58 @@
     max_chars: 30
     max_words: 0
     emojis_allowed: false
-- channel: META VIDEO
+    is_dropdown: true
+    dropdown_options:
+      - "Book Now"
+      - "Sign Up"
+      - "Apply Now"
+      - "Learn More"
+- channel: META SINGLE IMAGE
   subtype: Subject/course specific ad
   fields: *id011
-- channel: META VIDEO
+- channel: META SINGLE IMAGE
   subtype: Open Day
   fields: *id011
-- channel: META VIDEO
+- channel: META SINGLE IMAGE
   subtype: Clearing
   fields: *id011
-- channel: META CAROUSEL
+- channel: META VIDEO
   subtype: Brand level recruitment
   fields: &id012
+  - field: Primary Text
+    max_chars: 125
+    max_words: 0
+    emojis_allowed: true
+  - field: Headline
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: true
+  - field: Description
+    max_chars: 35
+    max_words: 0
+    emojis_allowed: true
+  - field: Call to Action
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Book Now"
+      - "Sign Up"
+      - "Apply Now"
+      - "Learn More"
+- channel: META VIDEO
+  subtype: Subject/course specific ad
+  fields: *id012
+- channel: META VIDEO
+  subtype: Open Day
+  fields: *id012
+- channel: META VIDEO
+  subtype: Clearing
+  fields: *id012
+- channel: META CAROUSEL
+  subtype: Brand level recruitment
+  fields: &id013
   - field: Primary Text
     max_chars: 125
     max_words: 0
@@ -349,22 +546,84 @@
     max_chars: 15
     max_words: 0
     emojis_allowed: true
+  - field: Card 4 Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 4 Description
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 5 Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 5 Description
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 6 Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 6 Description
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 7 Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 7 Description
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 8 Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 8 Description
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 9 Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 9 Description
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 10 Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
+  - field: Card 10 Description
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: true
   - field: Call to Action
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Book Now"
+      - "Sign Up"
+      - "Apply Now"
+      - "Learn More"
 - channel: META CAROUSEL
   subtype: Subject/course specific ad
-  fields: *id012
+  fields: *id013
 - channel: META CAROUSEL
   subtype: Open Day
-  fields: *id012
+  fields: *id013
 - channel: META CAROUSEL
   subtype: Clearing
-  fields: *id012
+  fields: *id013
 - channel: META COLLECTION
   subtype: Brand level recruitment
-  fields: &id013
+  fields: &id014
   - field: Ad Primary Text
     max_chars: 125
     max_words: 0
@@ -373,36 +632,62 @@
     max_chars: 15
     max_words: 0
     emojis_allowed: true
-- channel: META COLLECTION
-  subtype: Subject/course specific ad
-  fields: *id013
-- channel: META COLLECTION
-  subtype: Open Day
-  fields: *id013
-- channel: META COLLECTION
-  subtype: Clearing
-  fields: *id013
-- channel: REDDIT
-  subtype: Brand level recruitment
-  fields: &id014
-  - field: Primary Text
+  - field: LP Header
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: true
+  - field: LP Top Description
     max_chars: 125
     max_words: 0
     emojis_allowed: true
+  - field: CTA Button Text
+    max_chars: 20
+    max_words: 0
+    emojis_allowed: false
+  - field: LP Lower Description
+    max_chars: 125
+    max_words: 0
+    emojis_allowed: true
+  - field: CTA Button Text 2
+    max_chars: 20
+    max_words: 0
+    emojis_allowed: false
+- channel: META COLLECTION
+  subtype: Subject/course specific ad
+  fields: *id014
+- channel: META COLLECTION
+  subtype: Open Day
+  fields: *id014
+- channel: META COLLECTION
+  subtype: Clearing
+  fields: *id014
+- channel: REDDIT
+  subtype: Brand level recruitment
+  fields: &id015
   - field: Headline
-    max_chars: 30
+    max_chars: 125
     max_words: 0
     emojis_allowed: true
   - field: Description
     max_chars: 35
     max_words: 0
     emojis_allowed: true
+  - field: Call to Action
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Learn More"
+      - "Book Now"
+      - "Sign Up"
+      - "Apply Now"
 - channel: REDDIT
   subtype: Subject/course specific ad
-  fields: *id014
+  fields: *id015
 - channel: REDDIT
   subtype: Open Day
-  fields: *id014
+  fields: *id015
 - channel: REDDIT
   subtype: Clearing
-  fields: *id014
+  fields: *id015
