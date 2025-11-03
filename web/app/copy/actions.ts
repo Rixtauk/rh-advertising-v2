@@ -15,6 +15,8 @@ interface GeneratedField {
   max_chars: number;
   is_over_limit: boolean;
   shortened?: string | string[];
+  is_dropdown?: boolean;
+  dropdown_options?: string[];
 }
 
 interface GeneratedOption {
@@ -90,6 +92,8 @@ export async function generateAdCopy(formData: FormData) {
         maxChars: field.max_chars,
         isOverLimit: field.is_over_limit,
         shortened: field.shortened,
+        isDropdown: field.is_dropdown,
+        dropdownOptions: field.dropdown_options,
       })),
     }));
   } catch (error) {

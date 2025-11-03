@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Copy, RefreshCw, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { copyToClipboard } from '@/lib/clipboard';
@@ -15,6 +16,8 @@ interface GeneratedField {
   maxChars: number;
   isOverLimit: boolean;
   shortened?: string | string[];
+  isDropdown?: boolean;
+  dropdownOptions?: string[];
 }
 
 interface GeneratedOption {
@@ -36,8 +39,40 @@ function formatFieldName(field: string): string {
     .join(' ');
 }
 
-function FieldDisplay({ field }: { field: GeneratedField }) {
-  const displayValue = field.value; // Always show full text
+function FieldDisplay({
+  field,
+  selectedValue,
+  onValueChange
+}: {
+  field: GeneratedField;
+  selectedValue?: string;
+  onValueChange?: (value: string) => void;
+}) {
+  // If this is a dropdown field, show a selector
+  if (field.isDropdown && field.dropdownOptions && field.dropdownOptions.length > 0) {
+    return (
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium">{formatFieldName(field.field)}</span>
+        </div>
+        <Select value={selectedValue} onValueChange={onValueChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select an option" />
+          </SelectTrigger>
+          <SelectContent>
+            {field.dropdownOptions.map((option) => (
+              <SelectItem key={option} value={option}>
+                {option}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  }
+
+  // Otherwise, show generated text as before
+  const displayValue = field.value;
   const isArray = Array.isArray(displayValue);
 
   return (
@@ -73,9 +108,42 @@ export function CopyResults({ results, channel, onRegenerate, onSelectOption }: 
   const [isRegenerating, setIsRegenerating] = useState(false);
   const { toast } = useToast();
 
+  // Track dropdown selections for each option and field
+  // Structure: { optionNumber: { fieldName: selectedValue } }
+  const [dropdownSelections, setDropdownSelections] = useState<Record<number, Record<string, string>>>(() => {
+    // Initialize with first option from each dropdown
+    const initial: Record<number, Record<string, string>> = {};
+    results.forEach((option) => {
+      initial[option.option] = {};
+      option.fields.forEach((field) => {
+        if (field.isDropdown && field.dropdownOptions && field.dropdownOptions.length > 0) {
+          initial[option.option][field.field] = field.dropdownOptions[0];
+        }
+      });
+    });
+    return initial;
+  });
+
+  const handleDropdownChange = (optionNumber: number, fieldName: string, value: string) => {
+    setDropdownSelections((prev) => ({
+      ...prev,
+      [optionNumber]: {
+        ...(prev[optionNumber] || {}),
+        [fieldName]: value,
+      },
+    }));
+  };
+
   const handleCopy = async (option: GeneratedOption) => {
     const text = option.fields
       .map((f) => {
+        // For dropdown fields, use the selected value
+        if (f.isDropdown) {
+          const selectedValue = dropdownSelections[option.option]?.[f.field] || f.dropdownOptions?.[0] || '';
+          return `${formatFieldName(f.field)}:\n${selectedValue}`;
+        }
+
+        // For regular fields, use the generated value
         const val = f.value; // Always copy full text
         const formatted = Array.isArray(val) ? val.map((v, i) => `${i + 1}. ${v}`).join('\n') : val;
         return `${formatFieldName(f.field)}:\n${formatted}`;
@@ -141,7 +209,12 @@ export function CopyResults({ results, channel, onRegenerate, onSelectOption }: 
             </CardHeader>
             <CardContent className="space-y-4">
               {option.fields.map((field, idx) => (
-                <FieldDisplay key={`${option.option}-${idx}`} field={field} />
+                <FieldDisplay
+                  key={`${option.option}-${idx}`}
+                  field={field}
+                  selectedValue={dropdownSelections[option.option]?.[field.field]}
+                  onValueChange={(value) => handleDropdownChange(option.option, field.field, value)}
+                />
               ))}
             </CardContent>
           </Card>
