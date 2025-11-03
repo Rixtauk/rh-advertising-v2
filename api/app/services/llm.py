@@ -18,11 +18,16 @@ def build_json_schema_for_channel(channel: str, fields: list[FieldLimit]) -> dic
     Build OpenAI JSON schema for structured output based on channel fields.
 
     For fields with count > 1, creates an array. Otherwise creates a string field.
+    Skips fields marked as dropdown (is_dropdown=True) since they are not generated.
     """
     properties = {}
     required = []
 
     for field_limit in fields:
+        # Skip dropdown fields - they are selected from options, not generated
+        if getattr(field_limit, 'is_dropdown', False):
+            continue
+
         field_name = field_limit.field.lower().replace(" ", "_")
         required.append(field_name)
 
@@ -89,9 +94,16 @@ def build_user_prompt(
     scraped_context: Optional[str],
     emojis_allowed: bool,
 ) -> str:
-    """Build user prompt with university details and requirements."""
+    """Build user prompt with university details and requirements.
+
+    Skips dropdown fields since they are selected from options, not generated.
+    """
     field_descriptions = []
     for field_limit in fields:
+        # Skip dropdown fields - they are selected from options, not generated
+        if getattr(field_limit, 'is_dropdown', False):
+            continue
+
         count_str = f" (provide {field_limit.count} variations)" if field_limit.count and field_limit.count > 1 else ""
         emoji_note = " (emojis allowed)" if emojis_allowed and field_limit.emojis_allowed else " (no emojis)"
         field_descriptions.append(
