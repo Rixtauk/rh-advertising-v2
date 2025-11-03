@@ -6,6 +6,7 @@ import { CopyResults } from '@/components/results/CopyResults';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { generateAdCopy } from './actions';
+import { getAssetSpecs } from '@/app/assets/actions';
 import { useToast } from '@/components/ui/use-toast';
 
 // Taxonomies - these would normally be loaded server-side and passed as props
@@ -15,6 +16,7 @@ const TAXONOMIES = {
     'SEARCH',
     'DISPLAY',
     'PERFORMANCE MAX',
+    'DEMAND GEN',
     'YOUTUBE',
     'TIKTOK',
     'SNAPCHAT',
@@ -102,22 +104,9 @@ export default function CopyPage() {
 
       // Automatically fetch and display asset specs for the channel
       try {
-        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
-        const response = await fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(channel)}`);
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch asset specs: ${response.status}`);
-        }
-
-        const data = await response.json();
-        // API returns {channel: "...", specs: [...]}
-        const specs = data.specs || data;
-        if (Array.isArray(specs)) {
-          setAssetSpecs(specs);
-          setShowAssetSpecs(true);
-        } else {
-          console.error('Asset specs response is not an array:', data);
-        }
+        const specs = await getAssetSpecs(channel);
+        setAssetSpecs(specs);
+        setShowAssetSpecs(true);
       } catch (error) {
         console.error('Failed to load asset specs:', error);
         setAssetSpecs([]);
@@ -147,22 +136,9 @@ export default function CopyPage() {
     if (selectedChannel) {
       // Fetch asset specs for the channel
       try {
-        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
-        const response = await fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(selectedChannel)}`);
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch asset specs: ${response.status}`);
-        }
-
-        const data = await response.json();
-        // API returns {channel: "...", specs: [...]}
-        const specs = data.specs || data;
-        if (Array.isArray(specs)) {
-          setAssetSpecs(specs);
-          setShowAssetSpecs(true);
-        } else {
-          console.error('Asset specs response is not an array:', data);
-        }
+        const specs = await getAssetSpecs(selectedChannel);
+        setAssetSpecs(specs);
+        setShowAssetSpecs(true);
       } catch (error) {
         console.error('Failed to load asset specs:', error);
         setAssetSpecs([]);

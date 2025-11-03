@@ -13,6 +13,24 @@ from app.models.domain import FieldLimit
 logger = logging.getLogger(__name__)
 
 
+def creativity_to_temperature(creativity: int) -> float:
+    """
+    Map creativity level to OpenAI temperature.
+
+    Args:
+        creativity: Level from 3-7 (3=conservative, 5=balanced, 7=creative)
+
+    Returns:
+        Temperature value between 0.4-0.7
+    """
+    mapping = {
+        3: 0.4,  # Conservative - maximum constraint adherence
+        5: 0.5,  # Balanced - recommended default
+        7: 0.7,  # Creative - more variety, may bend constraints
+    }
+    return mapping.get(creativity, 0.5)  # Default to balanced if invalid value
+
+
 def build_json_schema_for_channel(channel: str, fields: list[FieldLimit]) -> dict[str, Any]:
     """
     Build OpenAI JSON schema for structured output based on channel fields.
@@ -84,7 +102,15 @@ Guidelines:
 - Match the tone and speak directly to the target audience
 - For higher education, emphasize career outcomes, experience, and opportunity
 
-You will receive specific character limits for each field. Stay within limits but prioritize compelling copy over arbitrary brevity."""
+CRITICAL REQUIREMENTS (YOU MUST FOLLOW THESE):
+1. Every field MUST stay within its character limit - no exceptions
+2. Count characters carefully for each field before finalizing
+3. Never omit required fields
+4. Follow emoji rules strictly (only include where explicitly allowed)
+
+You will receive specific character limits for each field.
+
+Before submitting your response, verify that each field meets its character limit."""
 
 
 def build_user_prompt(
@@ -107,7 +133,7 @@ def build_user_prompt(
         count_str = f" (provide {field_limit.count} variations)" if field_limit.count and field_limit.count > 1 else ""
         emoji_note = " (emojis allowed)" if emojis_allowed and field_limit.emojis_allowed else " (no emojis)"
         field_descriptions.append(
-            f"- {field_limit.field}: max {field_limit.max_chars} characters{count_str}{emoji_note}"
+            f"- {field_limit.field}: MUST be ≤{field_limit.max_chars} characters (aim for {int(field_limit.max_chars * 0.9)}-{field_limit.max_chars}){count_str}{emoji_note}"
         )
 
     fields_text = "\n".join(field_descriptions)
@@ -124,7 +150,9 @@ Key selling points and details:
 Required fields and limits:
 {fields_text}
 
-Generate compelling ad copy that fits these exact requirements. Each field must be within its character limit."""
+Generate compelling ad copy that fits these exact requirements.
+
+CRITICAL: Count characters for EACH field. If any field exceeds its limit, revise it to fit."""
 
     return prompt
 
@@ -140,6 +168,7 @@ async def generate_copy_with_openai(
     tone_hint: str,
     audience_hint: str,
     emojis_allowed: bool,
+    creativity: int = 5,
     scraped_context: Optional[str] = None,
     num_options: int = 3,
 ) -> tuple[list[dict[str, Any]], str]:
@@ -196,7 +225,7 @@ async def generate_copy_with_openai(
                             "schema": json_schema,
                         },
                     },
-                    temperature=0.8 + (option_num * 0.1),  # Vary temperature for diversity
+                    temperature=(base_temp := creativity_to_temperature(creativity)) + (option_num * 0.05),  # Vary temperature slightly for diversity
                 )
 
                 content = response.choices[0].message.content

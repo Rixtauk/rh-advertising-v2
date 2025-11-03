@@ -13,6 +13,8 @@ class FieldLimit(BaseModel):
     emojis_allowed: bool
     count: Optional[int] = None
     notes: Optional[str] = None
+    is_dropdown: bool = False
+    dropdown_options: Optional[list[str]] = None
 
 
 class AdLimit(BaseModel):

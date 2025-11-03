@@ -47,6 +47,7 @@ export async function generateAdCopy(formData: FormData) {
   const usps = formData.get('usps') as string;
   const landingUrl = formData.get('landingUrl') as string;
   const includeEmojis = formData.get('includeEmojis') === 'true';
+  const creativity = parseInt(formData.get('creativity') as string) || 5;
 
   if (!channel || !subtype || !university || !tone || !audience || !usps) {
     throw new Error('Missing required fields');
@@ -64,6 +65,7 @@ export async function generateAdCopy(formData: FormData) {
     usps,
     emojis_allowed: emojiAllowed && includeEmojis,
     landing_url: landingUrl || null,
+    creativity: creativity,
   };
 
   try {

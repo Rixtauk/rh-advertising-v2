@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { OptimizeForm } from "@/components/forms/OptimizeForm";
-import { OptimizeResults } from "@/components/results/OptimizeResults";
-import { optimizeLandingPage } from "./actions";
+import { OptimiseForm } from "@/components/forms/OptimiseForm";
+import { OptimiseResults } from "@/components/results/OptimiseResults";
+import { optimiseLandingPage } from "./actions";
 import { useToast } from "@/components/ui/use-toast";
 
-export default function OptimizePage() {
+export default function OptimisePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<any | null>(null);
   const { toast } = useToast();
@@ -16,7 +16,7 @@ export default function OptimizePage() {
     setResults(null);
 
     try {
-      const result = await optimizeLandingPage(data);
+      const result = await optimiseLandingPage(data);
 
       if (result.success && result.data) {
         setResults(result.data);
@@ -53,7 +53,7 @@ export default function OptimizePage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-1">
-          <OptimizeForm onSubmit={handleSubmit} isLoading={isLoading} />
+          <OptimiseForm onSubmit={handleSubmit} isLoading={isLoading} />
 
           {isLoading && (
             <div className="mt-6 p-4 border rounded-lg bg-blue-50">
@@ -89,7 +89,7 @@ export default function OptimizePage() {
 
         <div className="lg:col-span-2">
           {results ? (
-            <OptimizeResults {...results} />
+            <OptimiseResults {...results} />
           ) : (
             <div className="border-2 border-dashed rounded-lg p-12 text-center">
               <div className="max-w-md mx-auto">

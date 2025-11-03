@@ -1,117 +1,75 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Image, LineChart } from 'lucide-react';
+import { FullScreenHero } from '@/components/home/FullScreenHero';
+import { AlternatingSection } from '@/components/home/AlternatingSection';
+import { FeaturesBento } from '@/components/home/FeaturesBento';
 
 export default function HomePage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">Welcome to RH AI Assistant</h1>
-        <p className="text-xl text-muted-foreground">
-          Your intelligent companion for higher education advertising
-        </p>
-      </div>
+    <div className="relative min-h-screen">
+      {/* Main content */}
+      <main className="relative">
+        {/* Full screen hero */}
+        <FullScreenHero />
 
-      <div className="grid gap-6 md:grid-cols-3 mt-12">
-        <Card className="hover:shadow-lg transition-shadow flex flex-col">
-          <CardHeader className="flex-1">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <FileText className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle>Ad Copy Generator</CardTitle>
-            </div>
-            <CardDescription>
-              Generate compliant, on-brand ad copy for 14+ advertising channels with automatic
-              character limit enforcement
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href="/copy">
-              <Button className="w-full">Generate Copy</Button>
-            </Link>
-          </CardContent>
-        </Card>
+        {/* Copy Generator - Text Left, Image Right */}
+        <AlternatingSection
+          title="AI-Powered Copy Generator"
+          description="Generate compliant ad copy for 14+ advertising platforms in seconds. Our AI is specifically trained on higher education marketing best practices and regulatory requirements."
+          benefits={[
+            'Generate compliant ad copy in seconds',
+            '14+ advertising channels supported',
+            'Built-in Title IV compliance checks',
+            'Brand guidelines integration',
+            'Multiple variations with A/B testing suggestions',
+          ]}
+          image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+          imageAlt="Copy Generator Interface"
+          ctaText="Start Generating Copy"
+          ctaHref="/copy"
+          badge="Most Popular"
+          reverse={false}
+        />
 
-        <Card className="hover:shadow-lg transition-shadow flex flex-col">
-          <CardHeader className="flex-1">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <LineChart className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle>Landing Page Optimiser</CardTitle>
-            </div>
-            <CardDescription>
-              Analyse and optimise university landing pages with actionable recommendations and scoring
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href="/optimize">
-              <Button className="w-full">Analyse Page</Button>
-            </Link>
-          </CardContent>
-        </Card>
+        {/* Landing Page Optimiser - Text Right, Image Left */}
+        <AlternatingSection
+          title="Landing Page Optimiser"
+          description="Get actionable insights and recommendations to improve your landing page conversion rates. Our AI analyses page structure, messaging, and user experience with best practices tailored for higher education audiences."
+          benefits={[
+            'AI-powered conversion analysis',
+            'Actionable recommendations',
+            'Higher education best practices',
+            'Mobile and desktop insights',
+            'Competitor benchmarking',
+          ]}
+          image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+          imageAlt="Landing Page Optimiser Dashboard"
+          ctaText="Analyse Your Page"
+          ctaHref="/optimise"
+          reverse={true}
+          backgroundColor="bg-gray-50"
+        />
 
-        <Card className="hover:shadow-lg transition-shadow flex flex-col">
-          <CardHeader className="flex-1">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Image className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle>Asset Specifications</CardTitle>
-            </div>
-            <CardDescription>
-              Query creative asset requirements (dimensions, formats, file sizes) for any
-              advertising channel
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href="/assets">
-              <Button className="w-full">View Specs</Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
+        {/* Asset Specs - Text Left, Image Right */}
+        <AlternatingSection
+          title="Creative Asset Specifications"
+          description="Access up-to-date creative specifications for all major advertising platforms in one place. Never miss a deadline or submit incorrect file formats again with our comprehensive spec library."
+          benefits={[
+            '14+ platform specifications',
+            'Always up-to-date requirements',
+            'Dimensions, file sizes, character limits',
+            'Export to PDF or share with team',
+            'Platform-specific best practices',
+          ]}
+          image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+          imageAlt="Asset Specifications Interface"
+          ctaText="View All Specs"
+          ctaHref="/specs"
+          badge="New"
+          reverse={false}
+        />
 
-      <div className="mt-12 p-6 bg-muted rounded-lg">
-        <h2 className="text-lg font-semibold mb-3">Features</h2>
-        <ul className="space-y-2 text-sm">
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>
-              <strong>14 Channels:</strong> Search, Display, Performance Max, YouTube, TikTok, Snapchat, LinkedIn, Meta (Facebook/Instagram), and Reddit
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>
-              <strong>Smart Limits:</strong> Automatic character counting and over-limit warnings
-              with shortened alternatives
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>
-              <strong>Landing Page Analysis:</strong> Comprehensive scoring across 6 categories with actionable recommendations for improvement
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>
-              <strong>Context-Aware:</strong> Optional landing page scraping to inform copy
-              generation
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-primary">•</span>
-            <span>
-              <strong>Configurable:</strong> All limits and specs maintained in version-controlled
-              YAML files
-            </span>
-          </li>
-        </ul>
-      </div>
+        {/* Features/Benefits section */}
+        <FeaturesBento />
+      </main>
     </div>
   );
 }

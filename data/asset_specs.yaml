@@ -13,25 +13,36 @@
 
 # --- DISPLAY ---
 - channel: "DISPLAY"
-  placement_or_format: "15 images required"
+  placement_or_format: "Up to 15 images required"
   aspect_ratio: "5 Square 1:1, 5 Landscape 16:9, 5 Portrait 9:16"
   recommended_px: "Landscape - 1200 x 628px, Portrait - 960 x 1200px, Square - 1200 x 1200px"
   file_types: ["jpg","png"]
   max_file_size_mb: 5
   duration_seconds_max: 0
   caption_limit_chars: 0
-  notes: "Video as YouTube Link. Up to 1 min length. Landscape video."
+  notes: "Up to 15 images. Recommend a mix of Square, Landscape and Portrait. Minimum requirement - 1 of each size (portrait, square, landscape). Video optional - supplied as YouTube Link. Up to 1 min length. Landscape video."
 
 # --- PERFORMANCE MAX ---
 - channel: "PERFORMANCE MAX"
-  placement_or_format: "15 images required"
+  placement_or_format: "Up to 15 images required"
   aspect_ratio: "5 Square 1:1, 5 Landscape 16:9, 5 Portrait 9:16"
   recommended_px: "Landscape - 1200 x 628px, Portrait - 960 x 1200px, Square - 1200 x 1200px"
   file_types: ["jpg","png"]
   max_file_size_mb: 5
   duration_seconds_max: 0
   caption_limit_chars: 0
-  notes: "Video as YouTube Link. 1min length. Landscape Video."
+  notes: "Up to 15 images. Recommend a mix of Square, Landscape and Portrait. Minimum requirement - 1 of each size (portrait, square, landscape). Video optional - supplied as YouTube Link. Up to 1 min length. Landscape video."
+
+# --- DEMAND GEN ---
+- channel: "DEMAND GEN"
+  placement_or_format: "Up to 20 images required"
+  aspect_ratio: "5 Square 1:1, 5 Landscape 16:9, 5 Portrait 9:16, 5 Vertical 4:5"
+  recommended_px: "Landscape - 1200 x 628px, Portrait - 960 x 1200px, Square - 1200 x 1200px, Vertical - 960 x 1200px"
+  file_types: ["jpg","png"]
+  max_file_size_mb: 5
+  duration_seconds_max: 0
+  caption_limit_chars: 0
+  notes: "Up to 20 images. Recommend a mix of Square, Landscape, Portrait and Vertical. Minimum requirement - 1 of each size (portrait, square, landscape, vertical). Video optional - supplied as YouTube Link. Up to 1 min length. Landscape video."
 
 # --- YOUTUBE ---
 - channel: "YOUTUBE"
@@ -40,9 +51,9 @@
   recommended_px: "1920x1080"
   file_types: ["mp4","mov"]
   max_file_size_mb: 256
-  duration_seconds_max: 0
+  duration_seconds_max: 90
   caption_limit_chars: 0
-  notes: "Clear branding in first 5 seconds."
+  notes: "Supplied as YouTube link. 1920 x 1080px. Up to 90 seconds length. 16:9 ratio. Clear branding in first 5 seconds."
 
 # --- TIKTOK ---
 - channel: "TIKTOK"
@@ -53,7 +64,7 @@
   max_file_size_mb: 500
   duration_seconds_max: 30
   caption_limit_chars: 100
-  notes: "15 second recommended length. Up to 30 secs length."
+  notes: "1 video required. Portrait 9:16. 1080 x 1920 px. MOV or MP4. 15 second recommended length. Up to 30 secs length. Max file size: 500MB."
 
 # --- SNAPCHAT ---
 - channel: "SNAPCHAT"
@@ -64,7 +75,7 @@
   max_file_size_mb: 500
   duration_seconds_max: 30
   caption_limit_chars: 34
-  notes: "15 second recommended length. Up to 30 secs length."
+  notes: "1 video required. Portrait 9:16. 1080 x 1920 px. MOV or MP4. 15 second recommended length. Up to 30 secs length. Max file size: 500MB."
 
 # --- LINKEDIN LEAD GEN ---
 - channel: "LINKEDIN LEAD GEN"
@@ -75,7 +86,7 @@
   max_file_size_mb: 5
   duration_seconds_max: 0
   caption_limit_chars: 600
-  notes: "Square 1:1 for both mobile and desktop placements."
+  notes: "3 ad variations. Square 1:1. 1200 x 1200px. JPG or PNG. Max file size: 5MB. Square 1:1 for both mobile and desktop placements."
 
 # --- LINKEDIN SINGLE IMAGE ---
 - channel: "LINKEDIN SINGLE IMAGE"
@@ -86,7 +97,7 @@
   max_file_size_mb: 5
   duration_seconds_max: 0
   caption_limit_chars: 600
-  notes: "Square 1:1."
+  notes: "3 ad variations. Square 1:1. 1200 x 1200px. JPG or PNG. Max file size: 5MB. Square 1:1."
 
 # --- LINKEDIN SINGLE VIDEO ---
 - channel: "LINKEDIN SINGLE VIDEO"
@@ -97,7 +108,7 @@
   max_file_size_mb: 200
   duration_seconds_max: 45
   caption_limit_chars: 600
-  notes: "30sec-1min recommended length. No longer than 45 seconds."
+  notes: "Video. Square 1:1. 1920 x 1920 px. MOV or MP4. 30sec-1min recommended length. No longer than 45 seconds. Max file size: 200MB."
 
 # --- META SINGLE IMAGE ---
 - channel: "META SINGLE IMAGE"
@@ -108,7 +119,7 @@
   max_file_size_mb: 30
   duration_seconds_max: 0
   caption_limit_chars: 125
-  notes: "Each variation requires Square, Portrait & Landscape."
+  notes: "3 ad variations. Each variation requires Square, Portrait & Landscape. Landscape - 1200 x 628px, Portrait - 1080 x 1920px, Square - 1200 x 1200px. JPG or PNG. Max file size: 30MB."
 
 # --- META VIDEO ---
 - channel: "META VIDEO"
@@ -119,7 +130,7 @@
   max_file_size_mb: 4000
   duration_seconds_max: 30
   caption_limit_chars: 125
-  notes: "15-30 second recommended. Video as MOV or MP4."
+  notes: "Feed, Reels & Stories. Square, Portrait & Landscape. Square: 1920 x 1920 px, Portrait: 1080 x 1350px, Landscape: 1920 x 1080px. MOV or MP4. 15-30 seconds recommended. Max file size: 4GB. Video as MOV or MP4."
 
 # --- META CAROUSEL ---
 - channel: "META CAROUSEL"
@@ -130,7 +141,7 @@
   max_file_size_mb: 30
   duration_seconds_max: 0
   caption_limit_chars: 125
-  notes: "Up to 10 images square 1:1."
+  notes: "Up to 10 images square 1:1. 1200 x 1200px. JPG or PNG. Max file size: 30MB."
 
 # --- META COLLECTION ---
 - channel: "META COLLECTION"
@@ -141,7 +152,7 @@
   max_file_size_mb: 4000
   duration_seconds_max: 0
   caption_limit_chars: 125
-  notes: "A) 1 Hero Video (Square 1:1) or 1 Hero Image Square 1:1. B) Up to 10 Carousel Images - (Square 1:1). Image max 30MB, Video max 4GB."
+  notes: "A) 1 Hero Video (Square 1:1) or 1 Hero Image Square 1:1. B) Up to 10 Carousel Images - (Square 1:1). Square - 1200 x 1200px. JPG, PNG, MOV or MP4. Image max 30MB, Video max 4GB."
 
 # --- REDDIT ---
 - channel: "REDDIT"
@@ -152,4 +163,4 @@
   max_file_size_mb: 30
   duration_seconds_max: 0
   caption_limit_chars: 125
-  notes: "Each variation requires Square, Portrait & Landscape."
+  notes: "3 ad variations. Each variation requires Square, Portrait & Landscape. Landscape - 1200 x 628px, Portrait - 1080 x 1920px, Square - 1200 x 1200px. JPG or PNG. Max file size: 30MB."

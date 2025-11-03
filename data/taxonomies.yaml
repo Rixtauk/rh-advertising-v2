@@ -17,11 +17,13 @@ non_emoji_channels:
   - "SEARCH"
   - "DISPLAY"
   - "PERFORMANCE MAX"
+  - "DEMAND GEN"
 
 all_channels:
   - "SEARCH"
   - "DISPLAY"
   - "PERFORMANCE MAX"
+  - "DEMAND GEN"
   - "YOUTUBE"
   - "TIKTOK"
   - "SNAPCHAT"

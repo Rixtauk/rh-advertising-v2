@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface OptimizeFormProps {
+interface OptimiseFormProps {
   onSubmit: (data: { url: string; objective: string }) => Promise<void>;
   isLoading: boolean;
 }
@@ -25,7 +25,7 @@ const OBJECTIVES = [
   "Recruitment Page",
 ] as const;
 
-export function OptimizeForm({ onSubmit, isLoading }: OptimizeFormProps) {
+export function OptimiseForm({ onSubmit, isLoading }: OptimiseFormProps) {
   const [url, setUrl] = useState("");
   const [objective, setObjective] = useState<string>("");
 

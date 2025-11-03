@@ -5,14 +5,14 @@
 // API_URL is server-side only (not NEXT_PUBLIC_*)
 const API_BASE_URL = process.env.API_URL || "https://rh-advertising-v2-production.up.railway.app";
 
-interface OptimizeRequest {
+interface OptimiseRequest {
   url: string;
   objective: string;
 }
 
-export async function optimizeLandingPage(data: OptimizeRequest) {
+export async function optimiseLandingPage(data: OptimiseRequest) {
   try {
-    const response = await fetch(`${API_BASE_URL}/v1/optimize-landing`, {
+    const response = await fetch(`${API_BASE_URL}/v1/optimise-landing`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,13 +22,13 @@ export async function optimizeLandingPage(data: OptimizeRequest) {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.detail || "Failed to optimize landing page");
+      throw new Error(error.detail || "Failed to optimise landing page");
     }
 
     const result = await response.json();
     return { success: true, data: result };
   } catch (error) {
-    console.error("Error optimizing landing page:", error);
+    console.error("Error optimising landing page:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",

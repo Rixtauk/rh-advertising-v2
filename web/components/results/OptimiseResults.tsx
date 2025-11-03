@@ -34,7 +34,7 @@ interface PageSummary {
   word_count: number;
 }
 
-interface OptimizeResultsProps {
+interface OptimiseResultsProps {
   overall_score: number;
   grade: string;
   objective: string;
@@ -47,7 +47,7 @@ interface OptimizeResultsProps {
   analysis_time_ms: number;
 }
 
-export function OptimizeResults({
+export function OptimiseResults({
   overall_score,
   grade,
   objective,
@@ -57,7 +57,7 @@ export function OptimizeResults({
   quick_wins,
   summary,
   analysis_time_ms,
-}: OptimizeResultsProps) {
+}: OptimiseResultsProps) {
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case "high":

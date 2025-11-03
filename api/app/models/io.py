@@ -21,6 +21,7 @@ class GenerateRequest(BaseModel):
     usps: str = Field(..., description="USPs and key points")
     emojis_allowed: bool = Field(False, description="Whether emojis are allowed")
     landing_url: Optional[HttpUrl] = Field(None, description="Landing page URL to scrape")
+    creativity: int = Field(5, description="Creativity level (3=conservative, 5=balanced, 7=creative)")
 
 
 class GeneratedField(BaseModel):

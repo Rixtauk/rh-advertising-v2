@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SpecsList } from '@/components/assets/SpecsList';
+import { getAssetSpecs } from './actions';
+import { useToast } from '@/components/ui/use-toast';
 
 const CHANNELS = [
   'SEARCH',
@@ -39,39 +41,32 @@ export default function AssetsPage() {
   const [selectedChannel, setSelectedChannel] = useState<string>('');
   const [specs, setSpecs] = useState<AssetSpec[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  useEffect(() => {
-    if (!selectedChannel) {
+  const handleChannelChange = async (channel: string) => {
+    setSelectedChannel(channel);
+
+    if (!channel) {
       setSpecs([]);
       return;
     }
 
     setIsLoading(true);
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
-    fetch(`${API_BASE_URL}/v1/asset-specs?channel=${encodeURIComponent(selectedChannel)}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Failed to fetch asset specs: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        // API returns {channel: "...", specs: [...]}
-        const specs = data.specs || data;
-        if (Array.isArray(specs)) {
-          setSpecs(specs);
-        } else {
-          console.error('Asset specs response is not an array:', data);
-          setSpecs([]);
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error('Failed to load specs:', err);
-        setSpecs([]);
-        setIsLoading(false);
+    try {
+      const fetchedSpecs = await getAssetSpecs(channel);
+      setSpecs(fetchedSpecs);
+    } catch (error) {
+      console.error('Failed to load specs:', error);
+      setSpecs([]);
+      toast({
+        title: 'Error loading specifications',
+        description: error instanceof Error ? error.message : 'Failed to fetch asset specs',
+        variant: 'destructive',
       });
-  }, [selectedChannel]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -86,7 +81,7 @@ export default function AssetsPage() {
         <CardContent className="pt-6">
           <div className="space-y-2 max-w-md">
             <Label htmlFor="channel">Select Channel</Label>
-            <Select value={selectedChannel} onValueChange={setSelectedChannel}>
+            <Select value={selectedChannel} onValueChange={handleChannelChange}>
               <SelectTrigger id="channel">
                 <SelectValue placeholder="Choose a channel..." />
               </SelectTrigger>

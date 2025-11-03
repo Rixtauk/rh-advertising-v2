@@ -49,6 +49,23 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        md: '20px',
+        lg: '24px',
+        xl: '40px',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'float-delayed': 'float 8s ease-in-out infinite 2s',
+        'gradient': 'gradient 15s ease infinite',
+        'fade-in': 'fadeIn 0.6s ease-out forwards',
+        'scale-in': 'scaleIn 0.4s ease-out forwards',
+      },
+      backgroundImage: {
+        'gradient-accent': 'linear-gradient(135deg, var(--accent-color), var(--accent-color))',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

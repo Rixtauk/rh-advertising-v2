@@ -48,7 +48,7 @@ export default function RootLayout({
                     Copy Generator
                   </Link>
                   <Link
-                    href="/optimize"
+                    href="/optimise"
                     className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
                     Landing Page Optimiser

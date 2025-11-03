@@ -27,11 +27,12 @@ interface FormState {
   usps: string;
   landingUrl: string;
   includeEmojis: boolean;
+  creativity: 3 | 5 | 7;
 }
 
 export function CopyForm({ channels, subtypes, tones, audiences, socialChannels, onSubmit }: CopyFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isAnalysing, setIsAnalysing] = useState(false);
   const [extractedUSPs, setExtractedUSPs] = useState<string[]>([]);
   const [selectedUSPs, setSelectedUSPs] = useState<Set<number>>(new Set());
   const { toast } = useToast();
@@ -45,6 +46,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
     usps: '',
     landingUrl: '',
     includeEmojis: false,
+    creativity: 5,
   });
 
   // Load from localStorage on mount
@@ -69,7 +71,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
   const isLightHearted = formState.tone === 'Light-hearted & modern';
   const showEmojiToggle = isSocialChannel && isLightHearted;
 
-  const handleAnalyzeUSPs = async () => {
+  const handleAnalyseUSPs = async () => {
     if (!formState.landingUrl) {
       toast({
         title: 'Landing Page URL Required',
@@ -79,10 +81,10 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       return;
     }
 
-    setIsAnalyzing(true);
+    setIsAnalysing(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/v1/analyze-usps`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/v1/analyse-usps`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +112,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
         variant: 'destructive',
       });
     } finally {
-      setIsAnalyzing(false);
+      setIsAnalysing(false);
     }
   };
 
@@ -258,6 +260,58 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
         </Select>
       </div>
 
+      {/* Creativity Level */}
+      <div className="space-y-2">
+        <Label>Creativity Level</Label>
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            type="button"
+            onClick={() => setFormState((prev) => ({ ...prev, creativity: 3 }))}
+            className={`p-3 rounded-md border-2 transition-all ${
+              formState.creativity === 3
+                ? 'border-primary bg-primary/10'
+                : 'border-border hover:border-primary/50'
+            }`}
+          >
+            <div className="font-medium">Conservative</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              Better constraint adherence
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setFormState((prev) => ({ ...prev, creativity: 5 }))}
+            className={`p-3 rounded-md border-2 transition-all ${
+              formState.creativity === 5
+                ? 'border-primary bg-primary/10'
+                : 'border-border hover:border-primary/50'
+            }`}
+          >
+            <div className="font-medium">Balanced</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              Recommended default
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setFormState((prev) => ({ ...prev, creativity: 7 }))}
+            className={`p-3 rounded-md border-2 transition-all ${
+              formState.creativity === 7
+                ? 'border-primary bg-primary/10'
+                : 'border-border hover:border-primary/50'
+            }`}
+          >
+            <div className="font-medium">Creative</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              More variety, may bend constraints
+            </div>
+          </button>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Lower values prioritize staying within character limits. Higher values allow more creative freedom.
+        </p>
+      </div>
+
       <div className="space-y-2">
         <Label htmlFor="landingUrl">Landing Page URL (optional)</Label>
         <div className="flex gap-2">
@@ -272,10 +326,10 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <Button
             type="button"
             variant="outline"
-            onClick={handleAnalyzeUSPs}
-            disabled={isAnalyzing || !formState.landingUrl}
+            onClick={handleAnalyseUSPs}
+            disabled={isAnalysing || !formState.landingUrl}
           >
-            {isAnalyzing ? (
+            {isAnalysing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Analysing...
