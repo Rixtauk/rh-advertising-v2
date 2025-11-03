@@ -64,22 +64,22 @@ async def scrape_with_jina(url: str) -> ScrapedContent:
                 content.word_count = len(content.markdown.split())
                 content.h1 = re.findall(r"^# (.+)$", content.markdown, re.MULTILINE)
                 content.h2 = re.findall(r"^## (.+)$", content.markdown, re.MULTILINE)
-                content.h3 = re.findall(r"^### (.+)$", content.markdown, re.MULTILINE)
+                content.h3 = []  # Not needed - removed to reduce noise
                 content.paragraphs = [
                     p.strip()
                     for p in content.markdown.split("\n\n")
                     if p.strip() and not p.startswith("#")
-                ][:10]  # First 10 paragraphs
+                ][:5]  # First 5 paragraphs only
 
             logger.info(f"Scraped {url} via Jina.AI: {content.word_count} words")
             return content
 
     except httpx.TimeoutException:
         logger.warning(f"Timeout scraping {url} with Jina.AI")
-        content.error = "Timeout"
+        content.error = "Timeout: Site took too long to respond"
     except httpx.HTTPStatusError as e:
         logger.warning(f"HTTP error scraping {url}: {e.response.status_code}")
-        content.error = f"HTTP {e.response.status_code}"
+        content.error = f"Access denied: HTTP {e.response.status_code}"
     except Exception as e:
         logger.error(f"Error scraping {url} with Jina.AI: {e}")
         content.error = str(e)
@@ -116,8 +116,8 @@ async def scrape_with_selectolax(url: str) -> ScrapedContent:
 
             # Headings
             content.h1 = [h.text().strip() for h in tree.css("h1") if h.text().strip()]
-            content.h2 = [h.text().strip() for h in tree.css("h2") if h.text().strip()][:5]
-            content.h3 = [h.text().strip() for h in tree.css("h3") if h.text().strip()][:5]
+            content.h2 = [h.text().strip() for h in tree.css("h2") if h.text().strip()]
+            content.h3 = []  # Not needed - removed to reduce noise
 
             # CTAs (buttons and links with CTA keywords)
             # Expanded keywords and selectors to catch more CTAs
@@ -155,23 +155,16 @@ async def scrape_with_selectolax(url: str) -> ScrapedContent:
                 inputs = len(form.css("input, textarea, select"))
                 content.forms.append({"inputs": inputs})
 
-            # Images with alt text
-            for img in tree.css("img"):
-                alt = img.attributes.get("alt", "")
-                src = img.attributes.get("src", "")
-                if src:
-                    content.images.append({"src": src, "alt": alt, "has_alt": bool(alt)})
+            # Images - not needed, removed to reduce noise
+            content.images = []
 
-            # Links
-            for link in tree.css("a"):
-                href = link.attributes.get("href", "")
-                if href:
-                    content.links.append({"href": href, "text": link.text().strip()})
+            # Links - not needed, removed to reduce noise
+            content.links = []
 
-            # Paragraphs
+            # Paragraphs - limit to first 5 only
             content.paragraphs = [
                 p.text().strip() for p in tree.css("p") if p.text().strip()
-            ][:10]
+            ][:5]
 
             # Word count
             body = tree.css_first("body")
@@ -181,6 +174,12 @@ async def scrape_with_selectolax(url: str) -> ScrapedContent:
             logger.info(f"Scraped {url} with selectolax: {content.word_count} words")
             return content
 
+    except httpx.TimeoutException:
+        logger.warning(f"Timeout scraping {url} with selectolax")
+        content.error = "Timeout: Site took too long to respond"
+    except httpx.HTTPStatusError as e:
+        logger.warning(f"HTTP error scraping {url}: {e.response.status_code}")
+        content.error = f"Access denied: HTTP {e.response.status_code}"
     except Exception as e:
         logger.error(f"Error scraping {url} with selectolax: {e}")
         content.error = str(e)

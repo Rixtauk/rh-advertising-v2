@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     jina_api_key: str = ""
 
     # Scraping
-    scrape_timeout_seconds: int = 6
+    scrape_timeout_seconds: int = 25
     user_agent: str = "RH-Edu-Ads-Bot/1.0"
 
     # Logging

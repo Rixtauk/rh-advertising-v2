@@ -1,10 +1,14 @@
 """Landing page analysis and scoring engine."""
 
+import json
 import logging
 import re
 from datetime import datetime
 from typing import Optional
 
+from openai import AsyncOpenAI
+
+from app.deps import get_settings
 from app.models.io import (
     CategoryScore,
     Issue,
@@ -31,312 +35,138 @@ def calculate_letter_grade(percentage: int) -> str:
         return "F"
 
 
-def score_copy_quality(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
+async def analyze_with_llm(prompt: str, max_score: int = 10) -> dict:
     """
-    Score copy quality (20 points max).
+    Analyze content using LLM with structured JSON output.
 
-    Criteria:
-    - Clear value proposition (5pts)
-    - Appropriate length (5pts)
-    - Clarity and readability (5pts)
-    - Keyword optimization (5pts)
+    Returns:
+        dict with 'score' (0-max_score) and 'issues' (list of strings)
     """
-    score = 0
-    issues = []
+    settings = get_settings()
+    client = AsyncOpenAI(api_key=settings.openai_api_key)
+
+    json_schema = {
+        "type": "object",
+        "properties": {
+            "score": {
+                "type": "number",
+                "description": f"Score from 0 to {max_score}",
+                "minimum": 0,
+                "maximum": max_score
+            },
+            "issues": {
+                "type": "array",
+                "description": "List of 2-3 specific, actionable issues",
+                "items": {"type": "string"},
+                "minItems": 0,
+                "maxItems": 3
+            }
+        },
+        "required": ["score", "issues"],
+        "additionalProperties": False
+    }
+
+    try:
+        response = await client.chat.completions.create(
+            model=settings.model_generation_mini,  # Use mini for speed
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            response_format={
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "landing_page_analysis",
+                    "strict": True,
+                    "schema": json_schema
+                }
+            },
+            temperature=0.3  # Low temperature for consistent analysis
+        )
+
+        content = response.choices[0].message.content
+        if not content:
+            raise ValueError("Empty response from OpenAI")
+
+        result = json.loads(content)
+
+        # Ensure score is within bounds
+        result["score"] = max(0, min(max_score, result["score"]))
+
+        return result
+
+    except Exception as e:
+        logger.error(f"Error in LLM analysis: {e}")
+        # Return default values on error
+        return {
+            "score": max_score // 2,  # 50% score as fallback
+            "issues": ["Unable to perform detailed analysis due to technical error"]
+        }
+
+
+async def score_copy_quality(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
+    """
+    Score copy quality using LLM analysis (20 points max).
+
+    Uses GPT-4o-mini to evaluate:
+    - Value proposition clarity and specificity
+    - Benefit focus vs feature focus
+    - Content structure and flow
+    - Brand voice appropriateness
+    """
     max_score = 20
 
-    # Clear value proposition in H1 or first paragraph
-    has_value_prop = False
-    if content.h1 and len(content.h1[0]) > 20:
-        has_value_prop = True
-        score += 5
-    elif content.paragraphs and len(content.paragraphs[0]) > 50:
-        has_value_prop = True
-        score += 3
+    # Prepare content for analysis
+    h1_text = content.h1[0] if content.h1 else "No H1 found"
+    h2_text = ", ".join(content.h2[:5]) if content.h2 else "No H2s found"
+    paragraphs_text = " ".join(content.paragraphs[:3]) if content.paragraphs else "No content found"
 
-    if not has_value_prop:
-        issues.append(Issue(
-            category="Copy Quality",
-            severity="high",
-            title="Missing clear value proposition",
-            description="The H1 or opening paragraph should clearly communicate the unique value proposition.",
-            suggestion="Add a compelling H1 that tells visitors exactly what they'll get. For example: 'Join 5,000+ Students at [University] - Apply Now for September 2025'",
-            impact="Visitors may leave without understanding what you're offering"
-        ))
+    # Truncate to avoid token limits
+    if len(paragraphs_text) > 1000:
+        paragraphs_text = paragraphs_text[:1000] + "..."
 
-    # Appropriate length
-    word_count = content.word_count
-    if 300 <= word_count <= 1500:
-        score += 5
-    elif 200 <= word_count < 300 or 1500 < word_count <= 2000:
-        score += 3
-        issues.append(Issue(
-            category="Copy Quality",
-            severity="medium",
-            title="Suboptimal copy length",
-            description=f"Page has {word_count} words. Ideal range is 300-1500 words for landing pages.",
-            suggestion="Consider adding more descriptive content about the program, benefits, and student experience" if word_count < 300 else "Consider tightening the copy to focus on key messages and removing redundant content",
-            impact="May not provide enough information to convince visitors" if word_count < 300 else "Visitors may lose interest in lengthy content"
-        ))
-    else:
-        score += 1
-        issues.append(Issue(
-            category="Copy Quality",
-            severity="high",
-            title="Poor copy length",
-            description=f"Page has {word_count} words. This is {'too short' if word_count < 200 else 'too long'} for effective conversion.",
-            suggestion="Add substantive content about the program, benefits, faculty, and outcomes" if word_count < 200 else "Break content into sections, use tabs/accordions, or split into multiple pages",
-            impact="Low conversion rate due to insufficient or overwhelming information"
-        ))
+    prompt = f"""You are an expert landing page analyst evaluating copy quality for a {objective} page.
 
-    # Clarity and readability (check for short paragraphs, subheadings)
-    if len(content.h2) >= 3 or len(content.h3) >= 3:
-        score += 3
-    else:
-        issues.append(Issue(
-            category="Copy Quality",
-            severity="medium",
-            title="Insufficient content structure",
-            description=f"Only {len(content.h2)} H2 headings found. Content needs better organization.",
-            suggestion="Break content into clear sections with descriptive subheadings like 'Why Choose Us', 'Course Details', 'Career Outcomes', 'How to Apply'",
-            impact="Difficult to scan and find relevant information quickly"
-        ))
+Analyze this content:
+H1: {h1_text}
+H2s: {h2_text}
+Content: {paragraphs_text}
 
-    avg_paragraph_length = sum(len(p.split()) for p in content.paragraphs[:5]) / max(len(content.paragraphs[:5]), 1)
-    if 15 <= avg_paragraph_length <= 50:
-        score += 2
+Evaluate on this rubric (0-10 scale):
+- Value proposition: Is it clear, specific, and compelling?
+- Benefit focus: Does it emphasize outcomes, not just features?
+- Content structure: Appropriate length, good flow, scannable?
+- Brand voice: Professional, consistent, appropriate for higher education?
 
-    # Education keyword optimization
-    edu_keywords = [
-        "university", "course", "degree", "program", "study", "student",
-        "career", "graduate", "qualification", "apply", "admission", "tuition"
-    ]
-    markdown_lower = (content.markdown or "").lower()
-    keyword_count = sum(1 for keyword in edu_keywords if keyword in markdown_lower)
+Provide:
+1. Score (0-10, where 10 is excellent)
+2. 2-3 specific, actionable issues to fix (if score < 9)
 
-    if keyword_count >= 5:
-        score += 5
-    elif keyword_count >= 3:
-        score += 3
-    else:
-        issues.append(Issue(
-            category="Copy Quality",
-            severity="medium",
-            title="Insufficient education keywords",
-            description=f"Only {keyword_count} education-related keywords found in copy.",
-            suggestion="Naturally incorporate keywords like 'degree', 'program', 'career outcomes', 'graduate employment', 'student experience'",
-            impact="Lower search engine visibility and less clear educational context"
-        ))
+Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
 
-    percentage = int((score / max_score) * 100)
-    return CategoryScore(
-        score=score,
-        max=max_score,
-        grade=calculate_letter_grade(percentage),
-        percentage=percentage
-    ), issues
+    # Get LLM analysis
+    result = await analyze_with_llm(prompt, max_score=10)
 
+    # Scale score to 20 points
+    score = int(result["score"] * 2)
 
-def score_ux_layout(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
-    """
-    Score UX and layout (20 points max).
-
-    Criteria:
-    - Clear visual hierarchy (5pts)
-    - Navigation structure (5pts)
-    - Mobile considerations (5pts)
-    - Information architecture (5pts)
-    """
-    score = 0
+    # Convert issue strings to Issue objects
     issues = []
-    max_score = 20
-
-    # Clear visual hierarchy (H1 > H2 > H3 structure)
-    if len(content.h1) == 1:
-        score += 3
-    elif len(content.h1) == 0:
-        issues.append(Issue(
-            category="UX/Layout",
-            severity="high",
-            title="Missing H1 heading",
-            description="No H1 heading found on the page.",
-            suggestion="Add a single, prominent H1 heading at the top of the page that clearly states the main purpose",
-            impact="Poor accessibility and SEO; visitors unsure of page purpose"
-        ))
-    elif len(content.h1) > 1:
-        issues.append(Issue(
-            category="UX/Layout",
-            severity="medium",
-            title="Multiple H1 headings",
-            description=f"Found {len(content.h1)} H1 headings. Should have exactly one.",
-            suggestion="Use only one H1 for the main heading, convert others to H2 or H3",
-            impact="Confusing hierarchy and reduced SEO effectiveness"
-        ))
-
-    if len(content.h2) >= 3:
-        score += 2
-
-    if len(content.h2) >= 3 and len(content.h3) >= 2:
-        score += 2
-
-    # Navigation structure (check for navigation links)
-    nav_indicators = ["nav", "menu", "home", "about", "contact", "courses"]
-    nav_link_count = sum(
-        1 for link in content.links[:20]
-        if any(nav_word in link.get("text", "").lower() or nav_word in link.get("href", "").lower()
-               for nav_word in nav_indicators)
-    )
-
-    if nav_link_count >= 4:
-        score += 5
-    elif nav_link_count >= 2:
-        score += 3
-    else:
-        issues.append(Issue(
-            category="UX/Layout",
-            severity="medium",
-            title="Limited navigation detected",
-            description="Navigation menu appears minimal or unclear.",
-            suggestion="Add clear navigation with links to key pages: Home, Courses, About, Contact, Apply",
-            impact="Visitors may struggle to explore other areas of the site"
-        ))
-
-    # Mobile considerations (no direct way to check, but can infer from responsive images)
-    responsive_image_count = sum(
-        1 for img in content.images[:10]
-        if "responsive" in img.get("src", "").lower() or "-mobile" in img.get("src", "").lower()
-    )
-
-    # Assume modern sites are mobile-friendly, give benefit of doubt
-    score += 4  # Default assumption for mobile responsiveness
-
-    # Information architecture (appropriate number of sections)
-    if 4 <= len(content.h2) <= 8:
-        score += 4
-    elif 3 <= len(content.h2) <= 10:
-        score += 2
-    else:
-        issues.append(Issue(
-            category="UX/Layout",
-            severity="medium",
-            title="Suboptimal content sections",
-            description=f"Page has {len(content.h2)} main sections. Ideal is 4-8 sections.",
-            suggestion="Organize content into 4-8 clear sections covering: Overview, Key Benefits, Details, How to Apply, FAQs, Contact",
-            impact="Content may be too sparse or overwhelming"
-        ))
-
-    percentage = int((score / max_score) * 100)
-    return CategoryScore(
-        score=score,
-        max=max_score,
-        grade=calculate_letter_grade(percentage),
-        percentage=percentage
-    ), issues
-
-
-def score_conversion_elements(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
-    """
-    Score conversion elements (20 points max).
-
-    Criteria:
-    - Clear CTAs (8pts)
-    - Forms presence and quality (7pts)
-    - Trust signals (5pts)
-    """
-    score = 0
-    issues = []
-    max_score = 20
-
-    # Clear CTAs
-    cta_count = len(content.ctas)
-    if cta_count >= 2:
-        score += 8
-    elif cta_count == 1:
-        score += 5
-        issues.append(Issue(
-            category="Conversion Elements",
-            severity="medium",
-            title="Limited CTAs",
-            description="Only one CTA found. Multiple CTAs increase conversion opportunities.",
-            suggestion="Add a secondary CTA further down the page, such as 'Download Prospectus' or 'Book a Campus Tour'",
-            impact="Missed conversion opportunities for visitors at different decision stages"
-        ))
-    else:
-        score += 2
-        issues.append(Issue(
-            category="Conversion Elements",
-            severity="high",
-            title="No clear CTAs detected",
-            description="No obvious call-to-action buttons found.",
-            suggestion=f"Add prominent CTA buttons for '{objective}' - e.g., 'Register Now', 'Apply Today', 'Book Your Place'",
-            impact="Visitors don't know what action to take next, leading to high bounce rates"
-        ))
-
-    # Forms presence and quality
-    form_count = len(content.forms)
-    if form_count >= 1:
-        # Check form complexity
-        avg_inputs = sum(f.get("inputs", 0) for f in content.forms) / form_count
-
-        if 3 <= avg_inputs <= 8:
-            score += 7
-        elif 2 <= avg_inputs <= 12:
-            score += 5
-            if avg_inputs > 8:
-                issues.append(Issue(
-                    category="Conversion Elements",
-                    severity="medium",
-                    title="Form may be too long",
-                    description=f"Form has {int(avg_inputs)} fields. Shorter forms typically convert better.",
-                    suggestion="Reduce form fields to essentials only. Consider progressive disclosure or multi-step forms for longer data collection",
-                    impact="Form abandonment due to friction"
-                ))
+    for i, issue_text in enumerate(result["issues"]):
+        # Determine severity based on score
+        if result["score"] < 4:
+            severity = "high"
+        elif result["score"] < 7:
+            severity = "medium"
         else:
-            score += 3
-            issues.append(Issue(
-                category="Conversion Elements",
-                severity="medium",
-                title="Form complexity concerns",
-                description=f"Form has {int(avg_inputs)} fields which may {'discourage' if avg_inputs > 12 else 'not capture enough'} conversions.",
-                suggestion="Optimize form to 4-7 essential fields for better conversion rates",
-                impact="Reduced form completion rates"
-            ))
-    else:
-        if "Registration" in objective or "Enquiry" in objective or "Application" in objective:
-            score += 2
-            issues.append(Issue(
-                category="Conversion Elements",
-                severity="high",
-                title="Missing form for objective",
-                description=f"No form detected, but objective is '{objective}' which requires a form.",
-                suggestion=f"Add a form for {objective} with fields like: Name, Email, Phone, Course Interest, Start Date",
-                impact="Cannot capture leads or registrations - critical conversion blocker"
-            ))
-        else:
-            score += 4  # Not critical for recruitment pages
+            severity = "low"
 
-    # Trust signals (testimonials, rankings, accreditation)
-    trust_keywords = [
-        "testimonial", "review", "rating", "ranked", "accredited", "certified",
-        "award", "trusted", "students say", "graduate", "success", "employment"
-    ]
-    markdown_lower = (content.markdown or "").lower()
-    trust_signal_count = sum(1 for keyword in trust_keywords if keyword in markdown_lower)
-
-    if trust_signal_count >= 3:
-        score += 5
-    elif trust_signal_count >= 2:
-        score += 3
-    elif trust_signal_count >= 1:
-        score += 2
-    else:
         issues.append(Issue(
-            category="Conversion Elements",
-            severity="medium",
-            title="Lacking trust signals",
-            description="No testimonials, rankings, or credibility indicators found.",
-            suggestion="Add student testimonials, league table rankings, accreditations (QAA, TEF Gold), graduate employment stats",
-            impact="Visitors may question credibility and choose competitors"
+            category="Copy Quality",
+            severity=severity,
+            title=f"Copy improvement {i+1}",
+            description=issue_text,
+            suggestion=issue_text,
+            impact="May reduce visitor engagement and conversion rates"
         ))
 
     percentage = int((score / max_score) * 100)
@@ -346,6 +176,163 @@ def score_conversion_elements(content: ScrapedContent, objective: ObjectiveType)
         grade=calculate_letter_grade(percentage),
         percentage=percentage
     ), issues
+
+
+async def score_user_experience(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
+    """
+    Score UX and usability using LLM analysis (20 points max).
+
+    Uses GPT-4o-mini to evaluate:
+    - Content hierarchy and structure
+    - Readability and scannability
+    - Information architecture
+    - Mobile considerations
+    """
+    max_score = 20
+
+    # Prepare structure summary
+    h1_text = content.h1[0] if content.h1 else "No H1 found"
+    h2_text = ", ".join(content.h2[:8]) if content.h2 else "No H2s found"
+
+    structure_summary = f"{len(content.h1)} H1(s), {len(content.h2)} H2(s), {len(content.h3)} H3(s), {len(content.paragraphs)} paragraphs"
+
+    prompt = f"""You are a UX expert evaluating landing page structure and usability.
+
+Analyze this structure:
+H1: {h1_text}
+H2s: {h2_text}
+Content hierarchy: {structure_summary}
+
+Evaluate on this rubric (0-10 scale):
+- Content hierarchy: Clear H1→H2 structure, logical flow?
+- Readability: Appropriate paragraph length, easy to scan?
+- Information architecture: Key info prioritized, easy to find?
+- Mobile considerations: Structure works on mobile?
+
+Provide:
+1. Score (0-10, where 10 is excellent)
+2. 2-3 specific improvements
+
+Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
+
+    # Get LLM analysis
+    result = await analyze_with_llm(prompt, max_score=10)
+
+    # Scale score to 20 points
+    score = int(result["score"] * 2)
+
+    # Convert issue strings to Issue objects
+    issues = []
+    for i, issue_text in enumerate(result["issues"]):
+        # Determine severity based on score
+        if result["score"] < 4:
+            severity = "high"
+        elif result["score"] < 7:
+            severity = "medium"
+        else:
+            severity = "low"
+
+        issues.append(Issue(
+            category="User Experience",
+            severity=severity,
+            title=f"UX improvement {i+1}",
+            description=issue_text,
+            suggestion=issue_text,
+            impact="May hinder user navigation and page usability"
+        ))
+
+    percentage = int((score / max_score) * 100)
+    return CategoryScore(
+        score=score,
+        max=max_score,
+        grade=calculate_letter_grade(percentage),
+        percentage=percentage
+    ), issues
+
+
+# Keep backward compatibility alias
+score_ux_layout = score_user_experience
+
+
+async def score_cta_effectiveness(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
+    """
+    Score CTA effectiveness using LLM analysis (20 points max).
+
+    Uses GPT-4o-mini to evaluate:
+    - Action clarity and specificity
+    - Urgency and motivation
+    - CTA placement and visibility
+    - Variety of conversion opportunities
+    """
+    max_score = 20
+
+    # Prepare content context
+    full_content = ""
+    if content.ctas:
+        full_content += f"CTAs found: {', '.join(content.ctas[:5])}\n"
+    else:
+        full_content += "No CTAs detected\n"
+
+    if content.h1:
+        full_content += f"H1: {content.h1[0]}\n"
+
+    if content.paragraphs:
+        full_content += f"Content: {' '.join(content.paragraphs[:2])[:500]}..."
+
+    prompt = f"""You are an expert analyzing call-to-action effectiveness for a {objective} landing page.
+
+Analyze these CTAs in context:
+{full_content}
+
+Evaluate on this rubric (0-10 scale):
+- Action clarity: Are CTAs clear and specific?
+- Urgency/motivation: Do they create desire to act?
+- Placement: Are CTAs visible and well-positioned?
+- Variety: Are there multiple conversion opportunities?
+
+Provide:
+1. Score (0-10, where 10 is excellent)
+2. 2-3 specific improvements
+
+Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
+
+    # Get LLM analysis
+    result = await analyze_with_llm(prompt, max_score=10)
+
+    # Scale score to 20 points
+    score = int(result["score"] * 2)
+
+    # Convert issue strings to Issue objects
+    issues = []
+    for i, issue_text in enumerate(result["issues"]):
+        # Determine severity based on score
+        if result["score"] < 4:
+            severity = "high"
+        elif result["score"] < 7:
+            severity = "medium"
+        else:
+            severity = "low"
+
+        issues.append(Issue(
+            category="CTA Effectiveness",
+            severity=severity,
+            title=f"CTA improvement {i+1}",
+            description=issue_text,
+            suggestion=issue_text,
+            impact="May reduce conversion rates and lead generation"
+        ))
+
+    percentage = int((score / max_score) * 100)
+    return CategoryScore(
+        score=score,
+        max=max_score,
+        grade=calculate_letter_grade(percentage),
+        percentage=percentage
+    ), issues
+
+
+# Keep backward compatibility alias
+score_conversion_elements = score_cta_effectiveness
 
 
 def score_technical_seo(content: ScrapedContent) -> tuple[CategoryScore, list[Issue]]:
@@ -715,48 +702,38 @@ def create_page_summary(content: ScrapedContent) -> PageSummary:
     )
 
 
-def calculate_overall_score(
+async def calculate_overall_score(
     content: ScrapedContent,
     objective: ObjectiveType,
     analysis_start_time: datetime
 ) -> OptimizeResponse:
     """
-    Calculate overall landing page score across all categories.
+    Calculate overall landing page score across 3 core categories.
 
     Returns comprehensive OptimizeResponse with scores, issues, and recommendations.
     """
     all_issues = []
 
-    # Score each category
-    copy_score, copy_issues = score_copy_quality(content, objective)
+    # Score each category (3 categories only) - all using LLM analysis
+    copy_score, copy_issues = await score_copy_quality(content, objective)
     all_issues.extend(copy_issues)
 
-    ux_score, ux_issues = score_ux_layout(content, objective)
+    ux_score, ux_issues = await score_user_experience(content, objective)
     all_issues.extend(ux_issues)
 
-    conversion_score, conversion_issues = score_conversion_elements(content, objective)
+    conversion_score, conversion_issues = await score_cta_effectiveness(content, objective)
     all_issues.extend(conversion_issues)
 
-    seo_score, seo_issues = score_technical_seo(content)
-    all_issues.extend(seo_issues)
-
-    edu_score, edu_issues = score_education_specific(content, objective)
-    all_issues.extend(edu_issues)
-
-    accessibility_score, accessibility_issues = score_accessibility(content)
-    all_issues.extend(accessibility_issues)
-
-    # Calculate overall score
+    # Calculate overall score (out of 60 points)
     overall_score = (
         copy_score.score +
         ux_score.score +
-        conversion_score.score +
-        seo_score.score +
-        edu_score.score +
-        accessibility_score.score
+        conversion_score.score
     )
 
-    overall_grade = calculate_letter_grade(overall_score)
+    # Convert to percentage and then calculate grade
+    overall_percentage = int((overall_score / 60) * 100)
+    overall_grade = calculate_letter_grade(overall_percentage)
 
     # Extract quick wins
     quick_wins = extract_quick_wins(all_issues)
@@ -767,20 +744,17 @@ def calculate_overall_score(
     # Calculate analysis time
     analysis_time_ms = int((datetime.now() - analysis_start_time).total_seconds() * 1000)
 
-    logger.info(f"Landing page analysis complete: {overall_score}/100 ({overall_grade})")
+    logger.info(f"Landing page analysis complete: {overall_percentage}/100 ({overall_grade})")
 
     return OptimizeResponse(
-        overall_score=overall_score,
+        overall_score=overall_percentage,
         grade=overall_grade,
         objective=objective,
         url=str(content.markdown[:100]) if content.markdown else "unknown",  # Will be replaced with actual URL
         scores={
-            "Copy Quality": copy_score,
-            "UX/Layout": ux_score,
-            "Conversion Elements": conversion_score,
-            "Technical SEO": seo_score,
-            "Education-Specific": edu_score,
-            "Accessibility": accessibility_score,
+            "copy_quality": copy_score,
+            "user_experience": ux_score,
+            "cta_effectiveness": conversion_score,
         },
         issues=all_issues,
         quick_wins=quick_wins,

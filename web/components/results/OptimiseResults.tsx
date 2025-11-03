@@ -58,6 +58,14 @@ export function OptimiseResults({
   summary,
   analysis_time_ms,
 }: OptimiseResultsProps) {
+  const formatCategoryName = (category: string) => {
+    // Convert snake_case to Title Case
+    return category
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case "high":
@@ -156,14 +164,14 @@ export function OptimiseResults({
       <Card>
         <CardHeader>
           <CardTitle>Category Breakdown</CardTitle>
-          <CardDescription>Detailed scoring across 6 categories</CardDescription>
+          <CardDescription>Detailed scoring across 3 core categories</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(scores).map(([category, score]) => (
               <div key={category} className="border rounded-lg p-4">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-sm">{category}</h3>
+                  <h3 className="font-semibold text-sm">{formatCategoryName(category)}</h3>
                   <Badge variant="outline">Grade {score.grade}</Badge>
                 </div>
                 <div className="flex items-baseline gap-2 mb-2">

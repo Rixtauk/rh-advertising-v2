@@ -12,7 +12,7 @@ interface OptimiseRequest {
 
 export async function optimiseLandingPage(data: OptimiseRequest) {
   try {
-    const response = await fetch(`${API_BASE_URL}/v1/optimise-landing`, {
+    const response = await fetch(`${API_BASE_URL}/v1/optimize-landing`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

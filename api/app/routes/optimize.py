@@ -19,13 +19,10 @@ async def optimize_landing_page(request: OptimizeRequest) -> OptimizeResponse:
     """
     Analyze and optimize a landing page for education marketing.
 
-    Scores the page across 6 categories:
+    Scores the page across 3 core categories:
     - Copy Quality (20pts)
-    - UX/Layout (20pts)
-    - Conversion Elements (20pts)
-    - Technical SEO (15pts)
-    - Education-Specific (15pts)
-    - Accessibility (10pts)
+    - User Experience (20pts)
+    - CTA Effectiveness (20pts)
 
     Args:
         request: OptimizeRequest with URL and objective
@@ -53,7 +50,7 @@ async def optimize_landing_page(request: OptimizeRequest) -> OptimizeResponse:
 
         # Analyze and score the page
         analysis_start = datetime.now()
-        response = calculate_overall_score(
+        response = await calculate_overall_score(
             content=content,
             objective=request.objective,
             analysis_start_time=analysis_start
