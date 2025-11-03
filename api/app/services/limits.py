@@ -69,7 +69,9 @@ def validate_generated_fields(
                 char_count=max_char_count,
                 max_chars=max_chars,
                 is_over_limit=is_over_limit,
-                shortened=shortened if is_over_limit else None
+                shortened=shortened if is_over_limit else None,
+                is_dropdown=field_limit.is_dropdown,
+                dropdown_options=field_limit.dropdown_options
             ))
 
         # Handle string fields
@@ -95,7 +97,9 @@ def validate_generated_fields(
                 char_count=char_count,
                 max_chars=max_chars,
                 is_over_limit=is_over_limit,
-                shortened=shortened if is_over_limit else None
+                shortened=shortened if is_over_limit else None,
+                is_dropdown=field_limit.is_dropdown,
+                dropdown_options=field_limit.dropdown_options
             ))
 
     return validated_fields, warnings

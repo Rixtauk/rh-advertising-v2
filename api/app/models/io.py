@@ -32,6 +32,8 @@ class GeneratedField(BaseModel):
     max_chars: int
     is_over_limit: bool
     shortened: Optional[Union[str, list[str]]] = None
+    is_dropdown: bool = False
+    dropdown_options: Optional[list[str]] = None
 
 
 class GeneratedOption(BaseModel):
