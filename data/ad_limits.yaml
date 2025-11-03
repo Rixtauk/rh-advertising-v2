@@ -128,11 +128,11 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Apply now"
-      - "Book now"
-      - "Learn more"
-      - "See more"
-      - "Sign up"
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: DISPLAY
   subtype: Subject/course specific ad
   fields: *id002
@@ -211,11 +211,11 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Apply now"
-      - "Book now"
-      - "Learn more"
-      - "See more"
-      - "Sign up"
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: PERFORMANCE MAX
   subtype: Subject/course specific ad
   fields: *id003
@@ -274,11 +274,11 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Apply now"
-      - "Book now"
-      - "Learn more"
-      - "See more"
-      - "Sign up"
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: DEMAND GEN
   subtype: Subject/course specific ad
   fields: *id004
@@ -296,9 +296,16 @@
     max_words: 0
     emojis_allowed: false
   - field: Call to Action
-    max_chars: 10
+    max_chars: 30
     max_words: 0
     emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: YOUTUBE
   subtype: Subject/course specific ad
   fields: *id005
@@ -319,6 +326,13 @@
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: TIKTOK
   subtype: Subject/course specific ad
   fields: *id006
@@ -339,6 +353,13 @@
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: SNAPCHAT
   subtype: Subject/course specific ad
   fields: *id007
@@ -365,13 +386,22 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Learn more"
-      - "Apply"
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
       - "Sign Up"
   - field: Form CTA
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+    is_dropdown: true
+    dropdown_options:
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
   - field: Form Headline
     max_chars: 60
     max_words: 0
@@ -406,8 +436,10 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Learn more"
-      - "Apply"
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
       - "Sign Up"
 - channel: LINKEDIN SINGLE IMAGE
   subtype: Subject/course specific ad
@@ -435,8 +467,10 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Learn more"
-      - "Apply"
+      - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
       - "Sign Up"
 - channel: LINKEDIN SINGLE VIDEO
   subtype: Subject/course specific ad
@@ -468,10 +502,11 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Book Now"
-      - "Sign Up"
       - "Apply Now"
+      - "Book Now"
       - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: META SINGLE IMAGE
   subtype: Subject/course specific ad
   fields: *id011
@@ -502,10 +537,11 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Book Now"
-      - "Sign Up"
       - "Apply Now"
+      - "Book Now"
       - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: META VIDEO
   subtype: Subject/course specific ad
   fields: *id012
@@ -608,10 +644,11 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Book Now"
-      - "Sign Up"
       - "Apply Now"
+      - "Book Now"
       - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: META CAROUSEL
   subtype: Subject/course specific ad
   fields: *id013
@@ -678,10 +715,11 @@
     emojis_allowed: false
     is_dropdown: true
     dropdown_options:
-      - "Learn More"
-      - "Book Now"
-      - "Sign Up"
       - "Apply Now"
+      - "Book Now"
+      - "Learn More"
+      - "See More"
+      - "Sign Up"
 - channel: REDDIT
   subtype: Subject/course specific ad
   fields: *id015
