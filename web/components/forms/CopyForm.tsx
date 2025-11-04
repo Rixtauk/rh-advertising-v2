@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { Loader2, Info } from 'lucide-react';
+import { Loader2, Info, AlertCircle } from 'lucide-react';
 
 interface CopyFormProps {
   channels: string[];
@@ -31,6 +31,7 @@ interface FormState {
 
 export function CopyForm({ channels, subtypes, tones, audiences, socialChannels, onSubmit }: CopyFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [validationError, setValidationError] = useState<string>('');
 
   const [formState, setFormState] = useState<FormState>({
     channel: '',
@@ -68,6 +69,19 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Clear any previous validation errors
+    setValidationError('');
+
+    // Validate that either landing URL or USPs are provided
+    const hasLandingUrl = formState.landingUrl.trim().length > 0;
+    const hasUsps = formState.usps.trim().length > 0;
+
+    if (!hasLandingUrl && !hasUsps) {
+      setValidationError('Please provide either a landing page URL or manual USPs to generate copy.');
+      return;
+    }
+
     setIsLoading(true);
 
     const formData = new FormData();
@@ -203,7 +217,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
             <div className={`text-xs mt-2 ${
               formState.creativity === 3 ? 'text-white/90' : 'text-muted-foreground'
             }`}>
-              Better constraint adherence
+              Stays within limits
             </div>
           </button>
           <button
@@ -252,7 +266,11 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           placeholder="https://www.huish.ac.uk/"
           value={formState.landingUrl}
-          onChange={(e) => setFormState((prev) => ({ ...prev, landingUrl: e.target.value }))}
+          onChange={(e) => {
+            setFormState((prev) => ({ ...prev, landingUrl: e.target.value }));
+            // Clear validation error when user starts typing
+            if (validationError) setValidationError('');
+          }}
         />
         <p className="text-xs text-muted-foreground">
           Add a landing page URL to automatically extract and incorporate USPs into your ad copy. This will add 10-20 seconds to generation time.
@@ -260,16 +278,24 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="usps">Additional USPs (optional)</Label>
+        <Label htmlFor="usps">
+          Additional USPs {!formState.landingUrl.trim() && <span className="text-red-500">*</span>}
+        </Label>
         <Textarea
           id="usps"
           placeholder="Enter key points, dates, or unique selling points..."
           rows={5}
           value={formState.usps}
-          onChange={(e) => setFormState((prev) => ({ ...prev, usps: e.target.value }))}
+          onChange={(e) => {
+            setFormState((prev) => ({ ...prev, usps: e.target.value }));
+            // Clear validation error when user starts typing
+            if (validationError) setValidationError('');
+          }}
         />
         <p className="text-xs text-muted-foreground">
-          Add specific USPs manually, or leave blank if using a landing page URL. USPs from the page will be automatically included in the generated copy.
+          {formState.landingUrl.trim()
+            ? 'Add specific USPs manually, or leave blank to use only USPs from the landing page URL.'
+            : 'Required when no landing page URL is provided. Enter key points, dates, or unique selling points.'}
         </p>
       </div>
 
@@ -280,6 +306,14 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <p className="text-blue-900">
             Since you've added a landing page URL, generation will take 10-20 seconds while we extract and analyze USPs.
           </p>
+        </div>
+      )}
+
+      {/* Validation error message */}
+      {validationError && (
+        <div className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 p-3 text-sm">
+          <AlertCircle className="h-4 w-4 flex-shrink-0 text-red-600" />
+          <p className="text-red-900">{validationError}</p>
         </div>
       )}
 
