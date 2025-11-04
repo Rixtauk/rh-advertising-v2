@@ -279,7 +279,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
 
       <div className="space-y-2">
         <Label htmlFor="usps">
-          Additional USPs {!formState.landingUrl.trim() && <span className="text-red-500">*</span>}
+          Optional USPs (if not scraping a page)
         </Label>
         <Textarea
           id="usps"
@@ -293,9 +293,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           }}
         />
         <p className="text-xs text-muted-foreground">
-          {formState.landingUrl.trim()
-            ? 'Add specific USPs manually, or leave blank to use only USPs from the landing page URL.'
-            : 'Required when no landing page URL is provided. Enter key points, dates, or unique selling points.'}
+          Leave blank if using a landing page URL above, or add your own USPs here. At least one is required.
         </p>
       </div>
 
