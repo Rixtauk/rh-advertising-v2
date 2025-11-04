@@ -217,7 +217,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
             <div className={`text-xs mt-2 ${
               formState.creativity === 3 ? 'text-white/90' : 'text-muted-foreground'
             }`}>
-              Stays within limits
+              Follows limits
             </div>
           </button>
           <button
