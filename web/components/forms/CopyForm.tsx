@@ -203,17 +203,17 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       {/* Creativity Level */}
       <div className="space-y-2">
         <Label>Creativity Level</Label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 3 }))}
-            className={`p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
+            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
               formState.creativity === 3
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
                 : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
             }`}
           >
-            <div className="font-medium">Conservative</div>
+            <div className="text-sm font-medium">Conservative</div>
             <div className={`text-xs mt-2 ${
               formState.creativity === 3 ? 'text-white/90' : 'text-muted-foreground'
             }`}>
@@ -223,13 +223,13 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 5 }))}
-            className={`p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
+            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
               formState.creativity === 5
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
                 : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
             }`}
           >
-            <div className="font-medium">Balanced</div>
+            <div className="text-sm font-medium">Balanced</div>
             <div className={`text-xs mt-2 ${
               formState.creativity === 5 ? 'text-white/90' : 'text-muted-foreground'
             }`}>
@@ -239,13 +239,13 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 7 }))}
-            className={`p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
+            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
               formState.creativity === 7
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
                 : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
             }`}
           >
-            <div className="font-medium">Creative</div>
+            <div className="text-sm font-medium">Creative</div>
             <div className={`text-xs mt-2 ${
               formState.creativity === 7 ? 'text-white/90' : 'text-muted-foreground'
             }`}>

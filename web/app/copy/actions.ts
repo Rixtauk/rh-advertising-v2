@@ -49,8 +49,13 @@ export async function generateAdCopy(formData: FormData) {
   const includeEmojis = formData.get('includeEmojis') === 'true';
   const creativity = parseInt(formData.get('creativity') as string) || 5;
 
-  if (!channel || !subtype || !university || !tone || !audience || !usps) {
+  if (!channel || !subtype || !university || !tone || !audience) {
     throw new Error('Missing required fields');
+  }
+
+  // Validate that either landing URL or USPs are provided
+  if (!landingUrl && !usps) {
+    throw new Error('Either landing page URL or USPs must be provided');
   }
 
   const emojiAllowed = SOCIAL_CHANNELS.includes(channel);
