@@ -207,7 +207,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 3 }))}
-            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
+            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col items-center justify-center ${
               formState.creativity === 3
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
                 : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
@@ -223,7 +223,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 5 }))}
-            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
+            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col items-center justify-center ${
               formState.creativity === 5
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
                 : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
@@ -239,7 +239,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 7 }))}
-            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col ${
+            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col items-center justify-center ${
               formState.creativity === 7
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
                 : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
