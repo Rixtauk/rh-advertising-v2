@@ -113,7 +113,7 @@ def debug_env():
 
     # Add check for API keys (without revealing them)
     env_data["OPENAI_API_KEY_set"] = "OPENAI_API_KEY" in os.environ
-    env_data["JINA_API_KEY_set"] = "JINA_API_KEY" in os.environ
+    env_data["FIRECRAWL_API_KEY_set"] = "FIRECRAWL_API_KEY" in os.environ
 
     return env_data
 
