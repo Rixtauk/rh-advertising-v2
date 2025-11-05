@@ -34,10 +34,9 @@ async def optimize_landing_page(request: OptimizeRequest) -> OptimizeResponse:
     logger.info(f"Analyzing landing page: {request.url} (objective: {request.objective})")
 
     try:
-        # Scrape the landing page
-        # Use HTML parser (selectolax) instead of Jina for more accurate structure detection
+        # Scrape the landing page using Firecrawl (or selectolax as fallback)
         scrape_start = time.time()
-        content = await scrape_landing_page(str(request.url), use_jina=False)
+        content = await scrape_landing_page(str(request.url), use_firecrawl=True)
 
         if content.error:
             raise HTTPException(
