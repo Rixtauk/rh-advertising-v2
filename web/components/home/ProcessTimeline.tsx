@@ -4,7 +4,7 @@ export function ProcessTimeline() {
       number: '01',
       title: 'Choose Your Tool',
       description:
-        'Select from Copy Generator, Landing Page Optimiser, or Asset Specs based on your campaign needs.',
+        'Select from Education Ad Copy Generator, University Landing Page Optimizer, Creative Asset Spec Query Tool, or Education Insight Assistant based on your campaign needs.',
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path

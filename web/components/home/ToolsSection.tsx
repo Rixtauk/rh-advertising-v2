@@ -3,7 +3,7 @@ import Link from 'next/link';
 export function ToolsSection() {
   const tools = [
     {
-      title: 'Copy Generator',
+      title: 'Education Ad Copy Generator',
       description:
         'Generate compliant ad copy for 14+ advertising platforms using AI trained specifically for higher education marketing. Create headlines, descriptions, and calls-to-action that follow Title IV regulations and your institutional brand guidelines.',
       href: '/copy',
@@ -11,7 +11,7 @@ export function ToolsSection() {
       gradient: 'from-[#55A2C3] to-[#8B5CF6]',
     },
     {
-      title: 'Landing Page Optimiser',
+      title: 'University Landing Page Optimizer',
       description:
         'Get actionable insights and recommendations to improve your landing page conversion rates. Analyse page structure, messaging, CTAs, and user experience elements with AI-powered suggestions tailored for higher education audiences.',
       href: '/optimise',
@@ -19,12 +19,20 @@ export function ToolsSection() {
       gradient: 'from-[#8B5CF6] to-[#EC4899]',
     },
     {
-      title: 'Asset Specs',
+      title: 'Creative Asset Spec Query Tool',
       description:
         'Access creative specifications for all major advertising platforms in one place. Get exact dimensions, file sizes, character limits, and best practices for Google, Meta, LinkedIn, TikTok, Snapchat, YouTube, and more.',
-      href: '/specs',
+      href: '/assets',
       badge: 'New',
       gradient: 'from-[#EC4899] to-[#55A2C3]',
+    },
+    {
+      title: 'Education Insight Assistant',
+      description:
+        'Ask strategic questions and get instant answers powered by real data, market trends and student insight. Your AI-powered research assistant for education marketing strategy and decision-making.',
+      href: '#',
+      badge: 'Coming Soon',
+      gradient: 'from-[#55A2C3] to-[#EC4899]',
     },
   ];
 
