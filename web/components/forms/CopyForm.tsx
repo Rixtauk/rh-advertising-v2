@@ -64,8 +64,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
   }, [formState]);
 
   const isSocialChannel = socialChannels.includes(formState.channel);
-  const isLightHearted = formState.tone === 'Light-hearted & modern';
-  const showEmojiToggle = isSocialChannel && isLightHearted;
+  const showEmojiToggle = isSocialChannel;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
