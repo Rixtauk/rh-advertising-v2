@@ -45,20 +45,29 @@ export default function RootLayout({
                     href="/copy"
                     className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
-                    Copy Generator
+                    Education Ad Copy Generator
                   </Link>
                   <Link
                     href="/optimise"
                     className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
-                    Landing Page Optimiser
+                    University Landing Page Optimizer
                   </Link>
                   <Link
                     href="/assets"
                     className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
-                    Asset Specs
+                    Creative Asset Spec Query Tool
                   </Link>
+                  <span
+                    className="text-sm font-medium text-gray-500 cursor-not-allowed flex items-center gap-2"
+                    title="Coming Soon"
+                  >
+                    Education Insight Assistant
+                    <span className="text-xs px-2 py-0.5 bg-gray-700 text-gray-400 rounded-full">
+                      Coming Soon
+                    </span>
+                  </span>
                 </nav>
               </div>
             </div>
