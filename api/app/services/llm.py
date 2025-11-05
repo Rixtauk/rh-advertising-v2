@@ -82,12 +82,18 @@ def build_system_prompt(
     audience: str,
     tone_hint: str,
     audience_hint: str,
+    subtype_hint: str = "",
 ) -> str:
     """Build system prompt for ad copy generation."""
     # Add channel-specific rules
     channel_rules = ""
     if channel.upper() in ["SEARCH", "PERFORMANCE MAX"]:
         channel_rules = "\n5. NEVER use exclamation marks (!) in any field for Google Search and Performance Max ads"
+
+    # Add subtype context if available
+    subtype_context = ""
+    if subtype_hint:
+        subtype_context = f"\n\nCommunication Type Context: {subtype}\n{subtype_hint}\n"
 
     return f"""You are an expert higher education advertising copywriter specializing in {channel} ads.
 
@@ -97,7 +103,7 @@ Tone: {tone}
 {tone_hint}
 
 Audience: {audience}
-{audience_hint}
+{audience_hint}{subtype_context}
 
 Guidelines:
 - Write clear, benefit-focused copy that drives action
@@ -177,7 +183,8 @@ async def generate_copy_with_openai(
     fields: list[FieldLimit],
     tone_hint: str,
     audience_hint: str,
-    emojis_allowed: bool,
+    subtype_hint: str = "",
+    emojis_allowed: bool = False,
     creativity: int = 5,
     scraped_context: Optional[str] = None,
     num_options: int = 3,
@@ -203,6 +210,7 @@ async def generate_copy_with_openai(
         audience=audience,
         tone_hint=tone_hint,
         audience_hint=audience_hint,
+        subtype_hint=subtype_hint,
     )
 
     user_prompt = build_user_prompt(

@@ -157,3 +157,10 @@ def get_audience_hint(audience: str) -> str:
     taxonomies = load_taxonomies()
     hints = taxonomies.audience_hints if hasattr(taxonomies, 'audience_hints') else {}
     return hints.get(audience, "Tailor to their needs and aspirations.")
+
+
+def get_subtype_hint(subtype: str) -> str:
+    """Get contextual hint for subtype/communication type from taxonomies."""
+    taxonomies = load_taxonomies()
+    hints = taxonomies.subtype_hints if hasattr(taxonomies, 'subtype_hints') else {}
+    return hints.get(subtype, "")

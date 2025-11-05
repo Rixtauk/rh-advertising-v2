@@ -66,4 +66,7 @@ tone_hints:
 audience_hints:
   "Undergraduates": "Peer-like tone, modern phrasing, avoid jargon."
   "Postgraduates": "Professional tone, research/career focus, clear next steps."
-  "Parents & Influencers": "Reassuring and trustworthy; safety, support, outcomes."
+  "Parents & Influencers": "Focus on child's future (e.g., 'Your child's future...', 'Help them achieve...'). Emphasize safety, teaching quality, student support, and career prospects. Reassuring and trustworthy tone."
+
+subtype_hints:
+  "Clearing": "UK Clearing is the process for students who haven't secured a university place after A-level results day (mid-August). It allows universities with remaining spaces to accept applications. Key messaging: act fast, spaces limited, simplified application process, immediate decision possible, it's not too late. Emphasize speed, availability, and reassurance."

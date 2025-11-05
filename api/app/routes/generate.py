@@ -6,7 +6,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
-from app.config_loader import get_audience_hint, get_tone_hint
+from app.config_loader import get_audience_hint, get_tone_hint, get_subtype_hint
 from app.models.io import GenerateRequest, GenerateResponse, GeneratedOption
 from app.services.limits import get_limits_for_channel, validate_generated_fields
 from app.services.llm import generate_copy_with_openai
@@ -41,9 +41,10 @@ async def generate_copy(request: GenerateRequest) -> GenerateResponse:
                 detail=f"No field limits found for channel '{request.channel}' and subtype '{request.subtype}'"
             )
 
-        # Get tone and audience hints
+        # Get tone, audience, and subtype hints
         tone_hint = get_tone_hint(request.tone)
         audience_hint = get_audience_hint(request.audience)
+        subtype_hint = get_subtype_hint(request.subtype)
 
         # Scrape landing page if URL provided
         scraped_context: Optional[str] = None
@@ -72,6 +73,7 @@ async def generate_copy(request: GenerateRequest) -> GenerateResponse:
             fields=field_limits,
             tone_hint=tone_hint,
             audience_hint=audience_hint,
+            subtype_hint=subtype_hint,
             emojis_allowed=request.emojis_allowed,
             scraped_context=scraped_context,
             num_options=1,
