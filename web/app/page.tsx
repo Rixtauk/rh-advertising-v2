@@ -10,10 +10,10 @@ export default function HomePage() {
         {/* Full screen hero */}
         <FullScreenHero />
 
-        {/* Copy Generator - Text Left, Image Right */}
+        {/* Education Ad Copy Generator - Text Left, Image Right */}
         <AlternatingSection
-          title="AI-Powered Copy Generator"
-          description="Generate compliant ad copy for 14+ advertising platforms in seconds. Our AI is specifically trained on higher education marketing best practices and regulatory requirements."
+          title="Education Ad Copy Generator"
+          description="Build great ad copy in seconds. Generate, test, and refine variations for 14+ channels—all designed for education."
           benefits={[
             'Generate compliant ad copy in seconds',
             '14+ advertising channels supported',
@@ -29,10 +29,10 @@ export default function HomePage() {
           reverse={false}
         />
 
-        {/* Landing Page Optimiser - Text Right, Image Left */}
+        {/* University Landing Page Optimizer - Text Right, Image Left */}
         <AlternatingSection
-          title="Landing Page Optimiser"
-          description="Get actionable insights and recommendations to improve your landing page conversion rates. Our AI analyses page structure, messaging, and user experience with best practices tailored for higher education audiences."
+          title="University Landing Page Optimizer"
+          description="Get a quality score and actionable insights for any landing page. Built to analyze and optimize for university recruitment."
           benefits={[
             'AI-powered conversion analysis',
             'Actionable recommendations',
@@ -41,17 +41,17 @@ export default function HomePage() {
             'Competitor benchmarking',
           ]}
           image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-          imageAlt="Landing Page Optimiser Dashboard"
+          imageAlt="Landing Page Optimizer Dashboard"
           ctaText="Analyse Your Page"
           ctaHref="/optimise"
           reverse={true}
           backgroundColor="bg-gray-50"
         />
 
-        {/* Asset Specs - Text Left, Image Right */}
+        {/* Creative Asset Spec Query Tool - Text Left, Image Right */}
         <AlternatingSection
-          title="Creative Asset Specifications"
-          description="Access up-to-date creative specifications for all major advertising platforms in one place. Never miss a deadline or submit incorrect file formats again with our comprehensive spec library."
+          title="Creative Asset Spec Query Tool"
+          description="Ask for image sizes, character limits, or technical specs for any channel. Get instant, reliable answers."
           benefits={[
             '14+ platform specifications',
             'Always up-to-date requirements',
@@ -62,9 +62,29 @@ export default function HomePage() {
           image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
           imageAlt="Asset Specifications Interface"
           ctaText="View All Specs"
-          ctaHref="/specs"
+          ctaHref="/assets"
           badge="New"
           reverse={false}
+        />
+
+        {/* Education Insight Assistant - Text Right, Image Left */}
+        <AlternatingSection
+          title="Education Insight Assistant"
+          description="Ask strategic questions and get instant answers. Powered by real data, market trends and student insight."
+          benefits={[
+            'Real-time market intelligence',
+            'Student demographic insights',
+            'Competitor analysis and benchmarking',
+            'Trend forecasting and predictions',
+            'Data-backed strategic recommendations',
+          ]}
+          image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+          imageAlt="Education Insight Assistant Interface"
+          ctaText="Coming Soon"
+          disabled={true}
+          badge="Coming Soon"
+          reverse={true}
+          backgroundColor="bg-gray-50"
         />
 
         {/* Features/Benefits section */}

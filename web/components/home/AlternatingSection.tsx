@@ -9,10 +9,11 @@ interface AlternatingSectionProps {
   image: string;
   imageAlt: string;
   ctaText: string;
-  ctaHref: string;
+  ctaHref?: string;
   reverse: boolean;
   badge?: string;
   backgroundColor?: string;
+  disabled?: boolean;
 }
 
 export function AlternatingSection({
@@ -26,6 +27,7 @@ export function AlternatingSection({
   reverse,
   badge,
   backgroundColor = "transparent",
+  disabled = false,
 }: AlternatingSectionProps) {
   return (
     <section
@@ -67,12 +69,21 @@ export function AlternatingSection({
               ))}
             </ul>
 
-            <Link
-              href={ctaHref}
-              className="inline-block px-8 py-3 bg-[#55A2C3] text-white font-semibold rounded-lg hover:bg-[#4A8FA9] transition-colors duration-200 shadow-md hover:shadow-lg"
-            >
-              {ctaText}
-            </Link>
+            {disabled ? (
+              <button
+                disabled
+                className="inline-block px-8 py-3 bg-gray-400 text-white font-semibold rounded-lg cursor-not-allowed opacity-60 shadow-md"
+              >
+                {ctaText}
+              </button>
+            ) : (
+              <Link
+                href={ctaHref!}
+                className="inline-block px-8 py-3 bg-[#55A2C3] text-white font-semibold rounded-lg hover:bg-[#4A8FA9] transition-colors duration-200 shadow-md hover:shadow-lg"
+              >
+                {ctaText}
+              </Link>
+            )}
           </div>
 
           {/* Image Column */}
