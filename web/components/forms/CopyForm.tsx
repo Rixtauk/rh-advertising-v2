@@ -266,7 +266,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           </button>
         </div>
         <p className="text-xs text-muted-foreground">
-          Lower values prioritize staying within character limits. Higher values allow more creative freedom.
+          Lower values prioritise staying within character limits. Higher values allow more creative freedom.
         </p>
       </div>
 
@@ -314,7 +314,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
         <div className="flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm">
           <Info className="h-4 w-4 flex-shrink-0 text-blue-600" />
           <p className="text-blue-900">
-            Since you've added a landing page URL, generation will take 10-20 seconds while we extract and analyze USPs.
+            Since you've added a landing page URL, generation will take 10-20 seconds while we extract and analyse USPs.
           </p>
         </div>
       )}

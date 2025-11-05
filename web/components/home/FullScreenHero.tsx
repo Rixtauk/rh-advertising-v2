@@ -24,35 +24,38 @@ export function FullScreenHero() {
           sizes="100vw"
         />
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/60" />
       </div>
 
       {/* Content Container */}
       <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Main Headline */}
-        <h1
-          className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in"
-        >
-          Smarter marketing for education. Powered by AI.
-        </h1>
+        {/* Text Content with Semi-transparent Background */}
+        <div className="backdrop-blur-sm bg-gray-900/30 rounded-2xl px-6 py-8 md:px-12 md:py-10">
+          {/* Main Headline */}
+          <h1
+            className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in"
+          >
+            Smarter marketing for education. Powered by AI.
+          </h1>
 
-        {/* Subheading */}
-        <div
-          className="text-lg md:text-xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed space-y-4 animate-fade-in"
-          style={{ animationDelay: '0.2s' }}
-        >
-          <p>
-            We know that marketing a university, college or school is a complex job. Rules change. Channels evolve. Budgets shrink. Expectations grow. You need speed, accuracy, and creativity—all at once.
-          </p>
-          <p>
-            We've designed a set of intelligent, easy-to-use tools that help you generate high-performing copy, audit landing pages, and access channel specs in seconds—not hours.
-          </p>
-          <p>
-            At the heart of the suite is our Education Insight Assistant. Ask any strategic question and get instant, data-backed answers on trends, targeting, messaging, and more.
-          </p>
-          <p>
-            Behind every tool is our deep understanding of the education marketing landscape and the unique needs of recruiters. We built this for you.
-          </p>
+          {/* Subheading */}
+          <div
+            className="text-lg md:text-xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed space-y-4 animate-fade-in"
+            style={{ animationDelay: '0.2s' }}
+          >
+            <p>
+              We know that marketing a university, college or school is a complex job. Rules change. Channels evolve. Budgets shrink. Expectations grow. You need speed, accuracy, and creativity—all at once.
+            </p>
+            <p>
+              We've designed a set of intelligent, easy-to-use tools that help you generate high-performing copy, audit landing pages, and access channel specs in seconds—not hours.
+            </p>
+            <p>
+              At the heart of the suite is our Education Insight Assistant. Ask any strategic question and get instant, data-backed answers on trends, targeting, messaging, and more.
+            </p>
+            <p>
+              Behind every tool is our deep understanding of the education marketing landscape and the unique needs of recruiters. We built this for you.
+            </p>
+          </div>
         </div>
 
         {/* CTA Button */}

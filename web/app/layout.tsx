@@ -51,7 +51,7 @@ export default function RootLayout({
                     href="/optimise"
                     className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
-                    University Landing Page Optimizer
+                    University Landing Page Optimiser
                   </Link>
                   <Link
                     href="/assets"

@@ -31,7 +31,7 @@ export function AlternatingSection({
 }: AlternatingSectionProps) {
   return (
     <section
-      className="py-20 md:py-32"
+      className="py-12 md:py-20"
       style={{ backgroundColor }}
     >
       <div className="max-w-7xl mx-auto px-4">

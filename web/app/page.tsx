@@ -29,10 +29,10 @@ export default function HomePage() {
           reverse={false}
         />
 
-        {/* University Landing Page Optimizer - Text Right, Image Left */}
+        {/* University Landing Page Optimiser - Text Right, Image Left */}
         <AlternatingSection
-          title="University Landing Page Optimizer"
-          description="Get a quality score and actionable insights for any landing page. Built to analyze and optimize for university recruitment."
+          title="University Landing Page Optimiser"
+          description="Get a quality score and actionable insights for any landing page. Built to analyse and optimise for university recruitment."
           benefits={[
             'AI-powered conversion analysis',
             'Actionable recommendations',
@@ -41,7 +41,7 @@ export default function HomePage() {
             'Competitor benchmarking',
           ]}
           image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-          imageAlt="Landing Page Optimizer Dashboard"
+          imageAlt="Landing Page Optimiser Dashboard"
           ctaText="Analyse Your Page"
           ctaHref="/optimise"
           reverse={true}

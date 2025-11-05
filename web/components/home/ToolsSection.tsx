@@ -11,7 +11,7 @@ export function ToolsSection() {
       gradient: 'from-[#55A2C3] to-[#8B5CF6]',
     },
     {
-      title: 'University Landing Page Optimizer',
+      title: 'University Landing Page Optimiser',
       description:
         'Get actionable insights and recommendations to improve your landing page conversion rates. Analyse page structure, messaging, CTAs, and user experience elements with AI-powered suggestions tailored for higher education audiences.',
       href: '/optimise',
