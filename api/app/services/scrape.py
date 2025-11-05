@@ -62,13 +62,25 @@ async def scrape_with_jina(url: str) -> ScrapedContent:
             # Parse markdown for structure
             if content.markdown:
                 content.word_count = len(content.markdown.split())
-                content.h1 = re.findall(r"^# (.+)$", content.markdown, re.MULTILINE)
-                content.h2 = re.findall(r"^## (.+)$", content.markdown, re.MULTILINE)
+
+                # Match both ATX-style (# Heading) and setext-style (Heading\n===)
+                # ATX H1: # Heading
+                atx_h1 = re.findall(r"^# (.+)$", content.markdown, re.MULTILINE)
+                # Setext H1: Heading\n===
+                setext_h1 = re.findall(r"^(.+)\n=+$", content.markdown, re.MULTILINE)
+                content.h1 = atx_h1 + setext_h1
+
+                # ATX H2: ## Heading
+                atx_h2 = re.findall(r"^## (.+)$", content.markdown, re.MULTILINE)
+                # Setext H2: Heading\n---
+                setext_h2 = re.findall(r"^(.+)\n-+$", content.markdown, re.MULTILINE)
+                content.h2 = atx_h2 + setext_h2
+
                 content.h3 = []  # Not needed - removed to reduce noise
                 content.paragraphs = [
                     p.strip()
                     for p in content.markdown.split("\n\n")
-                    if p.strip() and not p.startswith("#")
+                    if p.strip() and not p.startswith("#") and not p.strip().startswith("=") and not p.strip().startswith("-")
                 ][:5]  # First 5 paragraphs only
 
             logger.info(f"Scraped {url} via Jina.AI: {content.word_count} words")

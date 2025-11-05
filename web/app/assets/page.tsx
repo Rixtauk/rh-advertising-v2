@@ -12,6 +12,7 @@ const CHANNELS = [
   'SEARCH',
   'DISPLAY',
   'PERFORMANCE MAX',
+  'DEMAND GEN',
   'YOUTUBE',
   'TIKTOK',
   'SNAPCHAT',
