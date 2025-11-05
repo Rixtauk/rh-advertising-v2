@@ -27,6 +27,7 @@ interface FormState {
   landingUrl: string;
   includeEmojis: boolean;
   creativity: 3 | 5 | 7;
+  openDayDate: string;
 }
 
 export function CopyForm({ channels, subtypes, tones, audiences, socialChannels, onSubmit }: CopyFormProps) {
@@ -43,6 +44,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
     landingUrl: '',
     includeEmojis: false,
     creativity: 5,
+    openDayDate: '',
   });
 
   // Load from localStorage on mount
@@ -133,6 +135,17 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
             ))}
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="openDayDate">Open Day Date (Optional)</Label>
+        <input
+          id="openDayDate"
+          type="date"
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          value={formState.openDayDate}
+          onChange={(e) => setFormState((prev) => ({ ...prev, openDayDate: e.target.value }))}
+        />
       </div>
 
       <div className="space-y-2">
