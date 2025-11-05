@@ -84,6 +84,11 @@ def build_system_prompt(
     audience_hint: str,
 ) -> str:
     """Build system prompt for ad copy generation."""
+    # Add channel-specific rules
+    channel_rules = ""
+    if channel.upper() in ["SEARCH", "PERFORMANCE MAX"]:
+        channel_rules = "\n5. NEVER use exclamation marks (!) in any field for Google Search and Performance Max ads"
+
     return f"""You are an expert higher education advertising copywriter specializing in {channel} ads.
 
 Your task is to write compelling ad copy for a {subtype} targeting {audience}.
@@ -106,7 +111,7 @@ CRITICAL REQUIREMENTS (YOU MUST FOLLOW THESE):
 1. Every field MUST stay within its character limit - no exceptions
 2. Count characters carefully for each field before finalizing
 3. Never omit required fields
-4. Follow emoji rules strictly (only include where explicitly allowed)
+4. Follow emoji rules strictly (only include where explicitly allowed){channel_rules}
 
 You will receive specific character limits for each field.
 
