@@ -48,6 +48,7 @@ export async function generateAdCopy(formData: FormData) {
   const landingUrl = formData.get('landingUrl') as string;
   const includeEmojis = formData.get('includeEmojis') === 'true';
   const creativity = parseInt(formData.get('creativity') as string) || 5;
+  const openDayDate = formData.get('openDayDate') as string;
 
   if (!channel || !subtype || !university || !tone || !audience) {
     throw new Error('Missing required fields');
@@ -71,6 +72,7 @@ export async function generateAdCopy(formData: FormData) {
     emojis_allowed: emojiAllowed && includeEmojis,
     landing_url: landingUrl || null,
     creativity: creativity,
+    open_day_date: openDayDate || null,
   };
 
   try {

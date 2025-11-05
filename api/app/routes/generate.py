@@ -76,6 +76,7 @@ async def generate_copy(request: GenerateRequest) -> GenerateResponse:
             scraped_context=scraped_context,
             num_options=1,
             creativity=request.creativity,
+            open_day_date=request.open_day_date,
         )
         timings["generation_ms"] = int((time.time() - generation_start) * 1000)
 

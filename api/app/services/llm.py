@@ -119,6 +119,7 @@ def build_user_prompt(
     fields: list[FieldLimit],
     scraped_context: Optional[str],
     emojis_allowed: bool,
+    open_day_date: Optional[str] = None,
 ) -> str:
     """Build user prompt with university details and requirements.
 
@@ -142,11 +143,15 @@ def build_user_prompt(
     if scraped_context:
         context_section = f"\n\nLanding Page Context:\n{scraped_context}\n"
 
+    open_day_section = ""
+    if open_day_date:
+        open_day_section = f"\n\nOpen Day Date: {open_day_date}\nNote: Include this date in the copy where appropriate to create urgency and specificity.\n"
+
     prompt = f"""University: {university}
 
 Key selling points and details:
 {usps}
-{context_section}
+{context_section}{open_day_section}
 Required fields and limits:
 {fields_text}
 
@@ -171,6 +176,7 @@ async def generate_copy_with_openai(
     creativity: int = 5,
     scraped_context: Optional[str] = None,
     num_options: int = 3,
+    open_day_date: Optional[str] = None,
 ) -> tuple[list[dict[str, Any]], str]:
     """
     Generate ad copy using OpenAI with structured outputs.
@@ -200,6 +206,7 @@ async def generate_copy_with_openai(
         fields=fields,
         scraped_context=scraped_context,
         emojis_allowed=emojis_allowed,
+        open_day_date=open_day_date,
     )
 
     logger.info(f"Generating {num_options} ad copy options for {channel} ({subtype})")
