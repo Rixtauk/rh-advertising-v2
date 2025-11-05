@@ -16,8 +16,8 @@ class Settings(BaseSettings):
     # CORS
     cors_allow_origins: str = "http://localhost:3000"
 
-    # Jina.AI
-    jina_api_key: str = ""
+    # Firecrawl
+    firecrawl_api_key: str = ""
 
     # Scraping
     scrape_timeout_seconds: int = 25

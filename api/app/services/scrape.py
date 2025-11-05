@@ -1,4 +1,4 @@
-"""Landing page scraping using Jina.AI Reader API."""
+"""Landing page scraping using Firecrawl API."""
 
 import logging
 import re
@@ -32,32 +32,37 @@ class ScrapedContent:
         self.error: Optional[str] = None
 
 
-async def scrape_with_jina(url: str) -> ScrapedContent:
+async def scrape_with_firecrawl(url: str) -> ScrapedContent:
     """
-    Scrape URL using Jina.AI Reader API.
+    Scrape URL using Firecrawl API.
 
-    Jina.AI provides clean markdown extraction which is great for LLM analysis.
+    Firecrawl provides clean markdown extraction and handles JavaScript-heavy sites.
     """
     settings = get_settings()
     content = ScrapedContent()
 
     try:
-        jina_url = f"https://r.jina.ai/{url}"
-        headers = {"Accept": "application/json"}
-
-        if settings.jina_api_key:
-            headers["Authorization"] = f"Bearer {settings.jina_api_key}"
+        firecrawl_url = "https://api.firecrawl.dev/v1/scrape"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {settings.firecrawl_api_key}"
+        }
+        payload = {
+            "url": url,
+            "formats": ["markdown"],
+            "onlyMainContent": True
+        }
 
         async with httpx.AsyncClient(timeout=settings.scrape_timeout_seconds) as client:
-            response = await client.get(jina_url, headers=headers)
+            response = await client.post(firecrawl_url, headers=headers, json=payload)
             response.raise_for_status()
 
             data = response.json()
 
-            # Jina returns clean markdown and structured data
-            content.markdown = data.get("data", {}).get("content", "")
-            content.title = data.get("data", {}).get("title")
-            content.meta_description = data.get("data", {}).get("description")
+            # Firecrawl returns clean markdown and structured data
+            content.markdown = data.get("data", {}).get("markdown", "")
+            content.title = data.get("data", {}).get("metadata", {}).get("title")
+            content.meta_description = data.get("data", {}).get("metadata", {}).get("description")
 
             # Parse markdown for structure
             if content.markdown:
@@ -83,17 +88,17 @@ async def scrape_with_jina(url: str) -> ScrapedContent:
                     if p.strip() and not p.startswith("#") and not p.strip().startswith("=") and not p.strip().startswith("-")
                 ][:5]  # First 5 paragraphs only
 
-            logger.info(f"Scraped {url} via Jina.AI: {content.word_count} words")
+            logger.info(f"Scraped {url} via Firecrawl: {content.word_count} words")
             return content
 
     except httpx.TimeoutException:
-        logger.warning(f"Timeout scraping {url} with Jina.AI")
+        logger.warning(f"Timeout scraping {url} with Firecrawl")
         content.error = "Timeout: Site took too long to respond"
     except httpx.HTTPStatusError as e:
         logger.warning(f"HTTP error scraping {url}: {e.response.status_code}")
         content.error = f"Access denied: HTTP {e.response.status_code}"
     except Exception as e:
-        logger.error(f"Error scraping {url} with Jina.AI: {e}")
+        logger.error(f"Error scraping {url} with Firecrawl: {e}")
         content.error = str(e)
 
     return content
@@ -199,22 +204,22 @@ async def scrape_with_selectolax(url: str) -> ScrapedContent:
     return content
 
 
-async def scrape_landing_page(url: str, use_jina: bool = True) -> ScrapedContent:
+async def scrape_landing_page(url: str, use_firecrawl: bool = True) -> ScrapedContent:
     """
     Scrape landing page using preferred method.
 
     Args:
         url: Page URL to scrape
-        use_jina: Whether to try Jina.AI first (default True)
+        use_firecrawl: Whether to try Firecrawl first (default True)
 
     Returns:
         ScrapedContent with extracted page data
     """
-    if use_jina:
-        content = await scrape_with_jina(url)
+    if use_firecrawl:
+        content = await scrape_with_firecrawl(url)
         if not content.error:
             return content
-        logger.info(f"Jina.AI failed, falling back to selectolax for {url}")
+        logger.info(f"Firecrawl failed, falling back to selectolax for {url}")
 
     return await scrape_with_selectolax(url)
 
