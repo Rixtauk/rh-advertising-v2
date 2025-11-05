@@ -21,7 +21,7 @@ export default function HomePage() {
             'Brand guidelines integration',
             'Multiple variations with A/B testing suggestions',
           ]}
-          image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+          image="/ad-copy-generator.jpeg"
           imageAlt="Copy Generator Interface"
           ctaText="Start Generating Copy"
           ctaHref="/copy"
@@ -40,7 +40,7 @@ export default function HomePage() {
             'Mobile and desktop insights',
             'Competitor benchmarking',
           ]}
-          image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+          image="/univerity-landing-page-optimiser.jpeg"
           imageAlt="Landing Page Optimiser Dashboard"
           ctaText="Analyse Your Page"
           ctaHref="/optimise"
@@ -59,7 +59,7 @@ export default function HomePage() {
             'Export to PDF or share with team',
             'Platform-specific best practices',
           ]}
-          image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+          image="/asset-spec-query-tool.jpeg"
           imageAlt="Asset Specifications Interface"
           ctaText="View All Specs"
           ctaHref="/assets"
@@ -78,7 +78,7 @@ export default function HomePage() {
             'Trend forecasting and predictions',
             'Data-backed strategic recommendations',
           ]}
-          image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+          image="/education-insight-assistant.jpeg"
           imageAlt="Education Insight Assistant Interface"
           ctaText="Coming Soon"
           disabled={true}

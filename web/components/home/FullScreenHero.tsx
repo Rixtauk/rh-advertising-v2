@@ -16,7 +16,7 @@ export function FullScreenHero() {
       {/* Background Image with Next.js Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80"
+          src="/university-hero.jpeg"
           alt="University campus"
           fill
           priority
