@@ -150,7 +150,7 @@ export default function CopyPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-2">Ad Copy Generator</h1>
+        <h1 className="text-3xl font-bold mb-2">Education Ad Copy Generator</h1>
         <p className="text-muted-foreground">
           Generate compliant, on-brand ad copy for your chosen channel and audience.
         </p>

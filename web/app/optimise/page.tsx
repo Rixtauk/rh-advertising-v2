@@ -45,7 +45,7 @@ export default function OptimisePage() {
   return (
     <main className="container mx-auto py-8 px-4 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Landing Page Optimiser</h1>
+        <h1 className="text-4xl font-bold mb-2">University Landing Page Optimizer</h1>
         <p className="text-lg text-muted-foreground">
           Get comprehensive analysis and actionable recommendations for your university landing pages
         </p>
