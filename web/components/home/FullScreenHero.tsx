@@ -33,18 +33,27 @@ export function FullScreenHero() {
         <h1
           className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in"
         >
-          Intelligent Advertising for Higher Education
+          Smarter marketing for education. Powered by AI.
         </h1>
 
         {/* Subheading */}
-        <p
-          className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in"
+        <div
+          className="text-lg md:text-xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed space-y-4 animate-fade-in"
           style={{ animationDelay: '0.2s' }}
         >
-          Generate compliant ad copy, optimise landing pages, and access creative specifications
-          for 14+ advertising channels—all in one platform designed for higher education marketing
-          teams.
-        </p>
+          <p>
+            We know that marketing a university, college or school is a complex job. Rules change. Channels evolve. Budgets shrink. Expectations grow. You need speed, accuracy, and creativity—all at once.
+          </p>
+          <p>
+            We've designed a set of intelligent, easy-to-use tools that help you generate high-performing copy, audit landing pages, and access channel specs in seconds—not hours.
+          </p>
+          <p>
+            At the heart of the suite is our Education Insight Assistant. Ask any strategic question and get instant, data-backed answers on trends, targeting, messaging, and more.
+          </p>
+          <p>
+            Behind every tool is our deep understanding of the education marketing landscape and the unique needs of recruiters. We built this for you.
+          </p>
+        </div>
 
         {/* CTA Button */}
         <div
