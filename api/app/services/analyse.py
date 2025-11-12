@@ -103,51 +103,64 @@ async def analyze_with_llm(prompt: str, max_score: int = 10) -> dict:
         }
 
 
-async def score_copy_quality(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
+async def score_content_clarity(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
     """
-    Score copy quality using LLM analysis (20 points max).
+    Score content clarity and messaging (25 points max).
 
-    Uses GPT-4o-mini to evaluate:
-    - Value proposition clarity and specificity
-    - Benefit focus vs feature focus
-    - Content structure and flow
-    - Brand voice appropriateness
+    Evaluates:
+    - Clear messaging and easy to understand
+    - Key information is visible and obvious
+    - Content is focused and not overwhelming
+    - Appropriate for the page objective
     """
-    max_score = 20
+    max_score = 25
 
     # Prepare content for analysis
-    h1_text = content.h1[0] if content.h1 else "No H1 found"
-    h2_text = ", ".join(content.h2[:5]) if content.h2 else "No H2s found"
+    h1_text = content.h1[0] if content.h1 else "No main heading found"
+    h2_text = ", ".join(content.h2[:5]) if content.h2 else "No subheadings found"
     paragraphs_text = " ".join(content.paragraphs[:3]) if content.paragraphs else "No content found"
 
     # Truncate to avoid token limits
     if len(paragraphs_text) > 1000:
         paragraphs_text = paragraphs_text[:1000] + "..."
 
-    prompt = f"""You are an expert landing page analyst evaluating copy quality for a {objective} page.
+    # Objective-specific requirements
+    objective_requirements = {
+        "Open Day Registration": "Event date, time, and location should be clear and prominent. What to expect at the open day.",
+        "Pre-Clearing Enquiry Form": "Course availability and next steps should be obvious. Why enquire now.",
+        "Drive Applications": "Course benefits and application deadline should be clear. Why apply to this course.",
+        "Course Information": "Course content, entry requirements, and what makes it unique should be visible."
+    }
 
-Analyze this content:
-H1: {h1_text}
-H2s: {h2_text}
+    requirement_text = objective_requirements.get(objective, "Key information for this page type")
+
+    prompt = f"""You are evaluating a university landing page for {objective}.
+
+Check if the content is clear and easy to understand:
+
+Main Heading: {h1_text}
+Subheadings: {h2_text}
 Content: {paragraphs_text}
 
-Evaluate on this rubric (0-10 scale):
-- Value proposition: Is it clear, specific, and compelling?
-- Benefit focus: Does it emphasize outcomes, not just features?
-- Content structure: Appropriate length, good flow, scannable?
-- Brand voice: Professional, consistent, appropriate for higher education?
+For this page type, students need to quickly find: {requirement_text}
+
+Rate on a simple 0-10 scale:
+- Is the main message clear within 3 seconds?
+- Can you easily find the important information?
+- Is the language simple and jargon-free?
+- Does it focus on student benefits, not just facts?
 
 Provide:
 1. Score (0-10, where 10 is excellent)
-2. 2-3 specific, actionable issues to fix (if score < 9)
+2. List 2-3 simple improvements the team can make (use plain language, no technical jargon)
 
 Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
 
     # Get LLM analysis
     result = await analyze_with_llm(prompt, max_score=10)
 
-    # Scale score to 20 points
-    score = int(result["score"] * 2)
+    # Scale score to 25 points
+    score = int((result["score"] / 10) * max_score)
 
     # Convert issue strings to Issue objects
     issues = []
@@ -161,12 +174,12 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
             severity = "low"
 
         issues.append(Issue(
-            category="Copy Quality",
+            category="Content Clarity",
             severity=severity,
-            title=f"Copy improvement {i+1}",
+            title=f"Content clarity issue {i+1}",
             description=issue_text,
             suggestion=issue_text,
-            impact="May reduce visitor engagement and conversion rates"
+            impact="Students may not understand the key message quickly enough"
         ))
 
     percentage = int((score / max_score) * 100)
@@ -178,48 +191,48 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
     ), issues
 
 
-async def score_user_experience(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
+async def score_page_usability(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
     """
-    Score UX and usability using LLM analysis (20 points max).
+    Score page layout and usability (25 points max).
 
-    Uses GPT-4o-mini to evaluate:
-    - Content hierarchy and structure
-    - Readability and scannability
-    - Information architecture
-    - Mobile considerations
+    Evaluates:
+    - Page layout and information hierarchy
+    - Easy to navigate and scan
+    - Mobile-friendly structure
+    - Content is not overwhelming
     """
-    max_score = 20
+    max_score = 25
 
     # Prepare structure summary
-    h1_text = content.h1[0] if content.h1 else "No H1 found"
-    h2_text = ", ".join(content.h2[:8]) if content.h2 else "No H2s found"
+    h1_text = content.h1[0] if content.h1 else "No main heading found"
+    h2_text = ", ".join(content.h2[:8]) if content.h2 else "No subheadings found"
 
-    structure_summary = f"{len(content.h1)} H1(s), {len(content.h2)} H2(s), {len(content.h3)} H3(s), {len(content.paragraphs)} paragraphs"
+    structure_summary = f"{len(content.h1)} main heading(s), {len(content.h2)} subheadings, {len(content.paragraphs)} content sections"
 
-    prompt = f"""You are a UX expert evaluating landing page structure and usability.
+    prompt = f"""You are evaluating how easy a university landing page is to use.
 
-Analyze this structure:
-H1: {h1_text}
-H2s: {h2_text}
-Content hierarchy: {structure_summary}
+Check the page structure:
+Main Heading: {h1_text}
+Subheadings: {h2_text}
+Structure: {structure_summary}
 
-Evaluate on this rubric (0-10 scale):
-- Content hierarchy: Clear H1→H2 structure, logical flow?
-- Readability: Appropriate paragraph length, easy to scan?
-- Information architecture: Key info prioritized, easy to find?
-- Mobile considerations: Structure works on mobile?
+Rate on a simple 0-10 scale:
+- Is important information at the top of the page?
+- Can you quickly scan and find what you need?
+- Is the content broken up with clear sections?
+- Does the layout look organized (not cluttered)?
 
 Provide:
 1. Score (0-10, where 10 is excellent)
-2. 2-3 specific improvements
+2. List 2-3 simple layout improvements (avoid technical terms like "HTML semantics" or "DOM structure")
 
 Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
 
     # Get LLM analysis
     result = await analyze_with_llm(prompt, max_score=10)
 
-    # Scale score to 20 points
-    score = int(result["score"] * 2)
+    # Scale score to 25 points
+    score = int((result["score"] / 10) * max_score)
 
     # Convert issue strings to Issue objects
     issues = []
@@ -233,12 +246,12 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
             severity = "low"
 
         issues.append(Issue(
-            category="User Experience",
+            category="Page Usability",
             severity=severity,
-            title=f"UX improvement {i+1}",
+            title=f"Layout issue {i+1}",
             description=issue_text,
             suggestion=issue_text,
-            impact="May hinder user navigation and page usability"
+            impact="Students may struggle to find information or leave the page"
         ))
 
     percentage = int((score / max_score) * 100)
@@ -250,57 +263,87 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
     ), issues
 
 
-# Keep backward compatibility alias
-score_ux_layout = score_user_experience
-
-
-async def score_cta_effectiveness(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
+async def score_conversion_elements(content: ScrapedContent, objective: ObjectiveType) -> tuple[CategoryScore, list[Issue]]:
     """
-    Score CTA effectiveness using LLM analysis (20 points max).
+    Score conversion elements (buttons, forms, videos) (25 points max).
 
-    Uses GPT-4o-mini to evaluate:
-    - Action clarity and specificity
-    - Urgency and motivation
-    - CTA placement and visibility
-    - Variety of conversion opportunities
+    Evaluates:
+    - Presence and clarity of key action buttons
+    - Forms for collecting student information
+    - Videos to engage visitors
+    - Multiple ways for students to convert
     """
-    max_score = 20
+    max_score = 25
+
+    # Check for objective-specific CTAs
+    objective_cta_requirements = {
+        "Open Day Registration": ["book", "register", "open day"],
+        "Pre-Clearing Enquiry Form": ["enquire", "contact", "clearing"],
+        "Drive Applications": ["apply", "application"],
+        "Course Information": ["learn more", "download", "prospectus", "find out"]
+    }
+
+    expected_ctas = objective_cta_requirements.get(objective, [])
+    ctas_lower = [cta.lower() for cta in content.ctas] if content.ctas else []
+
+    # Check for recommended buttons (bonus points)
+    has_apply_now = any("apply" in cta for cta in ctas_lower)
+    has_book_open_day = any("book" in cta or "open day" in cta for cta in ctas_lower)
+    has_download_prospectus = any("download" in cta or "prospectus" in cta for cta in ctas_lower)
+
+    # Count forms and videos as conversion elements
+    has_form = len(content.forms) > 0
+    has_video = "video" in (content.markdown or "").lower() or "youtube" in (content.markdown or "").lower() or "vimeo" in (content.markdown or "").lower()
 
     # Prepare content context
     full_content = ""
     if content.ctas:
-        full_content += f"CTAs found: {', '.join(content.ctas[:5])}\n"
+        full_content += f"Buttons/CTAs found: {', '.join(content.ctas[:8])}\n"
     else:
-        full_content += "No CTAs detected\n"
+        full_content += "No action buttons detected\n"
 
-    if content.h1:
-        full_content += f"H1: {content.h1[0]}\n"
+    full_content += f"Forms on page: {len(content.forms)}\n"
+    full_content += f"Video present: {'Yes' if has_video else 'No'}\n"
 
-    if content.paragraphs:
-        full_content += f"Content: {' '.join(content.paragraphs[:2])[:500]}..."
+    # Create objective-specific guidance
+    objective_guidance = {
+        "Open Day Registration": "For open day pages, look for 'Book Now' or 'Register' buttons prominently placed.",
+        "Pre-Clearing Enquiry Form": "For clearing enquiries, look for 'Enquire Now' or contact forms.",
+        "Drive Applications": "For application pages, 'Apply Now' buttons should be prominent and high on the page.",
+        "Course Information": "For course info pages, look for 'Learn More', 'Download Prospectus' or 'Find Out More' buttons."
+    }
 
-    prompt = f"""You are an expert analyzing call-to-action effectiveness for a {objective} landing page.
+    guidance = objective_guidance.get(objective, "Check for clear action buttons")
 
-Analyze these CTAs in context:
+    prompt = f"""You are evaluating conversion elements on a university {objective} page.
+
+Check what actions students can take:
 {full_content}
 
-Evaluate on this rubric (0-10 scale):
-- Action clarity: Are CTAs clear and specific?
-- Urgency/motivation: Do they create desire to act?
-- Placement: Are CTAs visible and well-positioned?
-- Variety: Are there multiple conversion opportunities?
+{guidance}
+
+Rate on a simple 0-10 scale:
+- Are there clear action buttons students can click?
+- Are the buttons easy to find (high up on page)?
+- Are there multiple ways to convert (forms, videos, buttons)?
+- Do button labels clearly say what happens when you click?
+
+Bonus points for:
+- Embedded forms to collect information
+- Videos to engage students
+- Multiple clear CTAs
 
 Provide:
 1. Score (0-10, where 10 is excellent)
-2. 2-3 specific improvements
+2. List 2-3 simple recommendations (e.g., "Add an 'Apply Now' button near the top")
 
 Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
 
     # Get LLM analysis
     result = await analyze_with_llm(prompt, max_score=10)
 
-    # Scale score to 20 points
-    score = int(result["score"] * 2)
+    # Scale score to 25 points
+    score = int((result["score"] / 10) * max_score)
 
     # Convert issue strings to Issue objects
     issues = []
@@ -314,13 +357,58 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
             severity = "low"
 
         issues.append(Issue(
-            category="CTA Effectiveness",
+            category="Conversion Elements",
             severity=severity,
-            title=f"CTA improvement {i+1}",
+            title=f"Conversion element {i+1}",
             description=issue_text,
             suggestion=issue_text,
-            impact="May reduce conversion rates and lead generation"
+            impact="Students may not know what action to take"
         ))
+
+    # Add recommendations for missing key CTAs (informational, not heavy scoring impact)
+    missing_recommendations = []
+    if not has_apply_now and objective == "Drive Applications":
+        missing_recommendations.append(Issue(
+            category="Conversion Elements",
+            severity="medium",
+            title="Consider adding 'Apply Now' button",
+            description="No 'Apply Now' button detected on this application page.",
+            suggestion="Add a prominent 'Apply Now' button near the top of the page",
+            impact="Students may not know how to start their application"
+        ))
+
+    if not has_book_open_day and objective == "Open Day Registration":
+        missing_recommendations.append(Issue(
+            category="Conversion Elements",
+            severity="medium",
+            title="Consider adding 'Book Open Day' button",
+            description="No 'Book' or 'Register' button detected for the open day.",
+            suggestion="Add a 'Book Open Day' or 'Register Now' button prominently",
+            impact="Students may struggle to register for the event"
+        ))
+
+    if not has_download_prospectus:
+        missing_recommendations.append(Issue(
+            category="Conversion Elements",
+            severity="low",
+            title="Bonus: Add prospectus download",
+            description="Consider adding a prospectus download option.",
+            suggestion="Add a 'Download Prospectus' button as an alternative conversion path",
+            impact="Provides another way for interested students to engage"
+        ))
+
+    if not has_video:
+        missing_recommendations.append(Issue(
+            category="Conversion Elements",
+            severity="low",
+            title="Bonus: Add video content",
+            description="No video detected on the page.",
+            suggestion="Consider adding a video (course overview, student testimonial, campus tour)",
+            impact="Videos increase engagement and help students understand the offering"
+        ))
+
+    # Limit to 2 most relevant recommendations
+    issues.extend(missing_recommendations[:2])
 
     percentage = int((score / max_score) * 100)
     return CategoryScore(
@@ -329,10 +417,6 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
         grade=calculate_letter_grade(percentage),
         percentage=percentage
     ), issues
-
-
-# Keep backward compatibility alias
-score_conversion_elements = score_cta_effectiveness
 
 
 def score_technical_seo(content: ScrapedContent) -> tuple[CategoryScore, list[Issue]]:
@@ -708,31 +792,37 @@ async def calculate_overall_score(
     analysis_start_time: datetime
 ) -> OptimizeResponse:
     """
-    Calculate overall landing page score across 3 core categories.
+    Calculate overall landing page score across 3 UX-focused categories.
+
+    New scoring structure:
+    - Content Clarity: 25 points
+    - Page Usability: 25 points
+    - Conversion Elements: 25 points
+    Total: 75 points → scaled to 0-100
 
     Returns comprehensive OptimizeResponse with scores, issues, and recommendations.
     """
     all_issues = []
 
-    # Score each category (3 categories only) - all using LLM analysis
-    copy_score, copy_issues = await score_copy_quality(content, objective)
-    all_issues.extend(copy_issues)
+    # Score each category (3 categories, 25 points each)
+    content_score, content_issues = await score_content_clarity(content, objective)
+    all_issues.extend(content_issues)
 
-    ux_score, ux_issues = await score_user_experience(content, objective)
-    all_issues.extend(ux_issues)
+    usability_score, usability_issues = await score_page_usability(content, objective)
+    all_issues.extend(usability_issues)
 
-    conversion_score, conversion_issues = await score_cta_effectiveness(content, objective)
+    conversion_score, conversion_issues = await score_conversion_elements(content, objective)
     all_issues.extend(conversion_issues)
 
-    # Calculate overall score (out of 60 points)
+    # Calculate overall score (out of 75 points)
     overall_score = (
-        copy_score.score +
-        ux_score.score +
+        content_score.score +
+        usability_score.score +
         conversion_score.score
     )
 
     # Convert to percentage and then calculate grade
-    overall_percentage = int((overall_score / 60) * 100)
+    overall_percentage = int((overall_score / 75) * 100)
     overall_grade = calculate_letter_grade(overall_percentage)
 
     # Extract quick wins
@@ -752,9 +842,9 @@ async def calculate_overall_score(
         objective=objective,
         url=str(content.markdown[:100]) if content.markdown else "unknown",  # Will be replaced with actual URL
         scores={
-            "copy_quality": copy_score,
-            "user_experience": ux_score,
-            "cta_effectiveness": conversion_score,
+            "content_clarity": content_score,
+            "page_usability": usability_score,
+            "conversion_elements": conversion_score,
         },
         issues=all_issues,
         quick_wins=quick_wins,

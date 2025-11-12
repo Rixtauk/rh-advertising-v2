@@ -97,8 +97,8 @@ class ShortenResponse(BaseModel):
 ObjectiveType = Literal[
     "Open Day Registration",
     "Pre-Clearing Enquiry Form",
-    "Application",
-    "Recruitment Page",
+    "Drive Applications",
+    "Course Information",
 ]
 
 

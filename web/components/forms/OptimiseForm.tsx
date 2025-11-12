@@ -21,8 +21,8 @@ interface OptimiseFormProps {
 const OBJECTIVES = [
   "Open Day Registration",
   "Pre-Clearing Enquiry Form",
-  "Application",
-  "Recruitment Page",
+  "Drive Applications",
+  "Course Information",
 ] as const;
 
 export function OptimiseForm({ onSubmit, isLoading }: OptimiseFormProps) {

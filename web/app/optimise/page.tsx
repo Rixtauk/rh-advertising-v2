@@ -113,12 +113,9 @@ export default function OptimisePage() {
                 <div className="mt-6">
                   <h4 className="text-xs font-semibold text-gray-900 mb-2">What we analyse:</h4>
                   <ul className="text-xs text-left text-gray-600 space-y-1">
-                    <li>• Copy Quality (value proposition, length, readability)</li>
-                    <li>• UX/Layout (hierarchy, navigation, mobile)</li>
-                    <li>• Conversion Elements (CTAs, forms, trust signals)</li>
-                    <li>• Technical SEO (title, meta, alt text)</li>
-                    <li>• Education-Specific (course details, requirements, dates)</li>
-                    <li>• Accessibility (semantic HTML, link quality)</li>
+                    <li>• Content Clarity (clear messaging, easy to understand)</li>
+                    <li>• Page Usability (layout, easy to scan, well organized)</li>
+                    <li>• Conversion Elements (buttons, forms, videos)</li>
                   </ul>
                 </div>
               </div>
