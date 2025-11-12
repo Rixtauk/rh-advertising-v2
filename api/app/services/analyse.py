@@ -40,7 +40,7 @@ async def analyze_with_llm(prompt: str, max_score: int = 10) -> dict:
     Analyze content using LLM with structured JSON output.
 
     Returns:
-        dict with 'score' (0-max_score) and 'issues' (list of strings)
+        dict with 'score' (0-max_score) and 'issues' (list of dicts with title, description, suggestion)
     """
     settings = get_settings()
     client = AsyncOpenAI(api_key=settings.openai_api_key)
@@ -56,8 +56,26 @@ async def analyze_with_llm(prompt: str, max_score: int = 10) -> dict:
             },
             "issues": {
                 "type": "array",
-                "description": "List of 2-3 specific, actionable issues",
-                "items": {"type": "string"},
+                "description": "List of 2-3 specific issues with actionable suggestions",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "description": "Short, specific title describing the issue (e.g., 'Missing course start date', 'Unclear call-to-action')"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Clear explanation of what the problem is and why it matters"
+                        },
+                        "suggestion": {
+                            "type": "string",
+                            "description": "Specific, actionable recommendation to fix the issue (must be different from description)"
+                        }
+                    },
+                    "required": ["title", "description", "suggestion"],
+                    "additionalProperties": False
+                },
                 "minItems": 0,
                 "maxItems": 3
             }
@@ -99,7 +117,11 @@ async def analyze_with_llm(prompt: str, max_score: int = 10) -> dict:
         # Return default values on error
         return {
             "score": max_score // 2,  # 50% score as fallback
-            "issues": ["Unable to perform detailed analysis due to technical error"]
+            "issues": [{
+                "title": "Analysis unavailable",
+                "description": "Unable to perform detailed analysis due to technical error",
+                "suggestion": "Please try again or contact support if the issue persists"
+            }]
         }
 
 
@@ -152,9 +174,14 @@ Rate on a simple 0-10 scale:
 
 Provide:
 1. Score (0-10, where 10 is excellent)
-2. List 2-3 simple improvements the team can make (use plain language, no technical jargon)
+2. List 2-3 specific issues with actionable suggestions
 
-Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
+For each issue, provide:
+- title: Short, specific title (e.g., "Missing course start date", "Unclear value proposition")
+- description: Clear explanation of what the problem is and why it matters to students
+- suggestion: Specific action the marketing team can take to fix it (must be different from description)
+
+Use plain language that non-technical marketing teams can understand and act on."""
 
     # Get LLM analysis
     result = await analyze_with_llm(prompt, max_score=10)
@@ -162,23 +189,23 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
     # Scale score to 25 points
     score = int((result["score"] / 10) * max_score)
 
-    # Convert issue strings to Issue objects
-    issues = []
-    for i, issue_text in enumerate(result["issues"]):
-        # Determine severity based on score
-        if result["score"] < 4:
-            severity = "high"
-        elif result["score"] < 7:
-            severity = "medium"
-        else:
-            severity = "low"
+    # Determine severity based on score
+    if result["score"] < 4:
+        severity = "high"
+    elif result["score"] < 7:
+        severity = "medium"
+    else:
+        severity = "low"
 
+    # Convert structured issue dicts to Issue objects
+    issues = []
+    for issue_data in result["issues"]:
         issues.append(Issue(
             category="Content Clarity",
             severity=severity,
-            title=f"Content clarity issue {i+1}",
-            description=issue_text,
-            suggestion=issue_text,
+            title=issue_data["title"],
+            description=issue_data["description"],
+            suggestion=issue_data["suggestion"],
             impact="Students may not understand the key message quickly enough"
         ))
 
@@ -224,9 +251,14 @@ Rate on a simple 0-10 scale:
 
 Provide:
 1. Score (0-10, where 10 is excellent)
-2. List 2-3 simple layout improvements (avoid technical terms like "HTML semantics" or "DOM structure")
+2. List 2-3 specific issues with actionable suggestions
 
-Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
+For each issue, provide:
+- title: Short, specific title (e.g., "Poor information hierarchy", "Content too dense")
+- description: Clear explanation of what the layout problem is and why it matters to students
+- suggestion: Specific action the marketing team can take to improve the layout (must be different from description)
+
+Use plain language that non-technical marketing teams can understand and act on. Avoid technical terms like "HTML semantics" or "DOM structure"."""
 
     # Get LLM analysis
     result = await analyze_with_llm(prompt, max_score=10)
@@ -234,23 +266,23 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
     # Scale score to 25 points
     score = int((result["score"] / 10) * max_score)
 
-    # Convert issue strings to Issue objects
-    issues = []
-    for i, issue_text in enumerate(result["issues"]):
-        # Determine severity based on score
-        if result["score"] < 4:
-            severity = "high"
-        elif result["score"] < 7:
-            severity = "medium"
-        else:
-            severity = "low"
+    # Determine severity based on score
+    if result["score"] < 4:
+        severity = "high"
+    elif result["score"] < 7:
+        severity = "medium"
+    else:
+        severity = "low"
 
+    # Convert structured issue dicts to Issue objects
+    issues = []
+    for issue_data in result["issues"]:
         issues.append(Issue(
             category="Page Usability",
             severity=severity,
-            title=f"Layout issue {i+1}",
-            description=issue_text,
-            suggestion=issue_text,
+            title=issue_data["title"],
+            description=issue_data["description"],
+            suggestion=issue_data["suggestion"],
             impact="Students may struggle to find information or leave the page"
         ))
 
@@ -335,9 +367,14 @@ Bonus points for:
 
 Provide:
 1. Score (0-10, where 10 is excellent)
-2. List 2-3 simple recommendations (e.g., "Add an 'Apply Now' button near the top")
+2. List 2-3 specific issues with actionable suggestions
 
-Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
+For each issue, provide:
+- title: Short, specific title (e.g., "Weak call-to-action", "No contact form visible")
+- description: Clear explanation of what's missing or unclear and why it matters for conversions
+- suggestion: Specific action the marketing team can take to improve conversions (must be different from description)
+
+Use plain language that non-technical marketing teams can understand and act on."""
 
     # Get LLM analysis
     result = await analyze_with_llm(prompt, max_score=10)
@@ -345,23 +382,23 @@ Return JSON: {{"score": X, "issues": ["...", "..."]}}"""
     # Scale score to 25 points
     score = int((result["score"] / 10) * max_score)
 
-    # Convert issue strings to Issue objects
-    issues = []
-    for i, issue_text in enumerate(result["issues"]):
-        # Determine severity based on score
-        if result["score"] < 4:
-            severity = "high"
-        elif result["score"] < 7:
-            severity = "medium"
-        else:
-            severity = "low"
+    # Determine severity based on score
+    if result["score"] < 4:
+        severity = "high"
+    elif result["score"] < 7:
+        severity = "medium"
+    else:
+        severity = "low"
 
+    # Convert structured issue dicts to Issue objects
+    issues = []
+    for issue_data in result["issues"]:
         issues.append(Issue(
             category="Conversion Elements",
             severity=severity,
-            title=f"Conversion element {i+1}",
-            description=issue_text,
-            suggestion=issue_text,
+            title=issue_data["title"],
+            description=issue_data["description"],
+            suggestion=issue_data["suggestion"],
             impact="Students may not know what action to take"
         ))
 
