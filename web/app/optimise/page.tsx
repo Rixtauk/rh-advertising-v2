@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+
+// Increase timeout for server actions to allow for longer API processing
+export const maxDuration = 60; // 60 seconds
 import { OptimiseForm } from "@/components/forms/OptimiseForm";
 import { OptimiseResults } from "@/components/results/OptimiseResults";
 import { optimiseLandingPage } from "./actions";
@@ -80,7 +83,7 @@ export default function OptimisePage() {
                 </svg>
                 <div>
                   <p className="font-medium text-blue-900">Analysing page...</p>
-                  <p className="text-sm text-blue-700">This may take 10-20 seconds</p>
+                  <p className="text-sm text-blue-700">This may take 20-30 seconds</p>
                 </div>
               </div>
             </div>

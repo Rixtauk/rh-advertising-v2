@@ -19,6 +19,7 @@ export async function optimiseLandingPage(data: OptimiseRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      signal: AbortSignal.timeout(60000), // 60 second timeout
     });
 
     if (!response.ok) {
