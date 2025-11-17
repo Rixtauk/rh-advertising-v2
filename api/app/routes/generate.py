@@ -79,6 +79,7 @@ async def generate_copy(request: GenerateRequest) -> GenerateResponse:
             num_options=1,
             creativity=request.creativity,
             open_day_date=request.open_day_date,
+            course_name=request.course_name,
         )
         timings["generation_ms"] = int((time.time() - generation_start) * 1000)
 

@@ -117,7 +117,8 @@ CRITICAL REQUIREMENTS (YOU MUST FOLLOW THESE):
 1. Every field MUST stay within its character limit - no exceptions
 2. Count characters carefully for each field before finalizing
 3. Never omit required fields
-4. Follow emoji rules strictly (only include where explicitly allowed){channel_rules}
+4. Follow emoji rules strictly (only include where explicitly allowed)
+5. ALWAYS use UK English spelling and grammar (e.g., "realise" not "realize", "organise" not "organize", "centre" not "center", "colour" not "color"){channel_rules}
 
 You will receive specific character limits for each field.
 
@@ -131,6 +132,7 @@ def build_user_prompt(
     scraped_context: Optional[str],
     emojis_allowed: bool,
     open_day_date: Optional[str] = None,
+    course_name: Optional[str] = None,
 ) -> str:
     """Build user prompt with university details and requirements.
 
@@ -158,11 +160,15 @@ def build_user_prompt(
     if open_day_date:
         open_day_section = f"\n\nOpen Day Date: {open_day_date}\nNote: Include this date in the copy where appropriate to create urgency and specificity.\n"
 
+    course_section = ""
+    if course_name:
+        course_section = f"\n\nCourse Name: {course_name}\nNote: This is a subject/course-specific ad. Feature the course name prominently in your copy and tailor messaging to highlight course-specific benefits.\n"
+
     prompt = f"""University: {university}
 
 Key selling points and details:
 {usps}
-{context_section}{open_day_section}
+{context_section}{open_day_section}{course_section}
 Required fields and limits:
 {fields_text}
 
@@ -189,6 +195,7 @@ async def generate_copy_with_openai(
     scraped_context: Optional[str] = None,
     num_options: int = 3,
     open_day_date: Optional[str] = None,
+    course_name: Optional[str] = None,
 ) -> tuple[list[dict[str, Any]], str]:
     """
     Generate ad copy using OpenAI with structured outputs.
@@ -220,6 +227,7 @@ async def generate_copy_with_openai(
         scraped_context=scraped_context,
         emojis_allowed=emojis_allowed,
         open_day_date=open_day_date,
+        course_name=course_name,
     )
 
     logger.info(f"Generating {num_options} ad copy options for {channel} ({subtype})")

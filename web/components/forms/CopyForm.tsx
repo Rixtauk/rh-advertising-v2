@@ -28,6 +28,7 @@ interface FormState {
   includeEmojis: boolean;
   creativity: 3 | 5 | 7;
   openDayDate: string;
+  courseName: string;
 }
 
 export function CopyForm({ channels, subtypes, tones, audiences, socialChannels, onSubmit }: CopyFormProps) {
@@ -45,6 +46,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
     includeEmojis: false,
     creativity: 5,
     openDayDate: '',
+    courseName: '',
   });
 
   // Load from localStorage on mount
@@ -116,6 +118,13 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
             ))}
           </SelectContent>
         </Select>
+        {(formState.channel === 'LINKEDIN LEAD GEN' ||
+          formState.channel === 'LINKEDIN SINGLE IMAGE' ||
+          formState.channel === 'LINKEDIN SINGLE VIDEO') && (
+          <p className="text-xs text-muted-foreground mt-2">
+            <strong>IntroText:</strong> Can be up to 600 characters, however we recommend up to 200
+          </p>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -137,16 +146,33 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="openDayDate">Open Day Date (Optional)</Label>
-        <input
-          id="openDayDate"
-          type="date"
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          value={formState.openDayDate}
-          onChange={(e) => setFormState((prev) => ({ ...prev, openDayDate: e.target.value }))}
-        />
-      </div>
+      {formState.subtype === 'Subject/course specific ad' && (
+        <div className="space-y-2">
+          <Label htmlFor="courseName">Name of Course *</Label>
+          <input
+            id="courseName"
+            type="text"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            placeholder="e.g., Computer Science BSc"
+            value={formState.courseName}
+            onChange={(e) => setFormState((prev) => ({ ...prev, courseName: e.target.value }))}
+            required
+          />
+        </div>
+      )}
+
+      {formState.subtype === 'Open Day' && (
+        <div className="space-y-2">
+          <Label htmlFor="openDayDate">Open Day Date (Optional)</Label>
+          <input
+            id="openDayDate"
+            type="date"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            value={formState.openDayDate}
+            onChange={(e) => setFormState((prev) => ({ ...prev, openDayDate: e.target.value }))}
+          />
+        </div>
+      )}
 
       <div className="space-y-2">
         <Label htmlFor="university">University Name *</Label>

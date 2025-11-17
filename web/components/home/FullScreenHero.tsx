@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 
 export function FullScreenHero() {
@@ -33,61 +32,12 @@ export function FullScreenHero() {
         <div className="backdrop-blur-sm bg-gray-900/30 rounded-2xl px-6 py-8 md:px-12 md:py-10">
           {/* Main Headline */}
           <h1
-            className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in"
+            className="text-5xl md:text-7xl font-bold text-white leading-tight animate-fade-in"
           >
-            Smarter marketing for education. Powered by AI.
+            Smarter Marketing for Education.
+            <br />
+            Powered by AI.
           </h1>
-
-          {/* Subheading */}
-          <div
-            className="text-lg md:text-xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed space-y-4 animate-fade-in"
-            style={{ animationDelay: '0.2s' }}
-          >
-            <p>
-              We know that marketing a university, college or school is a complex job. Rules change. Channels evolve. Budgets shrink. Expectations grow. You need speed, accuracy, and creativity—all at once.
-            </p>
-            <p>
-              We've designed a set of intelligent, easy-to-use tools that help you generate high-performing copy, audit landing pages, and access channel specs in seconds—not hours.
-            </p>
-            <p>
-              At the heart of the suite is our Education Insight Assistant. Ask any strategic question and get instant, data-backed answers on trends, targeting, messaging, and more.
-            </p>
-            <p>
-              Behind every tool is our deep understanding of the education marketing landscape and the unique needs of recruiters. We built this for you.
-            </p>
-          </div>
-        </div>
-
-        {/* CTA Button */}
-        <div
-          className="flex justify-center mb-16 animate-fade-in"
-          style={{ animationDelay: '0.4s' }}
-        >
-          <Link
-            href="/copy"
-            className="group relative px-8 py-4 rounded-full font-semibold text-white overflow-hidden transition-all hover:scale-105 hover:shadow-2xl"
-            style={{ backgroundColor: '#55A2C3' }}
-          >
-            {/* Animated shine effect */}
-            <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-            <span className="relative flex items-center gap-2 text-lg">
-              Start Creating
-              <svg
-                className="w-5 h-5 transition-transform group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </span>
-          </Link>
         </div>
 
         {/* Trust Indicators */}
@@ -97,17 +47,19 @@ export function FullScreenHero() {
         >
           <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">
             <svg
-              className="w-5 h-5 text-green-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+              className="w-5 h-5 text-yellow-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
               <path
-                fillRule="evenodd"
-                d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clipRule="evenodd"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
               />
             </svg>
-            <span className="font-medium">Compliance-First</span>
+            <span className="font-medium">Insight Driven</span>
           </div>
 
           <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">

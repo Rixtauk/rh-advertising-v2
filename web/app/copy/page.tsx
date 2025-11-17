@@ -152,7 +152,7 @@ export default function CopyPage() {
       <div>
         <h1 className="text-3xl font-bold mb-2">Education Ad Copy Generator</h1>
         <p className="text-muted-foreground">
-          Generate compliant, on-brand ad copy for your chosen channel and audience.
+          Create engaging, on-brand copy for digital and social campaigns in seconds. With smart limits, context-aware edits, and on-brand messaging.
         </p>
       </div>
 

@@ -1,6 +1,7 @@
 import { FullScreenHero } from '@/components/home/FullScreenHero';
+import { IntroSection } from '@/components/home/IntroSection';
 import { AlternatingSection } from '@/components/home/AlternatingSection';
-import { FeaturesBento } from '@/components/home/FeaturesBento';
+import { ContactForm } from '@/components/home/ContactForm';
 
 export default function HomePage() {
   return (
@@ -10,10 +11,13 @@ export default function HomePage() {
         {/* Full screen hero */}
         <FullScreenHero />
 
+        {/* Intro Section */}
+        <IntroSection />
+
         {/* Education Ad Copy Generator - Text Left, Image Right */}
         <AlternatingSection
           title="Education Ad Copy Generator"
-          description="Build great ad copy in seconds. Generate, test, and refine variations for 14+ channels—all designed for education."
+          description="Create engaging, on-brand copy for digital and social campaigns in seconds. With smart limits, context-aware edits, and on-brand messaging."
           benefits={[
             'Generate compliant ad copy in seconds',
             '14+ advertising channels supported',
@@ -32,7 +36,7 @@ export default function HomePage() {
         {/* University Landing Page Optimiser - Text Right, Image Left */}
         <AlternatingSection
           title="University Landing Page Optimiser"
-          description="Get a quality score and actionable insights for any landing page. Built to analyse and optimise for university recruitment."
+          description="Scan your page and see what's working. Plus quick fixes to boost engagement and conversions."
           benefits={[
             'AI-powered conversion analysis',
             'Actionable recommendations',
@@ -51,7 +55,7 @@ export default function HomePage() {
         {/* Creative Asset Spec Query Tool - Text Left, Image Right */}
         <AlternatingSection
           title="Creative Asset Spec Query Tool"
-          description="Ask for image sizes, character limits, or technical specs for any channel. Get instant, reliable answers."
+          description="Get instant specs for any channel, sizes, formats and requirements at your fingertips."
           benefits={[
             '14+ platform specifications',
             'Always up-to-date requirements',
@@ -87,8 +91,8 @@ export default function HomePage() {
           backgroundColor="bg-gray-50"
         />
 
-        {/* Features/Benefits section */}
-        <FeaturesBento />
+        {/* Contact Form section */}
+        <ContactForm />
       </main>
     </div>
   );

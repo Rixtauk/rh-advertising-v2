@@ -165,6 +165,50 @@
     max_chars: 30
     max_words: 0
     emojis_allowed: false
+  - field: Headline 6
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 7
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 8
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 9
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 10
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 11
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 12
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 13
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 14
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Headline 15
+    max_chars: 30
+    max_words: 0
+    emojis_allowed: false
+  - field: Short Headline
+    max_chars: 15
+    max_words: 0
+    emojis_allowed: false
   - field: Long Headline 1
     max_chars: 90
     max_words: 0
@@ -292,7 +336,7 @@
   subtype: Brand level recruitment
   fields: &id005
   - field: Headline
-    max_chars: 25
+    max_chars: 15
     max_words: 0
     emojis_allowed: false
   - field: Call to Action

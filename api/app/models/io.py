@@ -23,6 +23,7 @@ class GenerateRequest(BaseModel):
     landing_url: Optional[HttpUrl] = Field(None, description="Landing page URL to scrape")
     creativity: int = Field(5, description="Creativity level (3=conservative, 5=balanced, 7=creative)")
     open_day_date: Optional[str] = Field(None, description="Optional open day date for contextual copy")
+    course_name: Optional[str] = Field(None, description="Optional course name for subject-specific ads")
 
 
 class GeneratedField(BaseModel):

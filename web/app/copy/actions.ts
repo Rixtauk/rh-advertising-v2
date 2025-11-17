@@ -5,8 +5,15 @@
 // API_URL is server-side only (not NEXT_PUBLIC_*)
 const API_BASE_URL = process.env.API_URL || 'https://rh-advertising-v2-production.up.railway.app';
 
-// Social channels that support emojis
-const SOCIAL_CHANNELS = ['Facebook', 'Instagram', 'LinkedIn', 'TikTok', 'Snapchat', 'X', 'Reddit'];
+// Social channels that support emojis (Meta, TikTok, Snapchat only)
+const SOCIAL_CHANNELS = [
+  'META SINGLE IMAGE',
+  'META VIDEO',
+  'META CAROUSEL',
+  'META COLLECTION',
+  'TIKTOK',
+  'SNAPCHAT'
+];
 
 interface GeneratedField {
   field: string;
@@ -49,6 +56,7 @@ export async function generateAdCopy(formData: FormData) {
   const includeEmojis = formData.get('includeEmojis') === 'true';
   const creativity = parseInt(formData.get('creativity') as string) || 5;
   const openDayDate = formData.get('openDayDate') as string;
+  const courseName = formData.get('courseName') as string;
 
   if (!channel || !subtype || !university || !tone || !audience) {
     throw new Error('Missing required fields');
@@ -73,6 +81,7 @@ export async function generateAdCopy(formData: FormData) {
     landing_url: landingUrl || null,
     creativity: creativity,
     open_day_date: openDayDate || null,
+    course_name: courseName || null,
   };
 
   try {
