@@ -59,15 +59,12 @@ export default function RootLayout({
                   >
                     Creative Asset Spec Query Tool
                   </Link>
-                  <span
-                    className="text-sm font-medium text-gray-500 cursor-not-allowed flex items-center gap-2"
-                    title="Coming Soon"
+                  <Link
+                    href="/insights"
+                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
                   >
                     Education Insight Assistant
-                    <span className="text-xs px-2 py-0.5 bg-gray-700 text-gray-400 rounded-full">
-                      Coming Soon
-                    </span>
-                  </span>
+                  </Link>
                 </nav>
               </div>
             </div>
