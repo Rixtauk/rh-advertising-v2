@@ -1,6 +1,6 @@
 'use server';
 
-const N8N_WEBHOOK_URL = 'https://rickyvalentine.app.n8n.cloud/webhook/f61815ce-f800-4913-a5d3-69303910022f/chat';
+const N8N_WEBHOOK_URL = 'https://rickyvalentine.app.n8n.cloud/webhook/8e6cb019-4af2-4843-9a2c-b24ad20e7870';
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -29,9 +29,7 @@ export async function sendInsightQuery(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        action: 'sendMessage',
-        sessionId: sessionId,
-        chatInput: message,
+        message: message,
       }),
     });
 
