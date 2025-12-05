@@ -10,10 +10,10 @@ import { Send, Loader2, Trash2, Sparkles } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 const EXAMPLE_PROMPTS = [
-  'What are the key trends in higher education marketing for 2024?',
-  'How can universities improve their open day conversion rates?',
-  'What messaging resonates best with international students?',
-  'What are best practices for education PPC campaigns?',
+  'How much time do different generations spend consuming media each day?',
+  'Which social media platforms are most popular with Gen Z and Millennials?',
+  'What are the key trends in podcast listening behaviour in the UK?',
+  'How effective is social media advertising at driving purchases among younger audiences?',
 ];
 
 function generateSessionId(): string {

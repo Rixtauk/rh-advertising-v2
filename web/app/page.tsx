@@ -49,7 +49,7 @@ export default function HomePage() {
           ctaText="Analyse Your Page"
           ctaHref="/optimise"
           reverse={true}
-          backgroundColor="bg-gray-50"
+          backgroundColor="#f8f9fa"
         />
 
         {/* Creative Asset Spec Query Tool - Text Left, Image Right */}
@@ -84,11 +84,11 @@ export default function HomePage() {
           ]}
           image="/education-insight-assistant.jpeg"
           imageAlt="Education Insight Assistant Interface"
-          ctaText="Coming Soon"
-          disabled={true}
-          badge="Coming Soon"
+          ctaText="Try It Now"
+          ctaHref="/insights"
+          badge="New"
           reverse={true}
-          backgroundColor="bg-gray-50"
+          backgroundColor="#f8f9fa"
         />
 
         {/* Contact Form section */}

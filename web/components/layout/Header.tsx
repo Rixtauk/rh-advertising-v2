@@ -99,9 +99,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={closeMenu}
-                  className="text-lg font-medium text-gray-300 hover:text-[#55A2C3] transition-colors py-3 border-b border-gray-700"
+                  className="text-base font-medium text-gray-300 hover:text-[#55A2C3] transition-colors py-3 border-b border-gray-700"
                 >
-                  {link.label}
+                  {link.fullLabel}
                 </Link>
               ))}
             </nav>
