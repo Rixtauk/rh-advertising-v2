@@ -46,23 +46,29 @@ export default function OptimisePage() {
   };
 
   return (
-    <main className="container mx-auto py-8 px-4 max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">University Landing Page Optimiser</h1>
-        <p className="text-lg text-muted-foreground">
+    <main className="container mx-auto py-6 md:py-8 px-4 md:px-6 lg:px-8 max-w-7xl">
+      {/* Page Header */}
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">
+          University Landing Page Optimiser
+        </h1>
+        <p className="text-sm md:text-base text-muted-foreground">
           Get comprehensive analysis and actionable recommendations for your university landing pages
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Form Section */}
         <div className="lg:col-span-1">
           <OptimiseForm onSubmit={handleSubmit} isLoading={isLoading} />
 
+          {/* Loading State */}
           {isLoading && (
-            <div className="mt-6 p-4 border rounded-lg bg-blue-50">
+            <div className="mt-4 md:mt-6 p-4 border rounded-xl bg-blue-50 shadow-sm">
               <div className="flex items-center gap-3">
                 <svg
-                  className="animate-spin h-5 w-5 text-blue-600"
+                  className="animate-spin h-5 w-5 text-blue-600 flex-shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -82,19 +88,24 @@ export default function OptimisePage() {
                   ></path>
                 </svg>
                 <div>
-                  <p className="font-medium text-blue-900">Analysing page...</p>
-                  <p className="text-sm text-blue-700">This may take 20-30 seconds</p>
+                  <p className="font-medium text-blue-900 text-sm md:text-base">
+                    Analysing page...
+                  </p>
+                  <p className="text-xs md:text-sm text-blue-700">
+                    This may take 20-30 seconds
+                  </p>
                 </div>
               </div>
             </div>
           )}
         </div>
 
+        {/* Results Section */}
         <div className="lg:col-span-2">
           {results ? (
             <OptimiseResults {...results} />
           ) : (
-            <div className="border-2 border-dashed rounded-lg p-12 text-center">
+            <div className="border-2 border-dashed rounded-xl p-8 md:p-12 text-center">
               <div className="max-w-md mx-auto">
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
@@ -109,15 +120,19 @@ export default function OptimisePage() {
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
-                <h3 className="mt-2 text-sm font-semibold text-gray-900">No analysis yet</h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <h3 className="mt-4 text-sm md:text-base font-semibold text-gray-900">
+                  No analysis yet
+                </h3>
+                <p className="mt-2 text-sm text-gray-500">
                   Enter a landing page URL and objective to get started
                 </p>
                 <div className="mt-6">
-                  <h4 className="text-xs font-semibold text-gray-900 mb-2">What we analyse:</h4>
-                  <ul className="text-xs text-left text-gray-600 space-y-1">
+                  <h4 className="text-xs md:text-sm font-semibold text-gray-900 mb-3">
+                    What we analyse:
+                  </h4>
+                  <ul className="text-xs md:text-sm text-left text-gray-600 space-y-2">
                     <li>• Content Clarity (clear messaging, easy to understand)</li>
-                    <li>• Page Usability (layout, easy to scan, well organized)</li>
+                    <li>• Page Usability (layout, easy to scan, well organised)</li>
                     <li>• Conversion Elements (buttons, forms, videos)</li>
                   </ul>
                 </div>

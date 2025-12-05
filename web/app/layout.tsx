@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Link from 'next/link';
-import Image from 'next/image';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import Header from '@/components/layout/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,51 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="min-h-screen flex flex-col">
-          <header className="sticky top-0 z-50 bg-[#222222] border-b border-gray-800">
-            <div className="container mx-auto px-4 py-3">
-              <div className="flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                  <Image
-                    src="/rh-logo.png"
-                    alt="RH Advertising"
-                    width={120}
-                    height={40}
-                    className="h-10 w-auto"
-                    priority
-                  />
-                  <span className="text-xl font-semibold text-white border-l border-gray-600 pl-3">
-                    AI Assistant
-                  </span>
-                </Link>
-                <nav className="flex gap-6">
-                  <Link
-                    href="/copy"
-                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                  >
-                    Education Ad Copy Generator
-                  </Link>
-                  <Link
-                    href="/optimise"
-                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                  >
-                    University Landing Page Optimiser
-                  </Link>
-                  <Link
-                    href="/assets"
-                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                  >
-                    Creative Asset Spec Query Tool
-                  </Link>
-                  <Link
-                    href="/insights"
-                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                  >
-                    Education Insight Assistant
-                  </Link>
-                </nav>
-              </div>
-            </div>
-          </header>
+          <Header />
 
           <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
 

@@ -148,18 +148,21 @@ export default function CopyPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Education Ad Copy Generator</h1>
-        <p className="text-muted-foreground">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+      {/* Page Header */}
+      <div className="space-y-2">
+        <h1 className="text-2xl md:text-3xl font-bold">Education Ad Copy Generator</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Create engaging, on-brand copy for digital and social campaigns in seconds. With smart limits, context-aware edits, and on-brand messaging.
         </p>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-3">
+      {/* Main Content Grid */}
+      <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
+        {/* Form Column */}
         <div className="lg:col-span-1">
-          <Card>
-            <CardContent className="pt-6">
+          <Card className="rounded-xl shadow-sm border">
+            <CardContent className="p-4 sm:p-6">
               <CopyForm
                 channels={TAXONOMIES.all_channels}
                 subtypes={TAXONOMIES.subtypes}
@@ -172,7 +175,8 @@ export default function CopyPage() {
           </Card>
         </div>
 
-        <div className="lg:col-span-2">
+        {/* Results Column */}
+        <div className="lg:col-span-2 space-y-6">
           {results && selectedChannel ? (
             <CopyResults
               results={results}
@@ -181,26 +185,27 @@ export default function CopyPage() {
               onSelectOption={handleSelectOption}
             />
           ) : (
-            <Card>
-              <CardContent className="p-12 text-center">
-                <p className="text-muted-foreground">
+            <Card className="rounded-xl shadow-sm border">
+              <CardContent className="p-8 sm:p-12 text-center">
+                <p className="text-sm sm:text-base text-muted-foreground">
                   Fill in the form and click Generate to create your ad copy.
                 </p>
               </CardContent>
             </Card>
           )}
 
+          {/* Asset Specs Card */}
           {showAssetSpecs && assetSpecs.length > 0 && (
-            <Card className="mt-6">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">
+            <Card className="rounded-xl shadow-sm border">
+              <CardContent className="p-4 sm:p-6">
+                <h3 className="text-base sm:text-lg font-semibold mb-4">
                   Image/Video Specs for {selectedChannel}
                 </h3>
                 <div className="space-y-4">
                   {assetSpecs.map((spec, idx) => (
-                    <div key={idx} className="p-4 bg-muted rounded-md text-sm">
+                    <div key={idx} className="p-3 sm:p-4 bg-muted rounded-lg text-sm">
                       <p className="font-medium mb-2">{spec.placement_or_format}</p>
-                      <div className="space-y-1 text-xs">
+                      <div className="space-y-1 text-xs sm:text-sm">
                         {spec.aspect_ratio && <p>Aspect Ratio: {spec.aspect_ratio}</p>}
                         {spec.recommended_px && <p>Size: {spec.recommended_px}</p>}
                         {spec.file_types.length > 0 && (
@@ -214,6 +219,7 @@ export default function CopyPage() {
                   <Button
                     variant="outline"
                     size="sm"
+                    className="w-full sm:w-auto"
                     onClick={() => {
                       const text = assetSpecs
                         .map(

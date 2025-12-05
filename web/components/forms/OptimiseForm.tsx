@@ -37,19 +37,21 @@ export function OptimiseForm({ onSubmit, isLoading }: OptimiseFormProps) {
   };
 
   return (
-    <Card>
+    <Card className="shadow-md rounded-xl">
       <CardHeader>
-        <CardTitle>Analyse Landing Page</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-lg md:text-xl">Analyse Landing Page</CardTitle>
+        <CardDescription className="text-sm">
           Get a comprehensive analysis of your university landing page with actionable
           recommendations
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* URL Input */}
           <div className="space-y-2">
-            <Label htmlFor="url">Landing Page URL</Label>
+            <Label htmlFor="url" className="text-sm font-medium">
+              Landing Page URL
+            </Label>
             <Input
               id="url"
               type="url"
@@ -58,34 +60,41 @@ export function OptimiseForm({ onSubmit, isLoading }: OptimiseFormProps) {
               onChange={(e) => setUrl(e.target.value)}
               required
               disabled={isLoading}
+              className="w-full h-11 text-base"
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Enter the full URL of the landing page you want to analyse
             </p>
           </div>
 
           {/* Objective Select */}
           <div className="space-y-2">
-            <Label htmlFor="objective">Page Objective</Label>
+            <Label htmlFor="objective" className="text-sm font-medium">
+              Page Objective
+            </Label>
             <Select value={objective} onValueChange={setObjective} disabled={isLoading}>
-              <SelectTrigger id="objective">
+              <SelectTrigger id="objective" className="w-full h-11 text-base">
                 <SelectValue placeholder="Select page objective..." />
               </SelectTrigger>
               <SelectContent>
                 {OBJECTIVES.map((obj) => (
-                  <SelectItem key={obj} value={obj}>
+                  <SelectItem key={obj} value={obj} className="text-base">
                     {obj}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               What is the primary goal of this landing page?
             </p>
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" disabled={isLoading || !url || !objective} className="w-full">
+          <Button
+            type="submit"
+            disabled={isLoading || !url || !objective}
+            className="w-full h-11 text-base font-medium"
+          >
             {isLoading ? (
               <>
                 <svg

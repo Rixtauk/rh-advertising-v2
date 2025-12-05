@@ -56,7 +56,7 @@ function FieldDisplay({
           <span className="text-sm font-medium">{formatFieldName(field.field)}</span>
         </div>
         <Select value={selectedValue} onValueChange={onValueChange}>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full h-11 text-base">
             <SelectValue placeholder="Select an option" />
           </SelectTrigger>
           <SelectContent>
@@ -77,22 +77,22 @@ function FieldDisplay({
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <span className="text-sm font-medium">{formatFieldName(field.field)}</span>
-        <Badge variant={field.isOverLimit ? 'destructive' : 'outline'}>
+        <Badge variant={field.isOverLimit ? 'destructive' : 'outline'} className="text-xs">
           {field.charCount}/{field.maxChars}
         </Badge>
       </div>
       {isArray ? (
-        <ul className="space-y-1">
+        <ul className="space-y-2">
           {displayValue.map((v, i) => (
-            <li key={i} className="text-sm bg-muted p-2 rounded">
+            <li key={i} className="text-sm bg-muted p-3 rounded-lg">
               {i + 1}. {v}
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-sm bg-muted p-2 rounded whitespace-pre-wrap">{displayValue}</p>
+        <p className="text-sm bg-muted p-3 rounded-lg whitespace-pre-wrap break-words">{displayValue}</p>
       )}
       {field.isOverLimit && (
         <div className="flex items-start gap-2 text-xs text-destructive">
@@ -175,10 +175,16 @@ export function CopyResults({ results, channel, onRegenerate, onSelectOption }: 
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Generated Copy</h2>
-        <Button onClick={handleRegenerate} disabled={isRegenerating} variant="outline" size="sm">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <h2 className="text-xl sm:text-2xl font-bold">Generated Copy</h2>
+        <Button
+          onClick={handleRegenerate}
+          disabled={isRegenerating}
+          variant="outline"
+          size="sm"
+          className="w-full sm:w-auto touch-manipulation"
+        >
           {isRegenerating ? (
             <RefreshCw className="h-4 w-4 animate-spin" />
           ) : (
@@ -190,24 +196,29 @@ export function CopyResults({ results, channel, onRegenerate, onSelectOption }: 
         </Button>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {results.map((option) => (
-          <Card key={option.option} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex items-center justify-between">
+          <Card key={option.option} className="rounded-xl shadow-sm border hover:shadow-lg transition-shadow">
+            <CardHeader className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
-                  <CardTitle>{channel}</CardTitle>
-                  <CardDescription>Generated ad copy</CardDescription>
+                  <CardTitle className="text-base sm:text-lg">{channel}</CardTitle>
+                  <CardDescription className="text-sm">Generated ad copy</CardDescription>
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={() => handleCopy(option)} variant="outline" size="sm">
+                  <Button
+                    onClick={() => handleCopy(option)}
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 sm:flex-initial touch-manipulation"
+                  >
                     <Copy className="h-4 w-4 mr-2" />
                     Copy
                   </Button>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-4 sm:p-6 space-y-4">
               {option.fields.map((field, idx) => (
                 <FieldDisplay
                   key={`${option.option}-${idx}`}
@@ -221,9 +232,9 @@ export function CopyResults({ results, channel, onRegenerate, onSelectOption }: 
         ))}
       </div>
 
-      <div className="bg-muted p-4 rounded-md text-sm">
-        <p className="font-medium mb-1">Compliance Note:</p>
-        <p>
+      <div className="bg-muted p-4 sm:p-5 rounded-lg text-sm">
+        <p className="font-medium mb-2">Compliance Note:</p>
+        <p className="text-sm text-muted-foreground">
           This tool provides initial draft copy. All claims must be verified before submitting to
           RH for build. Copy character limits may also need checking to ensure individual
           requirements.

@@ -48,26 +48,26 @@ export function ContactForm() {
   };
 
   return (
-    <section className="bg-gray-50 py-16 md:py-24">
+    <section className="bg-gray-50 py-12 sm:py-16 md:py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white border border-gray-100 rounded-xl p-8 md:p-12 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] transition-all duration-300 hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)]">
+        <div className="bg-white border border-gray-100 rounded-xl p-6 sm:p-8 md:p-12 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] transition-all duration-300 hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)]">
           {/* Header Text */}
-          <div className="mb-10 space-y-5 text-gray-700 text-lg leading-relaxed">
+          <div className="mb-8 sm:mb-10 space-y-4 sm:space-y-5 text-gray-700 text-base sm:text-lg leading-relaxed">
             <p>
               These tools represent our ongoing commitment to helping education clients harness the potential of AI to create, analyse and optimise with confidence. Whether you're planning your next clearing campaign, shaping your postgraduate strategy or exploring student recruitment trends, RH's AI suite empowers your marketing to think and perform smarter.
             </p>
-            <p className="font-semibold text-2xl text-gray-900 leading-tight">
+            <p className="font-semibold text-xl sm:text-2xl text-gray-900 leading-tight">
               Get in touch if you're interested in using our tools & working together.
             </p>
           </div>
 
           {/* Success Message */}
           {isSuccess && (
-            <div className="mb-8 p-5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/60 rounded-xl shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+            <div className="mb-6 sm:mb-8 p-4 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/60 rounded-xl shadow-sm">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-green-600"
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-green-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -81,8 +81,8 @@ export function ContactForm() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-green-900 text-base">Message sent successfully!</h3>
-                  <p className="text-sm text-green-700 mt-1.5">
+                  <h3 className="font-semibold text-green-900 text-sm sm:text-base">Message sent successfully!</h3>
+                  <p className="text-xs sm:text-sm text-green-700 mt-1 sm:mt-1.5">
                     Thank you for your interest. We'll be in touch soon.
                   </p>
                 </div>
@@ -92,11 +92,11 @@ export function ContactForm() {
 
           {/* Error Message */}
           {error && (
-            <div className="mb-8 p-5 bg-gradient-to-r from-red-50 to-rose-50 border border-red-200/60 rounded-xl shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+            <div className="mb-6 sm:mb-8 p-4 sm:p-5 bg-gradient-to-r from-red-50 to-rose-50 border border-red-200/60 rounded-xl shadow-sm">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-red-100 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-red-600"
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-red-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -110,17 +110,17 @@ export function ContactForm() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-red-700 font-medium">{error}</p>
+                  <p className="text-xs sm:text-sm text-red-700 font-medium">{error}</p>
                 </div>
               </div>
             </div>
           )}
 
           {/* Contact Form */}
-          <form onSubmit={handleSubmit} className="space-y-7">
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 md:space-y-7">
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-base font-medium text-gray-800 mb-2.5">
+              <label htmlFor="name" className="block text-sm sm:text-base font-medium text-gray-800 mb-2">
                 Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -130,14 +130,14 @@ export function ContactForm() {
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 placeholder:text-gray-400 bg-white hover:border-gray-300"
+                className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 placeholder:text-gray-400 bg-white hover:border-gray-300"
                 placeholder="Your full name"
               />
             </div>
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-base font-medium text-gray-800 mb-2.5">
+              <label htmlFor="email" className="block text-sm sm:text-base font-medium text-gray-800 mb-2">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -147,14 +147,14 @@ export function ContactForm() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 placeholder:text-gray-400 bg-white hover:border-gray-300"
+                className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 placeholder:text-gray-400 bg-white hover:border-gray-300"
                 placeholder="your.email@institution.edu"
               />
             </div>
 
             {/* Institution Field */}
             <div>
-              <label htmlFor="institution" className="block text-base font-medium text-gray-800 mb-2.5">
+              <label htmlFor="institution" className="block text-sm sm:text-base font-medium text-gray-800 mb-2">
                 Institution <span className="text-red-500">*</span>
               </label>
               <input
@@ -164,14 +164,14 @@ export function ContactForm() {
                 required
                 value={formData.institution}
                 onChange={handleChange}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 placeholder:text-gray-400 bg-white hover:border-gray-300"
+                className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 placeholder:text-gray-400 bg-white hover:border-gray-300"
                 placeholder="Your university or college"
               />
             </div>
 
             {/* Message Field */}
             <div>
-              <label htmlFor="message" className="block text-base font-medium text-gray-800 mb-2.5">
+              <label htmlFor="message" className="block text-sm sm:text-base font-medium text-gray-800 mb-2">
                 Message <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -181,22 +181,22 @@ export function ContactForm() {
                 value={formData.message}
                 onChange={handleChange}
                 rows={5}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 resize-none placeholder:text-gray-400 bg-white hover:border-gray-300"
+                className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#55A2C3]/50 focus:border-[#55A2C3] transition-all duration-200 resize-none placeholder:text-gray-400 bg-white hover:border-gray-300"
                 placeholder="Tell us about your interest in our tools..."
               />
             </div>
 
             {/* Submit Button */}
-            <div className="pt-2">
+            <div className="pt-1 sm:pt-2">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-[#55A2C3] to-[#4891b0] hover:from-[#4891b0] hover:to-[#3d7f9a] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full bg-gradient-to-r from-[#55A2C3] to-[#4891b0] hover:from-[#4891b0] hover:to-[#3d7f9a] text-white font-semibold py-3.5 sm:py-4 px-5 sm:px-6 text-sm sm:text-base rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:scale-[1.01] sm:hover:scale-[1.02] active:scale-[0.98] touch-manipulation"
               >
                 {isSubmitting ? (
                   <>
                     <svg
-                      className="animate-spin h-5 w-5"
+                      className="animate-spin h-4 w-4 sm:h-5 sm:w-5"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"

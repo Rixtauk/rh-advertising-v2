@@ -30,7 +30,7 @@ export function FullScreenHero() {
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Main Headline - No glass card, just pure typography */}
         <h1
-          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white leading-[1.1] tracking-tight mb-16 animate-fade-in"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] tracking-tight mb-12 sm:mb-16 animate-fade-in"
         >
           Smarter Marketing for Education.
           <br />
@@ -41,12 +41,12 @@ export function FullScreenHero() {
 
         {/* Trust Indicators - Refined styling with better spacing */}
         <div
-          className="flex flex-wrap justify-center items-center gap-4 md:gap-6 animate-fade-in"
+          className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6 animate-fade-in"
           style={{ animationDelay: '0.3s' }}
         >
-          <div className="flex items-center gap-2.5 backdrop-blur-md bg-white/5 border border-white/10 px-5 py-3 rounded-full hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300 ease-out group">
+          <div className="flex items-center gap-2 sm:gap-2.5 backdrop-blur-md bg-white/5 border border-white/10 px-3 py-2 sm:px-5 sm:py-3 rounded-full hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300 ease-out group">
             <svg
-              className="w-5 h-5 text-yellow-400 group-hover:rotate-12 transition-transform duration-300"
+              className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 group-hover:rotate-12 transition-transform duration-300"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -58,23 +58,23 @@ export function FullScreenHero() {
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
               />
             </svg>
-            <span className="font-semibold text-white/90 text-sm md:text-base">Insight Driven</span>
+            <span className="font-semibold text-white/90 text-xs sm:text-sm md:text-base">Insight Driven</span>
           </div>
 
-          <div className="flex items-center gap-2.5 backdrop-blur-md bg-white/5 border border-white/10 px-5 py-3 rounded-full hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300 ease-out group">
+          <div className="flex items-center gap-2 sm:gap-2.5 backdrop-blur-md bg-white/5 border border-white/10 px-3 py-2 sm:px-5 sm:py-3 rounded-full hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300 ease-out group">
             <svg
-              className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300"
+              className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
               <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
             </svg>
-            <span className="font-semibold text-white/90 text-sm md:text-base">Trusted by Universities</span>
+            <span className="font-semibold text-white/90 text-xs sm:text-sm md:text-base">Trusted by Universities</span>
           </div>
 
-          <div className="flex items-center gap-2.5 backdrop-blur-md bg-white/5 border border-white/10 px-5 py-3 rounded-full hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300 ease-out group">
+          <div className="flex items-center gap-2 sm:gap-2.5 backdrop-blur-md bg-white/5 border border-white/10 px-3 py-2 sm:px-5 sm:py-3 rounded-full hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300 ease-out group">
             <svg
-              className="w-5 h-5 text-purple-400 group-hover:rotate-180 transition-transform duration-500"
+              className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 group-hover:rotate-180 transition-transform duration-500"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -85,7 +85,7 @@ export function FullScreenHero() {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="font-semibold text-white/90 text-sm md:text-base">AI-Powered</span>
+            <span className="font-semibold text-white/90 text-xs sm:text-sm md:text-base">AI-Powered</span>
           </div>
         </div>
       </div>

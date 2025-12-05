@@ -70,20 +70,20 @@ export default function AssetsPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Creative Asset Spec Query Tool</h1>
-        <p className="text-muted-foreground">
+    <div className="w-full px-4 md:px-6 lg:px-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
+      <div className="space-y-2">
+        <h1 className="text-2xl md:text-3xl font-bold">Creative Asset Spec Query Tool</h1>
+        <p className="text-sm md:text-base text-muted-foreground">
           Find the technical requirements for images and videos across all advertising channels.
         </p>
       </div>
 
-      <Card>
+      <Card className="rounded-xl shadow-sm">
         <CardContent className="pt-6">
           <div className="space-y-2 max-w-md">
-            <Label htmlFor="channel">Select Channel</Label>
+            <Label htmlFor="channel" className="text-sm md:text-base">Select Channel</Label>
             <Select value={selectedChannel} onValueChange={handleChannelChange}>
-              <SelectTrigger id="channel">
+              <SelectTrigger id="channel" className="h-10 md:h-11">
                 <SelectValue placeholder="Choose a channel..." />
               </SelectTrigger>
               <SelectContent>
@@ -99,9 +99,9 @@ export default function AssetsPage() {
       </Card>
 
       {isLoading && (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <p className="text-muted-foreground">Loading specifications...</p>
+        <Card className="rounded-xl shadow-sm">
+          <CardContent className="p-8 md:p-12 text-center">
+            <p className="text-sm md:text-base text-muted-foreground">Loading specifications...</p>
           </CardContent>
         </Card>
       )}
@@ -109,9 +109,9 @@ export default function AssetsPage() {
       {!isLoading && selectedChannel && <SpecsList specs={specs} channel={selectedChannel} />}
 
       {!isLoading && !selectedChannel && (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <p className="text-muted-foreground">Select a channel to view asset specifications.</p>
+        <Card className="rounded-xl shadow-sm">
+          <CardContent className="p-8 md:p-12 text-center">
+            <p className="text-sm md:text-base text-muted-foreground">Select a channel to view asset specifications.</p>
           </CardContent>
         </Card>
       )}

@@ -67,55 +67,55 @@ export function SpecsList({ specs, channel }: SpecsListProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Asset Specifications for {channel}</h2>
-        <Button onClick={handleCopyAll} variant="outline" size="sm">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <h2 className="text-xl md:text-2xl font-bold">Asset Specifications for {channel}</h2>
+        <Button onClick={handleCopyAll} variant="outline" size="sm" className="w-full sm:w-auto">
           <Copy className="h-4 w-4 mr-2" />
           Copy All
         </Button>
       </div>
 
       {specs.length === 0 && (
-        <Card>
+        <Card className="rounded-xl shadow-sm">
           <CardContent className="p-6">
-            <p className="text-muted-foreground">No asset specifications found for this channel.</p>
+            <p className="text-sm md:text-base text-muted-foreground">No asset specifications found for this channel.</p>
           </CardContent>
         </Card>
       )}
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 md:gap-6 md:grid-cols-2">
         {specs.map((spec, idx) => (
-          <Card key={idx}>
+          <Card key={idx} className="rounded-xl shadow-sm">
             <CardHeader>
-              <CardTitle>{spec.placement_or_format}</CardTitle>
-              <CardDescription>{spec.channel}</CardDescription>
+              <CardTitle className="text-lg md:text-xl">{spec.placement_or_format}</CardTitle>
+              <CardDescription className="text-sm">{spec.channel}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="space-y-3">
               {spec.aspect_ratio && (
-                <div className="flex justify-between text-sm">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-sm">
                   <span className="font-medium">Aspect Ratio:</span>
-                  <span>{spec.aspect_ratio}</span>
+                  <span className="text-muted-foreground sm:text-foreground">{spec.aspect_ratio}</span>
                 </div>
               )}
               {spec.recommended_px && (
-                <div className="flex justify-between text-sm">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-sm">
                   <span className="font-medium">Recommended Size:</span>
-                  <span>{spec.recommended_px}</span>
+                  <span className="text-muted-foreground sm:text-foreground">{spec.recommended_px}</span>
                 </div>
               )}
               {spec.duration_seconds_max > 0 && (
-                <div className="flex justify-between text-sm">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-sm">
                   <span className="font-medium">Max Duration:</span>
-                  <span>{spec.duration_seconds_max}s</span>
+                  <span className="text-muted-foreground sm:text-foreground">{spec.duration_seconds_max}s</span>
                 </div>
               )}
               {spec.file_types.length > 0 && (
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <span className="text-sm font-medium">File Types:</span>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {spec.file_types.map((ft) => (
-                      <Badge key={ft} variant="secondary">
+                      <Badge key={ft} variant="secondary" className="text-xs">
                         {ft}
                       </Badge>
                     ))}
@@ -123,21 +123,21 @@ export function SpecsList({ specs, channel }: SpecsListProps) {
                 </div>
               )}
               {spec.max_file_size_mb > 0 && (
-                <div className="flex justify-between text-sm">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-sm">
                   <span className="font-medium">Max File Size:</span>
-                  <span>{spec.max_file_size_mb}MB</span>
+                  <span className="text-muted-foreground sm:text-foreground">{spec.max_file_size_mb}MB</span>
                 </div>
               )}
               {spec.caption_limit_chars > 0 && (
-                <div className="flex justify-between text-sm">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-sm">
                   <span className="font-medium">Caption Limit:</span>
-                  <span>{spec.caption_limit_chars} chars</span>
+                  <span className="text-muted-foreground sm:text-foreground">{spec.caption_limit_chars} chars</span>
                 </div>
               )}
               {spec.notes && (
-                <div className="mt-3 p-2 bg-muted rounded text-xs">
+                <div className="mt-3 p-3 bg-muted rounded-lg text-xs md:text-sm">
                   <p className="font-medium mb-1">Notes:</p>
-                  <p>{spec.notes}</p>
+                  <p className="leading-relaxed">{spec.notes}</p>
                 </div>
               )}
             </CardContent>

@@ -100,14 +100,14 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="channel">Channel *</Label>
+        <Label htmlFor="channel" className="text-sm font-medium">Channel *</Label>
         <Select
           value={formState.channel}
           onValueChange={(val) => setFormState((prev) => ({ ...prev, channel: val }))}
         >
-          <SelectTrigger id="channel">
+          <SelectTrigger id="channel" className="w-full h-11 text-base">
             <SelectValue placeholder="Select a channel" />
           </SelectTrigger>
           <SelectContent>
@@ -128,12 +128,12 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="subtype">Type of Communication *</Label>
+        <Label htmlFor="subtype" className="text-sm font-medium">Type of Communication *</Label>
         <Select
           value={formState.subtype}
           onValueChange={(val) => setFormState((prev) => ({ ...prev, subtype: val }))}
         >
-          <SelectTrigger id="subtype">
+          <SelectTrigger id="subtype" className="w-full h-11 text-base">
             <SelectValue placeholder="Select type" />
           </SelectTrigger>
           <SelectContent>
@@ -148,11 +148,11 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
 
       {formState.subtype === 'Subject/course specific ad' && (
         <div className="space-y-2">
-          <Label htmlFor="courseName">Name of Course *</Label>
+          <Label htmlFor="courseName" className="text-sm font-medium">Name of Course *</Label>
           <input
             id="courseName"
             type="text"
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             placeholder="e.g., Computer Science BSc"
             value={formState.courseName}
             onChange={(e) => setFormState((prev) => ({ ...prev, courseName: e.target.value }))}
@@ -163,11 +163,11 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
 
       {formState.subtype === 'Open Day' && (
         <div className="space-y-2">
-          <Label htmlFor="openDayDate">Open Day Date (Optional)</Label>
+          <Label htmlFor="openDayDate" className="text-sm font-medium">Open Day Date (Optional)</Label>
           <input
             id="openDayDate"
             type="date"
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             value={formState.openDayDate}
             onChange={(e) => setFormState((prev) => ({ ...prev, openDayDate: e.target.value }))}
           />
@@ -175,11 +175,11 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="university">University Name *</Label>
+        <Label htmlFor="university" className="text-sm font-medium">University Name *</Label>
         <input
           id="university"
           type="text"
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           placeholder="e.g., University of Nowhere"
           value={formState.university}
           onChange={(e) => setFormState((prev) => ({ ...prev, university: e.target.value }))}
@@ -188,12 +188,12 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="tone">Tone of Voice *</Label>
+        <Label htmlFor="tone" className="text-sm font-medium">Tone of Voice *</Label>
         <Select
           value={formState.tone}
           onValueChange={(val) => setFormState((prev) => ({ ...prev, tone: val }))}
         >
-          <SelectTrigger id="tone">
+          <SelectTrigger id="tone" className="w-full h-11 text-base">
             <SelectValue placeholder="Select tone" />
           </SelectTrigger>
           <SelectContent>
@@ -207,7 +207,7 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       </div>
 
       {showEmojiToggle && (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3 py-2">
           <Switch
             id="includeEmojis"
             checked={formState.includeEmojis}
@@ -215,17 +215,17 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
               setFormState((prev) => ({ ...prev, includeEmojis: checked }))
             }
           />
-          <Label htmlFor="includeEmojis">Include emojis</Label>
+          <Label htmlFor="includeEmojis" className="text-sm font-medium cursor-pointer">Include emojis</Label>
         </div>
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="audience">Audience *</Label>
+        <Label htmlFor="audience" className="text-sm font-medium">Audience *</Label>
         <Select
           value={formState.audience}
           onValueChange={(val) => setFormState((prev) => ({ ...prev, audience: val }))}
         >
-          <SelectTrigger id="audience">
+          <SelectTrigger id="audience" className="w-full h-11 text-base">
             <SelectValue placeholder="Select audience" />
           </SelectTrigger>
           <SelectContent>
@@ -239,20 +239,20 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       </div>
 
       {/* Creativity Level */}
-      <div className="space-y-2">
-        <Label>Creativity Level</Label>
-        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+      <div className="space-y-3">
+        <Label className="text-sm font-medium">Creativity Level</Label>
+        <div className="grid grid-cols-3 gap-2">
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 3 }))}
-            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col items-center justify-center ${
+            className={`p-3 rounded-lg border-2 transition-all duration-200 min-h-[90px] sm:min-h-[100px] flex flex-col items-center justify-center touch-manipulation ${
               formState.creativity === 3
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
-                : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
+                : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 active:scale-95'
             }`}
           >
-            <div className="text-sm font-medium">Conservative</div>
-            <div className={`text-xs mt-2 ${
+            <div className="text-xs sm:text-sm font-medium text-center">Conservative</div>
+            <div className={`text-xs mt-1.5 text-center ${
               formState.creativity === 3 ? 'text-white/90' : 'text-muted-foreground'
             }`}>
               Follows limits
@@ -261,33 +261,33 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 5 }))}
-            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col items-center justify-center ${
+            className={`p-3 rounded-lg border-2 transition-all duration-200 min-h-[90px] sm:min-h-[100px] flex flex-col items-center justify-center touch-manipulation ${
               formState.creativity === 5
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
-                : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
+                : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 active:scale-95'
             }`}
           >
-            <div className="text-sm font-medium">Balanced</div>
-            <div className={`text-xs mt-2 ${
+            <div className="text-xs sm:text-sm font-medium text-center">Balanced</div>
+            <div className={`text-xs mt-1.5 text-center ${
               formState.creativity === 5 ? 'text-white/90' : 'text-muted-foreground'
             }`}>
-              Recommended default
+              Recommended
             </div>
           </button>
           <button
             type="button"
             onClick={() => setFormState((prev) => ({ ...prev, creativity: 7 }))}
-            className={`p-3 sm:p-4 rounded-md border-2 transition-all duration-200 min-h-[100px] flex flex-col items-center justify-center ${
+            className={`p-3 rounded-lg border-2 transition-all duration-200 min-h-[90px] sm:min-h-[100px] flex flex-col items-center justify-center touch-manipulation ${
               formState.creativity === 7
                 ? 'border-[#579EBE] bg-[#579EBE] text-white shadow-md'
-                : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 hover:scale-[1.02]'
+                : 'border-border bg-white hover:border-[#579EBE]/50 hover:bg-[#579EBE]/5 active:scale-95'
             }`}
           >
-            <div className="text-sm font-medium">Creative</div>
-            <div className={`text-xs mt-2 ${
+            <div className="text-xs sm:text-sm font-medium text-center">Creative</div>
+            <div className={`text-xs mt-1.5 text-center ${
               formState.creativity === 7 ? 'text-white/90' : 'text-muted-foreground'
             }`}>
-              More variety, may bend constraints
+              More variety
             </div>
           </button>
         </div>
@@ -297,11 +297,11 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="landingUrl">Landing Page URL (optional)</Label>
+        <Label htmlFor="landingUrl" className="text-sm font-medium">Landing Page URL (optional)</Label>
         <input
           id="landingUrl"
           type="url"
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           placeholder="https://www.huish.ac.uk/"
           value={formState.landingUrl}
           onChange={(e) => {
@@ -316,13 +316,14 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="usps">
+        <Label htmlFor="usps" className="text-sm font-medium">
           Optional USPs (if not scraping a page)
         </Label>
         <Textarea
           id="usps"
           placeholder="Enter key points, dates, or unique selling points..."
           rows={5}
+          className="text-base resize-none"
           value={formState.usps}
           onChange={(e) => {
             setFormState((prev) => ({ ...prev, usps: e.target.value }));
@@ -337,9 +338,9 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
 
       {/* Timing notice when landing URL is provided */}
       {formState.landingUrl && (
-        <div className="flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm">
-          <Info className="h-4 w-4 flex-shrink-0 text-blue-600" />
-          <p className="text-blue-900">
+        <div className="flex items-start gap-2 sm:gap-3 rounded-lg border border-blue-200 bg-blue-50 p-3 sm:p-4 text-sm">
+          <Info className="h-4 w-4 flex-shrink-0 text-blue-600 mt-0.5" />
+          <p className="text-blue-900 text-sm">
             Since you've added a landing page URL, generation will take 10-20 seconds while we extract and analyse USPs.
           </p>
         </div>
@@ -347,16 +348,16 @@ export function CopyForm({ channels, subtypes, tones, audiences, socialChannels,
 
       {/* Validation error message */}
       {validationError && (
-        <div className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 p-3 text-sm">
-          <AlertCircle className="h-4 w-4 flex-shrink-0 text-red-600" />
-          <p className="text-red-900">{validationError}</p>
+        <div className="flex items-start gap-2 sm:gap-3 rounded-lg border border-red-200 bg-red-50 p-3 sm:p-4 text-sm">
+          <AlertCircle className="h-4 w-4 flex-shrink-0 text-red-600 mt-0.5" />
+          <p className="text-red-900 text-sm">{validationError}</p>
         </div>
       )}
 
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-[#579EBE] hover:bg-[#4a8aa8] text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
+        className="w-full h-11 sm:h-12 text-base bg-[#579EBE] hover:bg-[#4a8aa8] text-white transition-all duration-200 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none touch-manipulation"
       >
         {isLoading ? (
           <>

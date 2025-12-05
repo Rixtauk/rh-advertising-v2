@@ -122,16 +122,16 @@ export function InsightChat() {
   };
 
   return (
-    <Card className="flex flex-col h-[600px]">
+    <Card className="flex flex-col h-[500px] md:h-[600px] rounded-xl shadow-sm">
       <CardContent className="flex flex-col flex-1 p-0 overflow-hidden">
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
+            <div className="flex flex-col items-center justify-center h-full text-center space-y-4 md:space-y-6 px-4">
               <div className="space-y-2">
-                <Sparkles className="w-12 h-12 mx-auto text-primary/60" />
-                <h3 className="text-lg font-medium">Start a conversation</h3>
-                <p className="text-sm text-muted-foreground max-w-md">
+                <Sparkles className="w-10 h-10 md:w-12 md:h-12 mx-auto text-primary/60" />
+                <h3 className="text-base md:text-lg font-medium">Start a conversation</h3>
+                <p className="text-xs md:text-sm text-muted-foreground max-w-md">
                   Ask questions about higher education marketing and get answers
                   grounded in our knowledge base with cited sources.
                 </p>
@@ -144,7 +144,7 @@ export function InsightChat() {
                   <button
                     key={idx}
                     onClick={() => handleExampleClick(prompt)}
-                    className="text-left text-sm p-3 rounded-lg border border-border hover:bg-muted transition-colors"
+                    className="text-left text-xs md:text-sm p-2.5 md:p-3 rounded-lg border border-border hover:bg-muted transition-colors touch-manipulation"
                   >
                     {prompt}
                   </button>
@@ -162,12 +162,12 @@ export function InsightChat() {
                 />
               ))}
               {isLoading && (
-                <div className="flex gap-3 p-4 rounded-lg bg-muted mr-8">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                <div className="flex gap-2 md:gap-3 p-3 md:p-4 rounded-lg bg-muted mr-4 md:mr-8">
+                  <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-secondary flex items-center justify-center">
+                    <Loader2 className="w-3.5 h-3.5 md:w-4 md:h-4 animate-spin" />
                   </div>
                   <div className="flex items-center">
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-xs md:text-sm text-muted-foreground">
                       Thinking...
                     </span>
                   </div>
@@ -179,7 +179,7 @@ export function InsightChat() {
         </div>
 
         {/* Input Area */}
-        <div className="border-t p-4 bg-background">
+        <div className="border-t p-3 md:p-4 bg-background">
           <form onSubmit={handleSubmit} className="flex gap-2">
             <div className="flex-1 relative">
               <Input
@@ -188,10 +188,15 @@ export function InsightChat() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about higher education marketing..."
                 disabled={isLoading}
-                className="pr-10"
+                className="h-10 md:h-11 text-sm md:text-base"
               />
             </div>
-            <Button type="submit" disabled={isLoading || !input.trim()}>
+            <Button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              size="icon"
+              className="h-10 w-10 md:h-11 md:w-11 flex-shrink-0"
+            >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
@@ -204,6 +209,8 @@ export function InsightChat() {
                 variant="outline"
                 onClick={handleClearChat}
                 title="Clear chat"
+                size="icon"
+                className="h-10 w-10 md:h-11 md:w-11 flex-shrink-0"
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
