@@ -20,46 +20,34 @@ export function ScoreGauge({ score, grade, size = "md" }: ScoreGaugeProps) {
     return "#ef4444"; // Red
   };
 
-  const getBackgroundColor = (score: number) => {
-    if (score >= 70) return "bg-green-50";
-    if (score >= 50) return "bg-amber-50";
-    return "bg-red-50";
-  };
-
-  const getBorderColor = (score: number) => {
-    if (score >= 70) return "border-green-200";
-    if (score >= 50) return "border-amber-200";
-    return "border-red-200";
-  };
-
   const getTextColor = (score: number) => {
     if (score >= 70) return "text-green-600";
     if (score >= 50) return "text-amber-600";
     return "text-red-600";
   };
 
-  // Size configurations
+  // Size configurations - bigger, bolder
   const sizeConfig = {
     sm: {
-      containerSize: 120,
-      strokeWidth: 8,
-      textSize: "text-3xl",
-      gradeSize: "text-sm",
-      radius: 50,
-    },
-    md: {
       containerSize: 160,
       strokeWidth: 10,
       textSize: "text-5xl",
       gradeSize: "text-base",
-      radius: 65,
+      radius: 68,
     },
-    lg: {
-      containerSize: 200,
+    md: {
+      containerSize: 220,
       strokeWidth: 12,
       textSize: "text-6xl",
       gradeSize: "text-lg",
-      radius: 82,
+      radius: 94,
+    },
+    lg: {
+      containerSize: 280,
+      strokeWidth: 14,
+      textSize: "text-7xl",
+      gradeSize: "text-xl",
+      radius: 120,
     },
   };
 
@@ -72,88 +60,78 @@ export function ScoreGauge({ score, grade, size = "md" }: ScoreGaugeProps) {
   const strokeDashoffset = circumference - progress;
 
   return (
-    <div className="flex flex-col items-center gap-8 w-full">
-      {/* Circular Progress Ring */}
-      <div
-        className={cn(
-          "flex flex-col items-center gap-4 rounded-3xl border-2 p-8 transition-all duration-300",
-          getBackgroundColor(clampedScore),
-          getBorderColor(clampedScore),
-          "shadow-lg"
-        )}
-      >
-        <div className="relative" style={{ width: config.containerSize, height: config.containerSize }}>
-          <svg
-            width={config.containerSize}
-            height={config.containerSize}
-            viewBox={`0 0 ${config.containerSize} ${config.containerSize}`}
-            className="transform -rotate-90"
+    <div className="flex flex-col items-center gap-4 w-full">
+      {/* Circular Progress Ring - no container box, just the ring */}
+      <div className="relative" style={{ width: config.containerSize, height: config.containerSize }}>
+        <svg
+          width={config.containerSize}
+          height={config.containerSize}
+          viewBox={`0 0 ${config.containerSize} ${config.containerSize}`}
+          className="transform -rotate-90"
+        >
+          {/* Background circle (track) */}
+          <circle
+            cx={center}
+            cy={center}
+            r={config.radius}
+            stroke="#e5e7eb"
+            strokeWidth={config.strokeWidth}
+            fill="none"
+          />
+
+          {/* Progress circle (animated) */}
+          <circle
+            cx={center}
+            cy={center}
+            r={config.radius}
+            stroke={getScoreColor(clampedScore)}
+            strokeWidth={config.strokeWidth}
+            fill="none"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            className="transition-all duration-1000 ease-out"
+            style={{
+              transformOrigin: "center",
+            }}
+          />
+        </svg>
+
+        {/* Center Score Display */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div
+            className={cn(
+              config.textSize,
+              "font-bold tabular-nums leading-none",
+              getTextColor(clampedScore)
+            )}
           >
-            {/* Background circle (track) */}
-            <circle
-              cx={center}
-              cy={center}
-              r={config.radius}
-              stroke="#e5e7eb"
-              strokeWidth={config.strokeWidth}
-              fill="none"
-              className="opacity-30"
-            />
-
-            {/* Progress circle (animated) */}
-            <circle
-              cx={center}
-              cy={center}
-              r={config.radius}
-              stroke={getScoreColor(clampedScore)}
-              strokeWidth={config.strokeWidth}
-              fill="none"
-              strokeLinecap="round"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
-              className="transition-all duration-1000 ease-out"
-              style={{
-                transformOrigin: "center",
-              }}
-            />
-          </svg>
-
-          {/* Center Score Display */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div
-              className={cn(
-                config.textSize,
-                "font-bold tabular-nums leading-none",
-                getTextColor(clampedScore)
-              )}
-            >
-              {clampedScore}
-            </div>
-            <div className={cn(
-              config.gradeSize,
-              "font-semibold text-gray-700 mt-1"
-            )}>
-              Grade {grade}
-            </div>
+            {clampedScore}
+          </div>
+          <div className={cn(
+            config.gradeSize,
+            "font-semibold text-gray-500 mt-1"
+          )}>
+            Grade {grade}
           </div>
         </div>
       </div>
 
-      {/* Legend badges */}
-      <div className="flex flex-wrap gap-3 justify-center">
+      {/* Legend badges - compact row */}
+      <div className="flex flex-wrap gap-2 justify-center">
         {[
-          { range: "0-40", label: "Poor", color: "red", active: clampedScore < 50 },
-          { range: "50-60", label: "Fair", color: "amber", active: clampedScore >= 50 && clampedScore < 70 },
+          { range: "0-49", label: "Poor", color: "red", active: clampedScore < 50 },
+          { range: "50-69", label: "Fair", color: "amber", active: clampedScore >= 50 && clampedScore < 70 },
           { range: "70-100", label: "Good", color: "green", active: clampedScore >= 70 },
         ].map(({ range, label, color, active }) => (
           <div
             key={range}
             className={cn(
-              "flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-medium transition-all duration-300",
+              "flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium transition-all duration-300",
               color === "red" && "bg-red-50 border-red-200 text-red-700",
               color === "amber" && "bg-amber-50 border-amber-200 text-amber-700",
               color === "green" && "bg-green-50 border-green-200 text-green-700",
-              active && "ring-2 shadow-lg scale-105",
+              active && "ring-2 shadow-md scale-105",
               active && color === "red" && "ring-red-500/30",
               active && color === "amber" && "ring-amber-500/30",
               active && color === "green" && "ring-green-500/30"
@@ -161,7 +139,7 @@ export function ScoreGauge({ score, grade, size = "md" }: ScoreGaugeProps) {
           >
             <div
               className={cn(
-                "w-2 h-2 rounded-full",
+                "w-1.5 h-1.5 rounded-full",
                 color === "red" && "bg-red-500",
                 color === "amber" && "bg-amber-500",
                 color === "green" && "bg-green-500",
