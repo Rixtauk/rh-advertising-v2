@@ -10,10 +10,11 @@ import { Send, Loader2, Trash2, Sparkles } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 const EXAMPLE_PROMPTS = [
-  'How much time do different generations spend consuming media each day?',
-  'Which social media platforms are most popular with Gen Z and Millennials?',
-  'What are the key trends in podcast listening behaviour in the UK?',
-  'How effective is social media advertising at driving purchases among younger audiences?',
+  'What were the key findings from the Pre-Clearing survey for 2025?',
+  'What are the top 10 most popular subjects nationally for Clearing 2025?',
+  'How did January 2025 UCAS applications compare to previous years?',
+  'How many students want to change their minds about their course or university choice?',
+  'What is the preferred contact method for students ahead of Results Day?',
 ];
 
 function generateSessionId(): string {
