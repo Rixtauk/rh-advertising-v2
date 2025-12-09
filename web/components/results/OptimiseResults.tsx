@@ -132,8 +132,8 @@ export function OptimiseResults({
         <CardHeader>
           <CardTitle className="text-lg md:text-xl">Overall Score</CardTitle>
         </CardHeader>
-        <CardContent className="flex justify-center py-4 md:py-6">
-          <ScoreGauge score={overall_score} grade={grade} size="lg" />
+        <CardContent className="py-4 md:py-6">
+          <ScoreGauge score={overall_score} grade={grade} />
         </CardContent>
       </Card>
 
