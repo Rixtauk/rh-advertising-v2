@@ -8,84 +8,85 @@ interface ScoreGaugeProps {
   grade: string; // A-F
 }
 
+// Segment colours from poor (left) to good (right)
+const SEGMENTS = [
+  { color: "bg-red-600", range: [0, 12.5] },
+  { color: "bg-orange-500", range: [12.5, 25] },
+  { color: "bg-amber-500", range: [25, 37.5] },
+  { color: "bg-yellow-400", range: [37.5, 50] },
+  { color: "bg-lime-400", range: [50, 62.5] },
+  { color: "bg-green-500", range: [62.5, 75] },
+  { color: "bg-teal-500", range: [75, 87.5] },
+  { color: "bg-cyan-500", range: [87.5, 100] },
+];
+
 export function ScoreGauge({ score, grade }: ScoreGaugeProps) {
   // Clamp score to 0-100
   const clampedScore = Math.max(0, Math.min(100, score));
 
-  // Determine colours and status based on score zones
-  const getScoreConfig = (score: number) => {
-    if (score >= 70) {
-      return {
-        barColor: "bg-green-500",
-        textColor: "text-green-600",
-        bgColor: "bg-green-50",
-        borderColor: "border-green-200",
-        badgeColor: "bg-green-100 text-green-700",
-        status: "Good",
-      };
-    }
-    if (score >= 50) {
-      return {
-        barColor: "bg-amber-500",
-        textColor: "text-amber-600",
-        bgColor: "bg-amber-50",
-        borderColor: "border-amber-200",
-        badgeColor: "bg-amber-100 text-amber-700",
-        status: "Fair",
-      };
-    }
-    return {
-      barColor: "bg-red-500",
-      textColor: "text-red-600",
-      bgColor: "bg-red-50",
-      borderColor: "border-red-200",
-      badgeColor: "bg-red-100 text-red-700",
-      status: "Poor",
-    };
+  // Get status text and colour
+  const getStatus = (score: number) => {
+    if (score >= 70) return { text: "Good", color: "text-green-600" };
+    if (score >= 50) return { text: "Fair", color: "text-amber-600" };
+    return { text: "Poor", color: "text-red-600" };
   };
 
-  const config = getScoreConfig(clampedScore);
+  const status = getStatus(clampedScore);
+
+  // Calculate marker position (percentage)
+  const markerPosition = clampedScore;
 
   return (
-    <div
-      className={cn(
-        "w-full rounded-xl border-2 p-6 transition-all duration-300",
-        config.bgColor,
-        config.borderColor
-      )}
-    >
-      {/* Top row: Score and Grade */}
-      <div className="flex items-center justify-between mb-4">
+    <div className="w-full">
+      {/* Score header row */}
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-baseline gap-1">
-          <span
-            className={cn(
-              "text-5xl font-bold tabular-nums",
-              config.textColor
-            )}
-          >
+          <span className={cn("text-4xl font-bold tabular-nums", status.color)}>
             {clampedScore}
           </span>
-          <span className="text-xl text-gray-400 font-medium">/100</span>
+          <span className="text-lg text-gray-400 font-medium">/100</span>
         </div>
         <div
           className={cn(
             "px-3 py-1.5 rounded-lg text-sm font-semibold",
-            config.badgeColor
+            clampedScore >= 70
+              ? "bg-green-100 text-green-700"
+              : clampedScore >= 50
+              ? "bg-amber-100 text-amber-700"
+              : "bg-red-100 text-red-700"
           )}
         >
           Grade {grade}
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+      {/* Segmented bar container */}
+      <div className="relative">
+        {/* Bar with border */}
+        <div className="relative flex rounded-full border-[3px] border-gray-800 overflow-hidden h-12">
+          {SEGMENTS.map((segment, index) => (
+            <div
+              key={index}
+              className={cn(
+                "flex-1 h-full",
+                segment.color,
+                // Add small gap between segments except first and last
+                index > 0 && "border-l-2 border-gray-800/30"
+              )}
+            />
+          ))}
+        </div>
+
+        {/* Position marker */}
         <div
-          className={cn(
-            "h-full rounded-full transition-all duration-1000 ease-out",
-            config.barColor
-          )}
-          style={{ width: `${clampedScore}%` }}
-        />
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 transition-all duration-700 ease-out"
+          style={{ left: `${markerPosition}%` }}
+        >
+          {/* Marker line */}
+          <div className="w-1.5 h-16 bg-gray-800 rounded-full shadow-lg" />
+          {/* Triangle pointer on top */}
+          <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[8px] border-b-gray-800" />
+        </div>
       </div>
 
       {/* Status label */}
@@ -93,11 +94,15 @@ export function ScoreGauge({ score, grade }: ScoreGaugeProps) {
         <div
           className={cn(
             "w-2 h-2 rounded-full",
-            config.barColor
+            clampedScore >= 70
+              ? "bg-green-500"
+              : clampedScore >= 50
+              ? "bg-amber-500"
+              : "bg-red-500"
           )}
         />
-        <span className={cn("text-sm font-medium", config.textColor)}>
-          {config.status}
+        <span className={cn("text-sm font-medium", status.color)}>
+          {status.text}
         </span>
       </div>
     </div>
